@@ -1,6 +1,9 @@
 import Profile from "../assets/image.png";
+import { useNavigate } from "react-router-dom";
 
 function ProfilePage() {
+    const navigate = useNavigate();
+
     return(
         <div className="p-5 mt-20 rounded-lg shadow-xl">
             <div className=" bg-white shadow-md p-6 rounded-lg flex flex-col h-screen">
@@ -44,6 +47,7 @@ function ProfilePage() {
                             </div>
                     </div>
                 </div>
+                <button className="mt-4 w-full px-10 py-2 bg-blue-600 text-white rounded-3xl shadow-md hover:bg-blue-700 text-xl font-semibold" onClick={() => navigate("/")}>Logout</button>
             </div>
         </div>
     );

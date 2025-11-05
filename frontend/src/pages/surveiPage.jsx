@@ -1,16 +1,10 @@
-import axios from "axios";
 import SurveiCard from "../components/surveiCard";
-import { useEffect, useState } from "react";
+import useQuestions from "../hooks/useQuestions";
 
 
 function SurveiPage() {
-    const [questions, setQuestions] = useState([]);
+    const questions = useQuestions();
 
-    useEffect(()=>{
-        axios.get("http://localhost:8000/api/questions")
-        .then((res) => (setQuestions(res.data)))
-        .catch((err) => console.error("Error fetching questions:", err));
-    },[]);
     return (
         <div className=" mt-23 p-5 flex flex-col gap-5 h-full">
             <div className=" p-5 rounded-2xl shadow-md flex flex-col gap-2">

@@ -9,8 +9,7 @@ function Navbar() {
     return (
         <nav className=" fixed top-0 right-0 left-0 bg-white text-gray-800 p-1 px-10 flex justify-between shadow-md items-center z-50">
             <div className="flex items-center">
-            <img src={Logo} alt="Logo" className="h-20 cursor-pointer" onClick={() => navigate("/")} />
-            <a href="/"></a>
+            <img src={Logo} alt="Logo" className="h-20 cursor-pointer" onClick={() => navigate("/home")} />
             </div>
             <div className="profile">
                 <img src={Profile} alt="Profile" className="h-12 w-12 rounded-full cursor-pointer object-cover" onClick={() => navigate("/profile")} />
