@@ -4,13 +4,13 @@ import db from "../db.js";
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  try {
-    const [rows] = await db.query("SELECT * FROM questions");
-    res.json(rows);
-  } catch (error) {
-    console.error("❌ Error fetching questions:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
+  db.query("SELECT * FROM questions", (error, results) => {
+    if (error) {
+      console.error("❌ Error fetching questions:", error);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+    res.json(results);
+  });
 });
 
 export default router;

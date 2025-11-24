@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AOS from "aos";
+import Img3 from "../assets/image3.jpg";
 import "aos/dist/aos.css";
 
 function HomePage() {
@@ -52,9 +53,11 @@ function HomePage() {
                 </div>
                 <div className="text flex flex-col gap-5 max-w-lg items-start">
                     <h1 className="font-bold text-5xl">Gallery</h1>
-                    <p className=" text-lg max-w-2xl">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo, quas! Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consectetur, repudiandae!</p>
+                    <p className=" text-lg max-w-2xl text-justify line-clamp-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo, quas! Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consectetur, repudiandae!</p>
                     <button onClick={()=>navigate("/gallery")} className="text-blue-500 hover:underline cursor-pointer">View All</button>
                 </div>
+            </div>
+            <div className=" h-screen flex justify-between p-10">
             </div>
         </div>
     )

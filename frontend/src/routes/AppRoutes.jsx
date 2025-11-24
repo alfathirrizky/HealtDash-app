@@ -14,6 +14,7 @@ const Question = lazy(() => import("../pages/questionPage"));
 const Profile = lazy(() => import("../pages/profilePage"));
 const Gallery = lazy(() => import("../pages/galleryPage"));
 const Login = lazy(() => import("../pages/loginPage"));
+const User = lazy(() => import("../pages/userPage"));
 
 
 function AppRoutes() {
@@ -32,6 +33,7 @@ function AppRoutes() {
                     <Route path="/statistic" element={<Statistic />} />
                     <Route path="/identification" element={<Identification />} />
                     <Route path="/question" element={<Question />} />
+                    <Route path="/user" element={<User />} />
                 </Route>
             </Routes>
         </Suspense>
