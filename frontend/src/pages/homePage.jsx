@@ -6,20 +6,19 @@ import "aos/dist/aos.css";
 
 function HomePage() {
     const navigate = useNavigate();
-        useEffect(() => {
+    useEffect(() => {
         AOS.init({
-            duration: 1000, // durasi animasi
-            once: true,     // animasi hanya jalan sekali
+            duration: 1000
         });
     }, []);
 
     return (
         <div className="scroll-smooth overflow-y-hidden">
-            <hero className="h-screen flex flex-col items-center justify-center bg-[url('./assets/hero.jpg')] bg-cover bg-center text-white">
+            <section className="h-screen flex flex-col items-center justify-center bg-[url('./assets/hero.jpg')] bg-cover bg-center text-white">
                 <h1 className="text-7xl font-bold mb-4">Welcome to the Home Page</h1>
                 <p className="text-xl">This is the home page of the application.</p>
                 <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-2xl transition duration-300 hover:bg-blue-600" onClick={() => navigate("/survei")}>Get Started</button>
-            </hero>
+            </section>
             <div className="h-screen flex flex-col items-center justify-center text-white gap-5 px-10">
                 <div className=" mb-5">
                     <h1 className=" text-black font-bold text-2xl">Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta, sit.</h1>
@@ -47,9 +46,9 @@ function HomePage() {
             </div>
             <div className="h-screen flex flex-row gap-10 items-center justify-center">
                 <div className="gallery flex gap-5 flex-wrap justify-center items-center">
-                    <div className="bg-[url('./assets/image2.jpg')] rounded-xl p-3 justify-between flex flex-col backdrop-blur-xs h-80 w-70">1</div>
-                    <div className="bg-[url('./assets/image2.jpg')] rounded-xl p-3 justify-between flex flex-col backdrop-blur-xs h-100 w-70">1</div>
-                    <div className="bg-[url('./assets/image2.jpg')] rounded-xl p-3 justify-between flex flex-col backdrop-blur-xs h-120 w-70">1</div>
+                    <div className="bg-[url('./assets/image2.jpg')] rounded-xl p-3 justify-between flex flex-col backdrop-blur-xs h-80 w-70" data-aos="fade-up" data-aos-delay="100">1</div>
+                    <div className="bg-[url('./assets/image2.jpg')] rounded-xl p-3 justify-between flex flex-col backdrop-blur-xs h-100 w-70" data-aos="fade-up" data-aos-delay="200">1</div>
+                    <div className="bg-[url('./assets/image2.jpg')] rounded-xl p-3 justify-between flex flex-col backdrop-blur-xs h-120 w-70" data-aos="fade-up" data-aos-delay="300">1</div>
                 </div>
                 <div className="text flex flex-col gap-5 max-w-lg items-start">
                     <h1 className="font-bold text-5xl">Gallery</h1>

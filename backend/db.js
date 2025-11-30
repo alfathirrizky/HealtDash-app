@@ -3,13 +3,15 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const db = mysql.createPool({
+const pool = mysql.createPool({
   host: "localhost",
   user: "root",
   password: "",
   database: "healthdash",
   port: 3306,
 });
+
+const db = pool.promise();
 
 console.log("database connected");
 
