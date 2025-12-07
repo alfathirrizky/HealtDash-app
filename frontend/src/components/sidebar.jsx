@@ -5,7 +5,7 @@ function Sidebar() {
     const menu=[
         { name: "Dashboard", path: "/dashboard" },
         { name: "Identification", path: "/identification" },
-        { name: "Statistic", path: "/statistic" },
+        { name: "Gallery", path: "/galleryDash" },
         { name: "Question", path: "/question" },
         { name: "User", path: "/user" },
     ];

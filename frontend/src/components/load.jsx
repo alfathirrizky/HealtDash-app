@@ -7,70 +7,73 @@ const Load = () => {
       <div className="loader" />
     </StyledWrapper>
   );
-};
+}
 
 const StyledWrapper = styled.div`
   .loader {
+    width: 48px;
+    height: 48px;
+    margin: auto;
     position: relative;
-    width: 50px;
-    height: 50px;
-    margin: 0 auto;
   }
 
-  /* Bola */
   .loader:before {
-    content: "";
+    content: '';
+    width: 48px;
+    height: 5px;
+    background: #99a1af;
     position: absolute;
-    bottom: 10px;
-    left: 10px;
-    height: 15px;
-    width: 15px;
+    top: 60px;
+    left: 0;
     border-radius: 50%;
-    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-    box-shadow: 0 0 10px rgba(59, 130, 246, 0.6);
-    animation: loading-bounce 0.6s ease-in-out infinite alternate;
+    animation: shadow324 0.5s linear infinite;
   }
 
-  /* Step Bars */
   .loader:after {
-    content: "";
+    content: '';
+    width: 100%;
+    height: 100%;
+    background: #155dfc;
     position: absolute;
-    right: 2px;
     top: 0;
-    height: 4px;
-    width: 20px;
-    border-radius: 3px;
-    background: #dbeafe; /* biru soft */
-    box-shadow:
-      0 5px 0 #dbeafe,
-      -15px 25px 0 #bfdbfe,
-      -30px 45px 0 #93c5fd;
-    animation: loading-step 1s ease-in-out infinite;
+    left: 0;
+    border-radius: 4px;
+    animation: jump7456 0.5s linear infinite;
   }
 
-  @keyframes loading-bounce {
-    0% { transform: scale(1, 0.7); }
-    40% { transform: scale(0.85, 1.2); }
-    60% { transform: scale(1, 1); }
-    100% { bottom: 50px; }
-  }
-
-  @keyframes loading-step {
-    0% {
-      box-shadow:
-        0 5px 0 rgba(0, 0, 0, 0),
-        0 5px 0 #dbeafe,
-        -15px 25px 0 #bfdbfe,
-        -30px 45px 0 #93c5fd;
+  @keyframes jump7456 {
+    15% {
+      border-bottom-right-radius: 3px;
     }
+
+    25% {
+      transform: translateY(9px) rotate(22.5deg);
+    }
+
+    50% {
+      transform: translateY(18px) scale(1, .9) rotate(45deg);
+      border-bottom-right-radius: 40px;
+    }
+
+    75% {
+      transform: translateY(9px) rotate(67.5deg);
+    }
+
     100% {
-      box-shadow:
-        0 5px 0 #dbeafe,
-        -15px 25px 0 #bfdbfe,
-        -30px 45px 0 #93c5fd,
-        -30px 45px 0 rgba(0, 0, 0, 0);
+      transform: translateY(0) rotate(90deg);
     }
   }
-`;
+
+  @keyframes shadow324 {
+
+    0%,
+      100% {
+      transform: scale(1, 1);
+    }
+
+    50% {
+      transform: scale(1.2, 1);
+    }
+  }`;
 
 export default Load;

@@ -1,5 +1,5 @@
 import API from "../api/api"
-import { useState, useEffect } from "react"
+import useUser from "../hooks/useUser"
 import {
   Table, TableBody, TableCaption, TableCell, TableHead,
   TableHeader, TableRow,
@@ -20,94 +20,82 @@ import {
 } from "@/components/ui/alert-dialog";
 import { motion } from "framer-motion";
 import Load from "../components/load"
-import { toast } from "sonner"
-
+import { ArrowUpIcon, Search } from "lucide-react"
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+  InputGroupText,
+  InputGroupTextarea,
+} from "@/components/ui/input-group"
+import { Link } from "react-router-dom";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
 
 export default function UserPage() {
-    const [users, setUsers] = useState([])
-    const [open, setOpen] = useState(false)
-    const [editing, setEditing] = useState(null)
-    const [form, setForm] = useState({ name: "", email: "" })
+    const {
+        users,
+        open,
+        editing,
+        form,
+        openEditForm,
+        handleChange,
+        handleCreate,
+        handleUpdate,
+        handleDelete,
+        setOpen,
+    } = useUser();
 
-    const fetchUser = async () => {
-        const res = await API.get('/users')
-        setUsers(res.data)
-    }
-
-    useEffect(() => {
-        fetchUser()
-    }, [])
-
-    const handleChange = (e) => {
-        setForm({ ...form, [e.target.name]: e.target.value })
-    }
-
-    const handleCreate = async () => {
-        const res = await API.post("/users", form)
-        setUsers(prev => [res.data, ...prev])
-        setOpen(false)
-        setForm({ name: "", email: "" })
-    }
-
-    const handleUpdate = async () => {
-        const res = await API.put(`/users/${editing.id}`, form)
-        setUsers(prev => prev.map(u => (u.id === editing.id ? res.data : u)))
-        setOpen(false)
-        setEditing(null)
-        setForm({ name: "", email: "" })
-    }
-
-    const handleDelete = async (id) => {
-        await API.delete(`/users/${id}`)
-        setUsers(prev => prev.filter(u => u.id !== id))
-        toast.error("User berhasil dihapus.")
-    }
-
-    const openEditForm = (user) => {
-        setEditing(user)
-        setForm({ name: user.name, email: user.email })
-        setOpen(true)
-    }
-
-    const openCreateForm = () => {
-        setEditing(null)
-        setForm({ name: "", email: "" })
-        setOpen(true)
-    }
 
     return (
         <div className="space-y-4 p-5">
             <div className="flex flex-col gap-5 scrollbar-none scroll-smooth overflow-y-auto h-[89vh]">
-                <div className=" flex gap-5">
-                    <Button
-                        onClick={openCreateForm}
-                        className="rounded-xl bg-blue-600 hover:bg-blue-700 text-white shadow-md"
-                    >
-                        Create User
-                    </Button>
-                        <div className="w-full md:w-1/3">
-                            <input
-                                type="text"
-                                placeholder="Search user..."
-                                // value={search}
-                                // onChange={(e) => setSearch(e.target.value)}
-                                className="w-full px-4 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
-                            />
-                        </div>
+                <div className=" flex w-full justify-end gap-5">
+                    <div className="w-full md:w-1/3">
+                            <InputGroup>
+                            <InputGroupInput placeholder="Search..." />
+                            <InputGroupAddon>
+                                <Search/>
+                            </InputGroupAddon>
+                            </InputGroup>
+                    </div>
+                    <Link to="/users/create">
+                        <Button className="rounded-xl bg-blue-600 hover:bg-blue-700 text-white">
+                            Create User
+                        </Button>
+                    </Link>
                 </div>
+                <Breadcrumb>
+                    <BreadcrumbList>
+                        <BreadcrumbItem>
+                        <BreadcrumbLink asChild>
+                            <Link to="/user">User</Link>
+                        </BreadcrumbLink>
+                        </BreadcrumbItem>
+                        <BreadcrumbSeparator />
+                    </BreadcrumbList>
+                </Breadcrumb>
                 {/* TABLE */}
                 <div className="border border-blue-200 rounded-xl p-3 bg-white">
                     <Table>
                         <TableHeader>
                             <TableRow className="bg-blue-50 border-b border-blue-100">
-                                <TableHead className="text-blue-700 font-semibold">ID</TableHead>
-                                <TableHead className="text-blue-700 font-semibold">Name</TableHead>
-                                <TableHead className="text-blue-700 font-semibold">Email</TableHead>
-                                <TableHead className="text-blue-700 font-semibold">Telepon</TableHead>
-                                <TableHead className="text-blue-700 font-semibold">Position</TableHead>
-                                <TableHead className="text-blue-700 font-semibold">Gender</TableHead>
-                                <TableHead className="text-blue-700 font-semibold">Role</TableHead>
-                                <TableHead className="text-blue-700 font-semibold">Actions</TableHead>
+                                <TableHead className="text-blue-600 font-semibold">ID</TableHead>
+                                <TableHead className="text-blue-600 font-semibold">Name</TableHead>
+                                <TableHead className="text-blue-600 font-semibold">Email</TableHead>
+                                <TableHead className="text-blue-600 font-semibold">Telepon</TableHead>
+                                <TableHead className="text-blue-600 font-semibold">Position</TableHead>
+                                <TableHead className="text-blue-600 font-semibold">Gender</TableHead>
+                                <TableHead className="text-blue-600 font-semibold">Role</TableHead>
+                                <TableHead className="text-blue-600 font-semibold">Password</TableHead>
+                                <TableHead className="text-blue-600 font-semibold">Actions</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -124,6 +112,7 @@ export default function UserPage() {
                                         <TableCell>{user.position}</TableCell>
                                         <TableCell>{user.gender}</TableCell>
                                         <TableCell>{user.role}</TableCell>
+                                        <TableCell>{user.password}</TableCell>
                                         <TableCell className="space-x-2">
                                             <Button
                                                 size="sm"
@@ -145,7 +134,6 @@ export default function UserPage() {
                                             </AlertDialogTrigger>
 
                                             <AlertDialogContent className="bg-white shadow-xl rounded-xl p-0 overflow-hidden">
-
                                                 {/* Animasi popup */}
                                                 <motion.div
                                                 initial={{ opacity: 0, scale: 0.8 }}
@@ -157,18 +145,15 @@ export default function UserPage() {
                                                     <AlertDialogTitle className="text-gray-900">
                                                     Konfirmasi Hapus
                                                     </AlertDialogTitle>
-
                                                     <AlertDialogDescription className="text-gray-600">
                                                     Apakah Anda yakin ingin menghapus user ini? Tindakan ini tidak dapat
                                                     dibatalkan.
                                                     </AlertDialogDescription>
                                                 </AlertDialogHeader>
-
                                                 <AlertDialogFooter className="mt-6">
                                                     <AlertDialogCancel className="bg-gray-100 text-gray-700 hover:bg-gray-200">
                                                     Batal
                                                     </AlertDialogCancel>
-
                                                     <AlertDialogAction
                                                     className="bg-red-500 hover:bg-red-600 text-white"
                                                     onClick={() => handleDelete(user.id)}
@@ -184,10 +169,10 @@ export default function UserPage() {
                                 ))
                             ) : (
                                 <TableRow>
-                                    <TableCell colSpan="4">
-                                        <div className="flex flex-col items-center justify-center py-20 gap-3">
-                                            <Load className="w-30 h-30" />
-                                            <p className="text-blue-700 font-medium text-lg">
+                                    <TableCell colSpan="8">
+                                        <div className="flex flex-col items-center justify-center py-20 gap-6">
+                                            <Load className="w-30 h-30 " />
+                                            <p className="text-blue-500 font-medium text-lg">
                                                 No users found
                                             </p>
                                         </div>
@@ -199,37 +184,97 @@ export default function UserPage() {
                 </div>
                 {/* POP-UP FORM */}
                 <Dialog open={open} onOpenChange={setOpen}>
-                    <DialogContent className="bg-white border border-blue-200 shadow-xl rounded-xl">
+                <DialogContent className="bg-white border border-blue-200 shadow-xl rounded-xl w-2xl">
                     <DialogHeader>
-                        <DialogTitle className="text-blue-700 font-semibold">
+                    <DialogTitle className="text-blue-700 font-semibold">
                         {editing ? "Edit User" : "Create User"}
-                        </DialogTitle>
+                    </DialogTitle>
                     </DialogHeader>
 
-                    <div className="space-y-3">
-                        <Input
+                    <div className="grid grid-cols-3 gap-3 py-2">
+                    <Input
+                        placeholder="Id"
+                        name="id"
+                        value={form.id}
+                        onChange={handleChange}
+                        className="border-blue-300 focus:ring-blue-500"
+                    />
+
+                    <Input
+                        placeholder="Image"
+                        name="image"
+                        value={form.image}
+                        onChange={handleChange}
+                        className="border-blue-300 focus:ring-blue-500"
+                    />
+
+                    <Input
+                        placeholder="Telepon"
+                        name="telepon"
+                        value={form.telepon}
+                        onChange={handleChange}
+                        className="border-blue-300 focus:ring-blue-500"
+                    />
+
+                    <Input
                         placeholder="Name"
                         name="name"
                         value={form.name}
                         onChange={handleChange}
                         className="border-blue-300 focus:ring-blue-500"
-                        />
-                        <Input
+                    />
+
+                    <Input
                         placeholder="Email"
                         name="email"
                         value={form.email}
                         onChange={handleChange}
                         className="border-blue-300 focus:ring-blue-500"
-                        />
+                    />
 
-                        <Button
+                    <Input
+                        placeholder="Position"
+                        name="position"
+                        value={form.position}
+                        onChange={handleChange}
+                        className="border-blue-300 focus:ring-blue-500"
+                    />
+
+                    <Input
+                        placeholder="Gender"
+                        name="gender"
+                        value={form.gender}
+                        onChange={handleChange}
+                        className="border-blue-300 focus:ring-blue-500"
+                    />
+
+                    <Input
+                        placeholder="Password"
+                        name="password"
+                        value={form.password}
+                        type="password"
+                        onChange={handleChange}
+                        className="border-blue-300 focus:ring-blue-500"
+                    />
+
+                    <Input
+                        placeholder="Role"
+                        name="role"
+                        value={form.role}
+                        onChange={handleChange}
+                        className="border-blue-300 focus:ring-blue-500"
+                    />
+                    </div>
+
+                    <div className="pt-4">
+                    <Button
                         className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow"
                         onClick={editing ? handleUpdate : handleCreate}
-                        >
+                    >
                         {editing ? "Update" : "Create"}
-                        </Button>
+                    </Button>
                     </div>
-                    </DialogContent>
+                </DialogContent>
                 </Dialog>
             </div>
         </div>

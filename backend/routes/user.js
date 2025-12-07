@@ -1,5 +1,6 @@
 import express from "express";
 import db from "../db.js";
+import { v4 as uuidv4 } from "uuid";
 
 const router = express.Router();
 
@@ -17,12 +18,8 @@ router.get("/", async (req, res) => {
 // GET user by id
 router.get("/:id", async (req, res) => {
   try {
-    const [rows] = await db.query("SELECT * FROM users WHERE users_id = ?", [
-      req.params.id,
-    ]);
-
+    const [rows] = await db.query("SELECT * FROM users WHERE id = ?", [req.params.id,]);
     if (!rows.length) return res.status(404).json({ error: "User not found" });
-
     res.json(rows[0]);
   } catch (err) {
     console.error(err);
@@ -33,18 +30,13 @@ router.get("/:id", async (req, res) => {
 // CREATE user
 router.post("/", async (req, res) => {
   try {
-    const { image, telepon, name, email, position, gender, password } =
-      req.body;
-
+    const id = uuidv4(); 
+    const { image, telepon, name, email, position, gender, password } = req.body;
     const [result] = await db.query(
-      "INSERT INTO users (image, telepon, name, email, position, gender, password) VALUES (?, ?, ?, ?, ?, ?, ?)",
-      [image, telepon, name, email, position, gender, password]
+      "INSERT INTO users (id, image, telepon, name, email, position, gender, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+      [id, image, telepon, name, email, position, gender, password]
     );
-
-    const [rows] = await db.query("SELECT * FROM users WHERE users_id = ?", [
-      result.insertId,
-    ]);
-
+    const [rows] = await db.query("SELECT * FROM users WHERE id = ?", [id]);
     res.status(201).json(rows[0]);
   } catch (err) {
     console.error(err);
@@ -59,11 +51,11 @@ router.put("/:id", async (req, res) => {
       req.body;
 
     await db.query(
-      "UPDATE users SET image = ?, telepon = ?, name = ?, email = ?, position = ?, gender = ?, password = ? WHERE users_id = ?",
+      "UPDATE users SET image = ?, telepon = ?, name = ?, email = ?, position = ?, gender = ?, password = ? WHERE id = ?",
       [image, telepon, name, email, position, gender, password, req.params.id]
     );
 
-    const [rows] = await db.query("SELECT * FROM users WHERE users_id = ?", [
+    const [rows] = await db.query("SELECT * FROM users WHERE id = ?", [
       req.params.id,
     ]);
 
@@ -79,7 +71,7 @@ router.put("/:id", async (req, res) => {
 // DELETE user
 router.delete("/:id", async (req, res) => {
   try {
-    const [result] = await db.query("DELETE FROM users WHERE users_id = ?", [
+    const [result] = await db.query("DELETE FROM users WHERE id = ?", [
       req.params.id,
     ]);
 

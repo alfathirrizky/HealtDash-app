@@ -6,7 +6,7 @@ import Layout from "../layouts/layout";
 
 
 const Dashboard= lazy(() => import("../pages/dashboardPage"));
-const Statistic= lazy(() => import("../pages/statisticPage"));
+const GalleryDash= lazy(() => import("../pages/galleryDashPage"));
 const Identification = lazy(() => import("../pages/identificationPage"));
 const Survei = lazy(() => import("../pages/surveiPage"));
 const Home = lazy(() => import("../pages/homePage"));
@@ -15,6 +15,9 @@ const Profile = lazy(() => import("../pages/profilePage"));
 const Gallery = lazy(() => import("../pages/galleryPage"));
 const Login = lazy(() => import("../pages/loginPage"));
 const User = lazy(() => import("../pages/userPage"));
+const CreateUserPage = lazy(() => import("../pages/createUserPage"));
+const CreateQuestionPage = lazy(() => import("../pages/createQuestionPage"));
+const CreateGalleryPage = lazy(() => import("../pages/createGalleryPage"));
 
 
 function AppRoutes() {
@@ -30,10 +33,13 @@ function AppRoutes() {
                 </Route>
                 <Route element={<Layout />}>
                     <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/statistic" element={<Statistic />} />
+                    <Route path="/galleryDash" element={<GalleryDash />} />
+                    <Route path="/galleryDash/create" element={<CreateGalleryPage />} />
                     <Route path="/identification" element={<Identification />} />
                     <Route path="/question" element={<Question />} />
+                    <Route path="/question/create" element={<CreateQuestionPage />} />
                     <Route path="/user" element={<User />} />
+                    <Route path="/users/create" element={<CreateUserPage />} />
                 </Route>
             </Routes>
         </Suspense>
