@@ -57,20 +57,23 @@ export default function UserPage() {
     return (
         <div className="space-y-4 p-5">
             <div className="flex flex-col gap-5 scrollbar-none scroll-smooth overflow-y-auto h-[89vh]">
-                <div className=" flex w-full justify-end gap-5">
-                    <div className="w-full md:w-1/3">
-                            <InputGroup>
-                            <InputGroupInput placeholder="Search..." />
-                            <InputGroupAddon>
-                                <Search/>
-                            </InputGroupAddon>
-                            </InputGroup>
+                <div className=" flex w-full items-center justify-between gap-5">
+                    <h1 className=" font-bold text-4xl">User Dashboard</h1>
+                    <div className=" flex gap-4 w-2xl justify-end">
+                        <div className="w-full md:w-1/3">
+                                <InputGroup>
+                                <InputGroupInput placeholder="Search..." />
+                                <InputGroupAddon>
+                                    <Search/>
+                                </InputGroupAddon>
+                                </InputGroup>
+                        </div>
+                        <Link to="/users/create">
+                            <Button className="rounded-xl bg-blue-600 hover:bg-blue-700 text-white">
+                                Create User
+                            </Button>
+                        </Link>
                     </div>
-                    <Link to="/users/create">
-                        <Button className="rounded-xl bg-blue-600 hover:bg-blue-700 text-white">
-                            Create User
-                        </Button>
-                    </Link>
                 </div>
                 <Breadcrumb>
                     <BreadcrumbList>
