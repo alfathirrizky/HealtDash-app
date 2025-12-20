@@ -88,9 +88,9 @@ function QuestionPage() {
                     <Table>
                         <TableHeader>
                             <TableRow className="bg-blue-50 border-b border-blue-100">
-                                <TableHead className="text-blue-600 font-semibold">Image</TableHead>
-                                <TableHead className="text-blue-600 font-semibold">Caption</TableHead>
-                                <TableHead className="text-blue-600 font-semibold">Descrition</TableHead>
+                                <TableHead className="text-blue-600 font-semibold">Question</TableHead>
+                                <TableHead className="text-blue-600 font-semibold">Category</TableHead>
+                                <TableHead className="text-blue-600 font-semibold">Note</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Action</TableHead>
                             </TableRow>
                         </TableHeader>

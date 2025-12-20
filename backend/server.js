@@ -7,6 +7,7 @@ import userRoutes from "./routes/user.js";
 import answerRoutes from "./routes/answer.js";
 import { PORT } from "./config/index.js";
 import authRoutes from "./routes/auth.js";
+import galleryRoutes from "./routes/gallery.js";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -27,7 +28,7 @@ app.use("/api/questions", questionRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/answers", answerRoutes);
 app.use("/api/auth", authRoutes);
-
+app.use("/api/gallery", galleryRoutes);
 
 // Jalankan server
 app.listen(PORT, () => {

@@ -1,10 +1,8 @@
 import SurveiCard from "../components/surveiCard";
 import useQuestions from "../hooks/useQuestions";
 
-
 function SurveiPage() {
     const questions = useQuestions();
-
     return (
         <div className=" mt-23 p-5 flex flex-col gap-5 h-full">
             <div className=" p-5 rounded-2xl shadow-md flex flex-col gap-2">
