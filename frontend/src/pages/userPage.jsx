@@ -91,6 +91,7 @@ export default function UserPage() {
                         <TableHeader>
                             <TableRow className="bg-blue-50 border-b border-blue-100">
                                 <TableHead className="text-blue-600 font-semibold">ID</TableHead>
+                                <TableHead className="text-blue-600 font-semibold">Image</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Name</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Email</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Telepon</TableHead>
@@ -109,6 +110,7 @@ export default function UserPage() {
                                         className="hover:bg-blue-50 transition border-b border-gray-400"
                                     >
                                         <TableCell>{user.id}</TableCell>
+                                        <TableCell>{user.image}</TableCell>
                                         <TableCell>{user.name}</TableCell>
                                         <TableCell>{user.email}</TableCell>
                                         <TableCell>{user.telepon}</TableCell>

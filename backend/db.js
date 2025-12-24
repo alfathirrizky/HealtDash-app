@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+// Membuat connection pool
+// Pool = koneksi dipakai ulang (lebih efisien)
 const db = await mysql.createPool({
   host: "localhost",
   user: "root",

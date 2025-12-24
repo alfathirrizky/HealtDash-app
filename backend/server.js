@@ -14,6 +14,7 @@ dotenv.config();
 const app = express();
 
 app.use(cors());
+// Middleware agar bisa membaca JSON dari body request
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -24,10 +25,15 @@ app.get("/", (req, res) => {
 
 //routes
 app.use("/api", uploadRoutes);
+// Semua endpoint question diawali /questions
 app.use("/api/questions", questionRoutes);
+// Semua endpoint user diawali /users
 app.use("/api/users", userRoutes);
+// Semua endpoint answers diawali /answers
 app.use("/api/answers", answerRoutes);
+// Semua endpoint auth diawali /auth
 app.use("/api/auth", authRoutes);
+// Semua endpoint gallery diawali /gallery
 app.use("/api/gallery", galleryRoutes);
 
 // Jalankan server

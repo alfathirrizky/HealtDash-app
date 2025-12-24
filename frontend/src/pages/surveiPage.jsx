@@ -1,18 +1,67 @@
-import SurveiCard from "../components/surveiCard";
-import useQuestions from "../hooks/useQuestions";
-
-function SurveiPage() {
-    const questions = useQuestions();
+import foto from '../assets/image2.jpg';
+export default function SurveiPage() {
     return (
-        <div className=" mt-23 p-5 flex flex-col gap-5 h-full">
-            <div className=" p-5 rounded-2xl shadow-md flex flex-col gap-2">
-                {questions.map((question) => (
-                    <SurveiCard key={question.id} name={question.name} label={question.label} />
-                ))}
-                <button className="self-center mt-4 w-full px-10 py-2 bg-blue-600 text-white rounded-3xl shadow-md hover:bg-blue-700 text-xl font-semibold">Submit</button>
+        <div className="h-auto mt-24 p-5 flex flex-wrap gap-5 justify-center">
+            <div className="bg-white flex flex-col justify-center h-70 w-2xl p-5 rounded-2xl shadow-lg border-4 border-white gap-2">
+                <img src={foto} alt="" className='rounded-xl h-40 object-cover' />
+                <div className='flex justify-between items-center'>
+                    <div className="text-black">
+                        <h1 className="text-2xl font-bold">Content A</h1>
+                        <p className="">Some description for content A.</p>
+                    </div>
+                    <button className="bg-blue-500 text-white px-5 py-2 rounded-2xl font-semibold">View Details</button>
+                </div>
+            </div>
+            <div className="bg-white flex flex-col justify-center h-70 w-2xl p-5 rounded-2xl shadow-lg border-4 border-white gap-2">
+                <img src={foto} alt="" className='rounded-xl h-40 object-cover' />
+                <div className='flex justify-between items-center'>
+                    <div className="text-black">
+                        <h1 className="text-2xl font-bold">Content A</h1>
+                        <p className="">Some description for content A.</p>
+                    </div>
+                    <button className="bg-blue-500 text-white px-5 py-2 rounded-2xl font-semibold">View Details</button>
+                </div>
+            </div>
+            <div className="bg-white flex flex-col justify-center h-70 w-2xl p-5 rounded-2xl shadow-lg border-4 border-white gap-2">
+                <img src={foto} alt="" className='rounded-xl h-40 object-cover' />
+                <div className='flex justify-between items-center'>
+                    <div className="text-black">
+                        <h1 className="text-2xl font-bold">Content A</h1>
+                        <p className="">Some description for content A.</p>
+                    </div>
+                    <button className="bg-blue-500 text-white px-5 py-2 rounded-2xl font-semibold">View Details</button>
+                </div>
+            </div>
+            <div className="bg-white flex flex-col justify-center h-70 w-2xl p-5 rounded-2xl shadow-lg border-4 border-white gap-2">
+                <img src={foto} alt="" className='rounded-xl h-40 object-cover' />
+                <div className='flex justify-between items-center'>
+                    <div className="text-black">
+                        <h1 className="text-2xl font-bold">Content A</h1>
+                        <p className="">Some description for content A.</p>
+                    </div>
+                    <button className="bg-blue-500 text-white px-5 py-2 rounded-2xl font-semibold">View Details</button>
+                </div>
+            </div>
+            <div className="bg-white flex flex-col justify-center h-70 w-2xl p-5 rounded-2xl shadow-lg border-4 border-white gap-2">
+                <img src={foto} alt="" className='rounded-xl h-40 object-cover' />
+                <div className='flex justify-between items-center'>
+                    <div className="text-black">
+                        <h1 className="text-2xl font-bold">Content A</h1>
+                        <p className="">Some description for content A.</p>
+                    </div>
+                    <button className="bg-blue-500 text-white px-5 py-2 rounded-2xl font-semibold">View Details</button>
+                </div>
+            </div>
+            <div className="bg-white flex flex-col justify-center h-70 w-2xl p-5 rounded-2xl shadow-lg border-4 border-white gap-2">
+                <img src={foto} alt="" className='rounded-xl h-40 object-cover' />
+                <div className='flex justify-between items-center'>
+                    <div className="text-black">
+                        <h1 className="text-2xl font-bold">Content A</h1>
+                        <p className="">Some description for content A.</p>
+                    </div>
+                    <button className="bg-blue-500 text-white px-5 py-2 rounded-2xl font-semibold">View Details</button>
+                </div>
             </div>
         </div>
-    )
+    );
 }
-
-export default SurveiPage;
