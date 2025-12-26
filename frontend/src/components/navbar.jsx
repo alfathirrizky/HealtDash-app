@@ -20,7 +20,7 @@ function Navbar() {
                     <NavLink to="/survei" className={navClass}>Survei</NavLink>
                 </li>
                 <li>
-                    <NavLink to="/gallery" className={navClass}>Education</NavLink>
+                    <NavLink to="/content" className={navClass}>Content</NavLink>
                 </li>
             </ul>
             <img src={Profile} alt="Profile" className="hidden md:block h-13 w-13 rounded-full cursor-pointer object-cover" onClick={() => navigate("/profile")} />

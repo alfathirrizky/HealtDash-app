@@ -9,6 +9,7 @@ import { PORT } from "./config/index.js";
 import authRoutes from "./routes/auth.js";
 import galleryRoutes from "./routes/gallery.js";
 import dotenv from "dotenv";
+import surveyRoutes from "./routes/survey.js";
 
 dotenv.config();
 const app = express();
@@ -35,6 +36,8 @@ app.use("/api/answers", answerRoutes);
 app.use("/api/auth", authRoutes);
 // Semua endpoint gallery diawali /gallery
 app.use("/api/gallery", galleryRoutes);
+// Semua endpoint surveys diawali /surveys
+app.use("/api/surveys", surveyRoutes);
 
 // Jalankan server
 app.listen(PORT, () => {

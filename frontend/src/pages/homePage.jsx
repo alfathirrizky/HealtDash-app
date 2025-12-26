@@ -53,7 +53,7 @@ function HomePage() {
                 <div className="text flex flex-col gap-5 max-w-lg items-start">
                     <h1 className="font-bold text-5xl">Education</h1>
                     <p className=" text-md text-slate-500 max-w-2xl text-justify line-clamp-4">ini paragraf Kesehatan mental merupakan aspek penting dalam kehidupan setiap individu, terutama bagi pelajar dan mahasiswa yang dihadapkan pada tuntutan akademik, tekanan sosial, serta ekspektasi masa depan. Sayangnya, kesehatan mental masih sering diabaikan karena dianggap tidak sepenting kesehatan fisik. Padahal, kondisi mental yang tidak stabil dapat memengaruhi konsentrasi, produktivitas, hingga kualitas hidup secara keseluruhan.</p>
-                    <button onClick={()=>navigate("/gallery")} className="text-white bg-blue-500 px-7 py-2 rounded-3xl hover:underline cursor-pointer font-semibold">View All</button>
+                    <button onClick={()=>navigate("/content")} className="text-white bg-blue-500 px-7 py-2 rounded-3xl hover:underline cursor-pointer font-semibold">View All</button>
                 </div>
             </div>
             <div className=" h-screen flex justify-between p-10">
