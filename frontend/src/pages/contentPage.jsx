@@ -1,8 +1,8 @@
-import useContent from "@/hooks/useContent";
+import useGallery from "@/hooks/useGallery";
 
 
 function ContentPage() {
-    const contents = useContent();
+    const {contents = []} = useGallery();
     return(
         <div className="h-auto mt-24 p-5 flex flex-wrap gap-5 justify-center">
             {contents.map((content) => (

@@ -10,14 +10,21 @@ import authRoutes from "./routes/auth.js";
 import galleryRoutes from "./routes/gallery.js";
 import dotenv from "dotenv";
 import surveyRoutes from "./routes/survey.js";
+import path from "path";
 
 dotenv.config();
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true,
+}));
 // Middleware agar bisa membaca JSON dari body request
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Static files untuk mengakses gambar yang diupload
+app.use("/uploads", express.static(path.resolve("uploads")));
 
 // Cek server
 app.get("/", (req, res) => {

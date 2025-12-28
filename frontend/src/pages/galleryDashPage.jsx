@@ -1,5 +1,5 @@
 import API from "../api/api"
-import useUser from "../hooks/useUser"
+import useGallery from "../hooks/useGallery"
 import {
   Table, TableBody, TableCaption, TableCell, TableHead,
   TableHeader, TableRow,
@@ -41,17 +41,17 @@ import {
 
 function QuestionPage() {
         const {
-            users,
+            contents=[],
             open,
             editing,
-            form,
+            form={},
             openEditForm,
             handleChange,
             handleCreate,
             handleUpdate,
             handleDelete,
             setOpen,
-        } = useUser();
+        } = useGallery();
     return (
         <div className="space-y-4 p-5">
             <div className="flex flex-col gap-5 scrollbar-none scroll-smooth overflow-y-auto h-[89vh]">
@@ -90,26 +90,35 @@ function QuestionPage() {
                             <TableRow className="bg-blue-50 border-b border-blue-100">
                                 <TableHead className="text-blue-600 font-semibold">Image</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Caption</TableHead>
-                                <TableHead className="text-blue-600 font-semibold">Descrition</TableHead>
+                                <TableHead className="text-blue-600 font-semibold">Description</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Action</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {users.length > 0 ? (
-                                users.map((user) => (
+                            {contents.length > 0 ? (
+                                contents.map((content) => (
                                     <TableRow
-                                        key={user.id}
+                                        key={content.id}
                                         className="hover:bg-blue-50 transition border-b border-gray-400"
                                     >
-                                        <TableCell>{user.id}</TableCell>
-                                        <TableCell>{user.name}</TableCell>
-                                        <TableCell>{user.name}</TableCell>
+                                        <TableCell>
+                                            <img
+                                                src={`http://localhost:5000/uploads/${content.image}`}
+                                                alt={content.caption}
+                                                className="w-20 h-14 object-cover rounded-md border"
+                                                onError={(e) => {
+                                                e.currentTarget.src = "/no-image.png"; // optional fallback
+                                                }}
+                                            />
+                                        </TableCell>
+                                        <TableCell>{content.caption}</TableCell>
+                                        <TableCell>{content.description}</TableCell>
                                         <TableCell className="space-x-2">
                                             <Button
                                                 size="sm"
                                                 variant="outline"
                                                 className="border-blue-500 text-blue-600 hover:bg-blue-100"
-                                                onClick={() => openEditForm(user)}
+                                                onClick={() => openEditForm(content)}
                                             >
                                                 Edit
                                             </Button>
@@ -147,7 +156,7 @@ function QuestionPage() {
                                                     </AlertDialogCancel>
                                                     <AlertDialogAction
                                                     className="bg-red-500 hover:bg-red-600 text-white"
-                                                    onClick={() => handleDelete(user.id)}
+                                                    onClick={() => handleDelete(content.id)}
                                                     >
                                                     Ya, Hapus
                                                     </AlertDialogAction>
@@ -190,68 +199,24 @@ function QuestionPage() {
                         onChange={handleChange}
                         className="border-blue-300 focus:ring-blue-500"
                     />
-
                     <Input
-                        placeholder="Image"
+                        placeholder="image"
                         name="image"
                         value={form.image}
                         onChange={handleChange}
                         className="border-blue-300 focus:ring-blue-500"
                     />
-
                     <Input
-                        placeholder="Telepon"
-                        name="telepon"
-                        value={form.telepon}
+                        placeholder="caption"
+                        name="caption"
+                        value={form.caption}
                         onChange={handleChange}
                         className="border-blue-300 focus:ring-blue-500"
                     />
-
                     <Input
-                        placeholder="Name"
-                        name="name"
-                        value={form.name}
-                        onChange={handleChange}
-                        className="border-blue-300 focus:ring-blue-500"
-                    />
-
-                    <Input
-                        placeholder="Email"
-                        name="email"
-                        value={form.email}
-                        onChange={handleChange}
-                        className="border-blue-300 focus:ring-blue-500"
-                    />
-
-                    <Input
-                        placeholder="Position"
-                        name="position"
-                        value={form.position}
-                        onChange={handleChange}
-                        className="border-blue-300 focus:ring-blue-500"
-                    />
-
-                    <Input
-                        placeholder="Gender"
-                        name="gender"
-                        value={form.gender}
-                        onChange={handleChange}
-                        className="border-blue-300 focus:ring-blue-500"
-                    />
-
-                    <Input
-                        placeholder="Password"
-                        name="password"
-                        value={form.password}
-                        type="password"
-                        onChange={handleChange}
-                        className="border-blue-300 focus:ring-blue-500"
-                    />
-
-                    <Input
-                        placeholder="Role"
-                        name="role"
-                        value={form.role}
+                        placeholder="description"
+                        name="description"
+                        value={form.description}
                         onChange={handleChange}
                         className="border-blue-300 focus:ring-blue-500"
                     />

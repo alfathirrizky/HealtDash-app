@@ -3,10 +3,26 @@ import { Input } from "@/components/ui/input"
 import { DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
 import { Link, useNavigate } from "react-router-dom"
-import useUser from "../hooks/useUser"
-import { FilePond } from "react-filepond";
-export default function CreateQuestionPage() {
-    const { form, handleChange, handleCreate, files, setFiles, setForm } = useUser()
+import useGallery from "../hooks/useGallery"
+import { FilePond, registerPlugin } from "react-filepond";
+import "filepond/dist/filepond.min.css";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import FilePondPluginImageEdit from "filepond-plugin-image-edit";
+import FilePondPluginImageCrop from "filepond-plugin-image-crop";
+import FilePondPluginImageResize from "filepond-plugin-image-resize";
+import FilePondPluginImageTransform from "filepond-plugin-image-transform";
+
+registerPlugin(
+  FilePondPluginImagePreview,
+  FilePondPluginImageEdit,
+  FilePondPluginImageCrop,
+  FilePondPluginImageResize,
+  FilePondPluginImageTransform
+);
+export default function CreateGalleryPage() {
+    const { form, handleChange, handleCreate, setForm } = useGallery()
     const navigate = useNavigate()
     const submit = async () => {
         await handleCreate()
@@ -39,21 +55,31 @@ export default function CreateQuestionPage() {
                         <div className="flex flex-col gap-1">
                             <h1 className="font-semibold mb-2">Image</h1>
                             <FilePond
-                                files={files}
-                                onupdatefiles={(items) => {
-                                setFiles(items);
-                                setForm({ ...form, image: items[0]?.file || null });
-                                }}
-                                allowMultiple={false}
-                                allowReplace={true}
-                                name="image"
-                                labelIdle='Drag & Drop atau <span class="filepond--label-action">Pilih Gambar</span>'
-                                stylePanelAspectRatio="8:2"
-                                imagePreviewHeight={180}
-                                allowImagePreview={true}
-                                allowImageEdit={true}
-                                imageEditInstantEdit={true}
-                                credits={false}
+                            name="file"
+                            allowMultiple={false}
+                            acceptedFileTypes={["image/jpeg", "image/png"]}
+                            labelFileTypeNotAllowed="Hanya JPG dan PNG"
+                            fileValidateTypeLabelExpectedTypes="Hanya JPG / PNG"
+                            server={{
+                                process: {
+                                url: "http://localhost:5000/api/gallery/upload",
+                                method: "POST",
+                                onload: (filename) => {
+                                    setForm(prev => ({ ...prev, image: filename }));
+                                    return filename;
+                                },
+                                onerror: (err) => {
+                                    console.error("UPLOAD ERROR:", err);
+                                    return err;
+                                },
+                                },
+                            }}
+
+                            labelIdle='Drag & Drop atau <span class="filepond--label-action">Pilih Gambar</span>'
+                            imagePreviewHeight={180}
+                            allowImagePreview
+                            allowImageEdit
+                            credits={false}
                             />
                         </div>
                         <div className="flex flex-col gap-1">
