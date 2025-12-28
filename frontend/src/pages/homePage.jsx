@@ -57,6 +57,7 @@ function HomePage() {
                 </div>
             </div>
             <div className=" h-screen flex justify-between p-10">
+                <h1>hai</h1>
             </div>  
         </div>
     )
