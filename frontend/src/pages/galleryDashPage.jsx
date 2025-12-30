@@ -38,6 +38,23 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import { FilePond, registerPlugin } from "react-filepond";
+import "filepond/dist/filepond.min.css";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import FilePondPluginImageEdit from "filepond-plugin-image-edit";
+import FilePondPluginImageCrop from "filepond-plugin-image-crop";
+import FilePondPluginImageResize from "filepond-plugin-image-resize";
+import FilePondPluginImageTransform from "filepond-plugin-image-transform";
+
+registerPlugin(
+  FilePondPluginImagePreview,
+  FilePondPluginImageEdit,
+  FilePondPluginImageCrop,
+  FilePondPluginImageResize,
+  FilePondPluginImageTransform
+);
 
 function QuestionPage() {
         const {
@@ -45,6 +62,7 @@ function QuestionPage() {
             open,
             editing,
             form={},
+            setForm,
             openEditForm,
             handleChange,
             handleCreate,
@@ -83,7 +101,7 @@ function QuestionPage() {
                         <BreadcrumbSeparator />
                     </BreadcrumbList>
                 </Breadcrumb>
-                {/* TABLE */}
+
                 <div className="border border-blue-200 rounded-xl p-3 bg-white">
                     <Table>
                         <TableHeader>
@@ -105,9 +123,9 @@ function QuestionPage() {
                                             <img
                                                 src={`http://localhost:5000/uploads/${content.image}`}
                                                 alt={content.caption}
-                                                className="w-20 h-14 object-cover rounded-md border"
+                                                className="w-40 h-24 object-cover rounded-md"
                                                 onError={(e) => {
-                                                e.currentTarget.src = "/no-image.png"; // optional fallback
+                                                    e.currentTarget.src = "/no-image.png";
                                                 }}
                                             />
                                         </TableCell>
@@ -132,7 +150,6 @@ function QuestionPage() {
                                                 Delete
                                                 </Button>
                                             </AlertDialogTrigger>
-
                                             <AlertDialogContent className="bg-white shadow-xl rounded-xl p-0 overflow-hidden">
                                                 {/* Animasi popup */}
                                                 <motion.div
@@ -187,41 +204,73 @@ function QuestionPage() {
                 <DialogContent className="bg-white border border-blue-200 shadow-xl rounded-xl w-2xl">
                     <DialogHeader>
                     <DialogTitle className="text-blue-700 font-semibold">
-                        {editing ? "Edit User" : "Create User"}
+                        {editing ? "Edit Content" : "Create Content"}
                     </DialogTitle>
                     </DialogHeader>
-
-                    <div className="grid grid-cols-3 gap-3 py-2">
-                    <Input
-                        placeholder="Id"
-                        name="id"
-                        value={form.id}
-                        onChange={handleChange}
-                        className="border-blue-300 focus:ring-blue-500"
-                    />
-                    <Input
-                        placeholder="image"
-                        name="image"
-                        value={form.image}
-                        onChange={handleChange}
-                        className="border-blue-300 focus:ring-blue-500"
-                    />
-                    <Input
-                        placeholder="caption"
-                        name="caption"
-                        value={form.caption}
-                        onChange={handleChange}
-                        className="border-blue-300 focus:ring-blue-500"
-                    />
-                    <Input
-                        placeholder="description"
-                        name="description"
-                        value={form.description}
-                        onChange={handleChange}
-                        className="border-blue-300 focus:ring-blue-500"
-                    />
+                    <div className="flex flex-col gap-3 py-2">
+                        <div>
+                            <h2 className=" font-medium">ID</h2>
+                            <Input
+                                placeholder="Id"
+                                name="id"
+                                value={form.id}
+                                onChange={handleChange}
+                                className="border-blue-300 focus:ring-blue-500"
+                            />
+                        </div>
+                        <div>
+                            <h2 className=" font-medium">Caption</h2>
+                            <Input
+                                placeholder="caption"
+                                name="caption"
+                                value={form.caption}
+                                onChange={handleChange}
+                                className="border-blue-300 focus:ring-blue-500"
+                            />
+                        </div>
+                        <div>
+                            <h2 className=" font-medium">Description</h2>
+                            <Input
+                                placeholder="description"
+                                name="description"
+                                value={form.description}
+                                onChange={handleChange}
+                                className="border-blue-300 focus:ring-blue-500"
+                            />
+                        </div>
+                        <div>
+                            <h2 className=" font-medium">Image</h2>
+                            <FilePond
+                                name="file"
+                                allowMultiple={false}
+                                acceptedFileTypes={["image/jpeg", "image/png", "image/webp"]}
+                                labelFileTypeNotAllowed="Hanya JPG / PNG / WEBP"
+                                fileValidateTypeLabelExpectedTypes="Hanya JPG / PNG / WEBP"
+                                server={{
+                                    process: {
+                                    url: "http://localhost:5000/api/gallery/upload",
+                                    method: "POST",
+                                    onload: (filename) => {
+                                        setForm((prev) => ({
+                                        ...prev,
+                                        newImage: filename,
+                                        }));
+                                        return filename;
+                                    },
+                                    onerror: (err) => {
+                                        console.error("UPLOAD ERROR:", err);
+                                        return err;
+                                    },
+                                    },
+                                }}
+                                labelIdle='Drag & Drop atau <span class="filepond--label-action">Pilih Gambar</span>'
+                                imagePreviewHeight={180}
+                                allowImagePreview
+                                allowImageEdit
+                                credits={false}
+                            />
+                        </div>
                     </div>
-
                     <div className="pt-4">
                     <Button
                         className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow"

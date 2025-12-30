@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
 import API from "@/api/api";
+import { toast } from "sonner";
 
 function useContent() {
   const [contents, setContents] = useState([]);
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState(false);
+  const resetForm = () => {
+    setForm(initialForm);
+    setEditing(false);
+    setOpen(false);
+  };
   const initialForm = {
     caption: "",
     description: "",
     image: "",
+    newImage: null,
   };
   const [form, setForm] = useState(initialForm);
 
@@ -37,6 +44,7 @@ function useContent() {
   };
 
   const handleCreate = async () => {
+    toast.success("User berhasil dibuat");
     await API.post("/gallery", {
       caption: form.caption,
       description: form.description,
@@ -44,14 +52,31 @@ function useContent() {
     });
   };
 
-
   const handleUpdate = async () => {
-    await API.put(`/gallery/${form.id}`, form);
-    fetchContent();
-    setOpen(false);
+    try {
+      const payload = {
+        caption: form.caption,
+        description: form.description,
+      };
+
+      // ⬇️ hanya kirim jika user upload gambar baru
+      if (form.newImage) {
+        payload.image = form.newImage;
+      }
+
+      await API.put(`/gallery/${form.id}`, payload);
+
+      toast.success("Content berhasil diperbarui ✅");
+      fetchContent();
+      resetForm();
+    } catch (err) {
+      console.error(err);
+      toast.error("Gagal memperbarui content");
+    }
   };
 
   const handleDelete = async (id) => {
+    toast.error("User berhasil dihapus.");
     await API.delete(`/gallery/${id}`);
     fetchContent();
   };

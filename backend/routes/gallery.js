@@ -80,41 +80,36 @@ router.post("/upload", upload.single("file"), (req, res) => {
 });
 
 //UPDATE (REPLACE IMAGE)
-router.put("/:id", upload.single("file"), async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
-    const { caption, description } = req.body;
-
+    const { caption, description, image } = req.body;
     const [rows] = await db.query("SELECT * FROM albums WHERE id=?", [
       req.params.id,
     ]);
-
     if (!rows.length) {
       return res.status(404).json({ message: "Data not found" });
     }
-
     let filename = rows[0].image;
-
-    if (req.file) {
+    // ganti image hanya jika dikirim
+    if (image) {
       const oldPath = path.join(uploadDir, filename);
       if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
-      filename = req.file.filename;
+      filename = image;
     }
-
     await db.query(
       "UPDATE albums SET image=?, caption=?, description=? WHERE id=?",
       [filename, caption, description, req.params.id]
     );
-
     const [updated] = await db.query("SELECT * FROM albums WHERE id=?", [
       req.params.id,
     ]);
-
     res.json(updated[0]);
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    console.error(err);
     res.status(500).json({ message: "Update failed" });
   }
 });
+
 
 //DELETE
 router.delete("/:id", async (req, res) => {

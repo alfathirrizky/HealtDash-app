@@ -21,6 +21,7 @@ registerPlugin(
   FilePondPluginImageResize,
   FilePondPluginImageTransform
 );
+
 export default function CreateGalleryPage() {
     const { form, handleChange, handleCreate, setForm } = useGallery()
     const navigate = useNavigate()
