@@ -8,6 +8,7 @@ function Sidebar() {
         { name: "Gallery", path: "/galleryDash" },
         { name: "Question", path: "/question" },
         { name: "User", path: "/user" },
+        { name: "Survei", path: "/surveiDash" },
     ];
     return(
         <div className=" flex flex-col bg-white shadow-md w-64 min-w-64 h-screen p-5">

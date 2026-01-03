@@ -22,7 +22,7 @@ function useContent() {
   const fetchContent = async () => {
     try {
       const res = await API.get("/gallery");
-      console.log("API RESPONSE:", res.data); // 🔥 cek di console
+      console.log("API RESPONSE:", res.data);
       setContents(res.data);
     } catch (err) {
       console.error(err);
