@@ -81,4 +81,37 @@ router.post("/upload", upload.single("file"), (req, res) => {
     res.status(200).send(req.file.filename);
 });
 
+router.put("/:id", async (req, res)=>{
+    try {
+        const { title, caption, description, is_active, image } = req.body;
+        const [rows] = await db.query("SELECT * FROM surveys WHERE id = ?", [req.params.id]);
+        if (!rows.length) {
+            return res.status(404).json({ message: "Survey not found" });
+        }
+        let filename = rows[0].image;
+        if (image) {
+            const oldPath = path.join(uploadDir, filename);
+            if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+            filename = image;
+        }
+        await db.query("UPDATE surveys SET image=?, title=?, caption=?, description=?, is_active=? WHERE id=?", [filename, title, caption, description, is_active, req.params.id]);
+        const [updated] = await db.query("SELECT * FROM surveys WHERE id = ?", [req.params.id]);
+        res.json(updated[0]);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Update failed" });
+    }
+});
+
+router.delete("/:id", async (req, res)=>{
+    const [rows] = await db.query("SELECT * FROM surveys WHERE id = ?", [req.params.id]);
+    if (!rows.length) {
+        return res.status(404).json({ message: "Data not found" });
+    }
+    const filePath = path.join(uploadDir, rows[0].image);
+    if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+    await db.query("DELETE FROM surveys WHERE id = ?", [req.params.id]);
+    res.json({ message: "Deleted successfully" });
+});
+
 export default router;

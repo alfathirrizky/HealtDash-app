@@ -34,7 +34,7 @@ export default function CreateSurveyPage() {
     const navigate = useNavigate()
     const submit = async () => {
         await handleCreate()
-        navigate("/surveiDash/create")
+        navigate("/surveiDash")
     }
     return(
     <div className="p-5 space-y-6">
@@ -105,18 +105,13 @@ export default function CreateSurveyPage() {
                         <div className="flex flex-col gap-1">
                             <h1 className="font-semibold">Status</h1>
                             <Select
-                                value={String(form.is_active)}
-                                onValueChange={(value) =>
-                                setForm({ ...form, is_active: value })
-                                }
-                            >
-                                <SelectTrigger className="border border-gray-400">
-                                <SelectValue placeholder="Pilih Status" />
+                                value={String(form.is_active)} onValueChange={(value) =>setForm({ ...form, is_active: value })}>
+                                <SelectTrigger className="bg-white w-full">
+                                    <SelectValue placeholder="Pilih Status" />
                                 </SelectTrigger>
-
-                                <SelectContent>
-                                <SelectItem value="1">Aktif</SelectItem>
-                                <SelectItem value="0">Nonaktif</SelectItem>
+                                <SelectContent className="bg-white">
+                                    <SelectItem value="1" className="bg-white">Aktif</SelectItem>
+                                    <SelectItem value="0" className="bg-white">Nonaktif</SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>

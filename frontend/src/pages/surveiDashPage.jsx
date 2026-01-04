@@ -4,7 +4,7 @@ import {
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, } from "@/components/ui/dialog"
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -16,6 +16,13 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 import { motion } from "framer-motion";
 import Load from "../components/load"
 import { ArrowUpIcon, Search } from "lucide-react"
@@ -105,8 +112,10 @@ export default function surveiDashPage() {
                         <TableHeader>
                             <TableRow className="bg-blue-50 border-b border-blue-100">
                                 <TableHead className="text-blue-600 font-semibold">Image</TableHead>
+                                <TableHead className="text-blue-600 font-semibold">Title</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Caption</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Description</TableHead>
+                                <TableHead className="text-blue-600 font-semibold">Status</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Action</TableHead>
                             </TableRow>
                         </TableHeader>
@@ -127,8 +136,10 @@ export default function surveiDashPage() {
                                                 }}
                                             />
                                         </TableCell>
+                                        <TableCell>{survey.title}</TableCell>
                                         <TableCell>{survey.caption}</TableCell>
-                                        <TableCell>{survey.description}</TableCell>
+                                        <TableCell className="">{survey.description}</TableCell>
+                                        <TableCell>{survey.is_active === 1 ? "Aktif" : "Nonaktif"}</TableCell>
                                         <TableCell className="space-x-2">
                                             <Button
                                                 size="sm"
@@ -204,14 +215,27 @@ export default function surveiDashPage() {
                     <DialogTitle className="text-blue-700 font-semibold">
                         {editing ? "Edit Content" : "Create Content"}
                     </DialogTitle>
+                    <DialogDescription>
+                        Form untuk mengelola data survey
+                    </DialogDescription>
                     </DialogHeader>
-                    <div className="flex flex-col gap-3 py-2">
+                    <div className="grid grid-cols-2 gap-3 py-2">
                         <div>
                             <h2 className=" font-medium">ID</h2>
                             <Input
                                 placeholder="Id"
                                 name="id"
                                 value={form.id}
+                                onChange={handleChange}
+                                className="border-blue-300 focus:ring-blue-500"
+                            />
+                        </div>
+                        <div>
+                            <h2 className=" font-medium">Title</h2>
+                            <Input
+                                placeholder="title"
+                                name="title"
+                                value={form.title}
                                 onChange={handleChange}
                                 className="border-blue-300 focus:ring-blue-500"
                             />
@@ -236,6 +260,19 @@ export default function surveiDashPage() {
                                 className="border-blue-300 focus:ring-blue-500"
                             />
                         </div>
+                        <div className="flex flex-col gap-1">
+                            <h1 className="font-semibold">Status</h1>
+                            <Select
+                                value={String(form.is_active)} onValueChange={(value) =>setForm({ ...form, is_active: value })}>
+                                <SelectTrigger className="bg-white w-full">
+                                    <SelectValue placeholder="Pilih Status" />
+                                </SelectTrigger>
+                                <SelectContent className="bg-white">
+                                    <SelectItem value="1" className="bg-white">Aktif</SelectItem>
+                                    <SelectItem value="0" className="bg-white">Nonaktif</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
                         <div>
                             <h2 className=" font-medium">Image</h2>
                             <FilePond
@@ -246,7 +283,7 @@ export default function surveiDashPage() {
                                 fileValidateTypeLabelExpectedTypes="Hanya JPG / PNG / WEBP"
                                 server={{
                                     process: {
-                                    url: "http://localhost:5000/api/gallery/upload",
+                                    url: "http://localhost:5000/api/surveys/upload",
                                     method: "POST",
                                     onload: (filename) => {
                                         setForm((prev) => ({
