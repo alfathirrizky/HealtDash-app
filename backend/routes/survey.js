@@ -28,7 +28,7 @@ const upload = multer({
     fileFilter: (req, file, cb) => {
         const allowed = ["image/jpeg", "image/png", "image/webp"];
         if (!allowed.includes(file.mimetype)) {
-        cb(new Error("Invalid file type"));
+            return cb(new Error("Invalid file type"));
         }
         cb(null, true);
     },
@@ -57,19 +57,19 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
-        const { image, title, description } = req.body;
+        const { image, title, caption, description, is_active } = req.body;
         if (!image) {
         return res.status(400).json({ message: "Image required" });
         }
         const id = uuidv4();
         await db.query(
-        "INSERT INTO surveys (id, image, title, description) VALUES (?, ?, ?, ?)",
-        [id, image, title, description]
+            "INSERT INTO surveys (id, image, title, caption, description, is_active) VALUES (?, ?, ?, ?, ?, ?)",
+            [id, image, title, caption, description, is_active]
         );
         const [rows] = await db.query("SELECT * FROM surveys WHERE id = ?", [id]);
         res.status(201).json(rows[0]);
     } catch (error) {
-        console.error(err);
+        console.error("Create Survey Error:", error);
         res.status(500).json({ error: "Created failed" });
     }
 });

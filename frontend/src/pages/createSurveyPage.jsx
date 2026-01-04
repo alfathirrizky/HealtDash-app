@@ -2,6 +2,13 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 import { Link, useNavigate } from "react-router-dom"
 import useSurvey from "../hooks/useSurvey"
 import { FilePond, registerPlugin } from "react-filepond";
@@ -85,15 +92,33 @@ export default function CreateSurveyPage() {
                         </div>
                         <div className="flex flex-col gap-1">
                             <h1 className="font-semibold">Title</h1>
-                            <Input name="title" placeholder="Title" value={form.title} onChange={handleChange} className="border border-gray-400"/>
+                            <Input type="text" name="title" placeholder="Title" value={form.title} onChange={handleChange} className="border border-gray-400"/>
                         </div>
                         <div className="flex flex-col gap-1">
                             <h1 className="font-semibold">Caption</h1>
-                            <Input name="caption" placeholder="Caption" value={form.caption} onChange={handleChange} className="border border-gray-400"/>
+                            <Input type="text" name="caption" placeholder="Caption" value={form.caption} onChange={handleChange} className="border border-gray-400"/>
                         </div>
                         <div className="flex flex-col gap-1">
                             <h1 className="font-semibold">Description</h1>
                             <Input type="textarea" name="description" placeholder="Description" value={form.description} onChange={handleChange} className="border border-gray-400"/>
+                        </div>
+                        <div className="flex flex-col gap-1">
+                            <h1 className="font-semibold">Status</h1>
+                            <Select
+                                value={String(form.is_active)}
+                                onValueChange={(value) =>
+                                setForm({ ...form, is_active: value })
+                                }
+                            >
+                                <SelectTrigger className="border border-gray-400">
+                                <SelectValue placeholder="Pilih Status" />
+                                </SelectTrigger>
+
+                                <SelectContent>
+                                <SelectItem value="1">Aktif</SelectItem>
+                                <SelectItem value="0">Nonaktif</SelectItem>
+                                </SelectContent>
+                            </Select>
                         </div>
                     </div>
                     <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white" onClick={submit}>
