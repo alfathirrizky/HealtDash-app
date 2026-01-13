@@ -33,7 +33,7 @@ function AppRoutes() {
                     <Route path="/home" element={<Home />} />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/content" element={<Content/>}/>
-                    <Route path="/survei/content" element={<SurveiContent/>}/>
+                    <Route path="/survei/:id" element={<SurveiContent/>}/>
                 </Route>
                 <Route element={<Layout />}>
                     <Route path="/dashboard" element={<Dashboard />} />

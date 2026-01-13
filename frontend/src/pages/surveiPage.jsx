@@ -1,7 +1,9 @@
 import useSurvey from '@/hooks/useSurvey';
+import { useNavigate } from 'react-router-dom';
 
 export default function SurveiPage() {
     const {surveys} = useSurvey();
+    const navigate = useNavigate();
     return (
         <div className="mt-13 md:mt-20 p-5 grid grid-cols-1 md:grid-cols-2 gap-5">
             {surveys.map((survey)=>(
@@ -12,7 +14,7 @@ export default function SurveiPage() {
                             <h1 className="text-lg md:text-2xl font-bold">{survey.title}</h1>
                             <p className="text-sm">{survey.caption}</p>
                         </div>
-                        <button className="bg-blue-500 text-white px-5 py-2 rounded-2xl font-semibold cursor-pointer text-xs">Start Survey</button>
+                        <button className="bg-blue-500 text-white px-5 py-2 rounded-2xl font-semibold cursor-pointer text-xs" onClick={()=> navigate('/survei/${survey.id}')}>Start Survey</button>
                     </div>
                 </div>
             ))}
