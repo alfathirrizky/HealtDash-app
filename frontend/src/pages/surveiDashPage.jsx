@@ -115,6 +115,7 @@ export default function surveiDashPage() {
                                 <TableHead className="text-blue-600 font-semibold">Title</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Caption</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Description</TableHead>
+                                <TableHead className="text-blue-600 font-semibold">Question</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Status</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Action</TableHead>
                             </TableRow>
@@ -138,6 +139,7 @@ export default function surveiDashPage() {
                                         </TableCell>
                                         <TableCell>{survey.title}</TableCell>
                                         <TableCell>{survey.caption}</TableCell>
+                                        <TableCell className="">{survey.description}</TableCell>
                                         <TableCell className="">{survey.description}</TableCell>
                                         <TableCell>{survey.is_active === 1 ? "Aktif" : "Nonaktif"}</TableCell>
                                         <TableCell className="space-x-2">

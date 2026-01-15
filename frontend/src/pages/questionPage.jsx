@@ -1,5 +1,5 @@
 import API from "../api/api"
-import useUser from "../hooks/useUser"
+import useUser from "../hooks/useQuestions"
 import {
   Table, TableBody, TableCaption, TableCell, TableHead,
   TableHeader, TableRow,
