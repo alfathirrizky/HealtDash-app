@@ -50,11 +50,9 @@ export default function useUser() {
   // CREATE
   const handleCreate = async () => {
     const data = { ...form, image: files[0]?.file || null };
-
     const res = await API.post("/users", data);
     setUsers((prev) => [res.data, ...prev]);
     toast.success("User berhasil dibuat");
-
     setOpen(false);
     resetForm();
   };
@@ -101,7 +99,6 @@ export default function useUser() {
         },
       ]);
     }
-
     setOpen(true);
   };
 

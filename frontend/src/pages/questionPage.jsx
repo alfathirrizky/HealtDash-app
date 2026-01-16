@@ -1,5 +1,5 @@
 import API from "../api/api"
-import useUser from "../hooks/useQuestions"
+import useQuestion from "../hooks/useQuestions"
 import {
   Table, TableBody, TableCaption, TableCell, TableHead,
   TableHeader, TableRow,
@@ -40,18 +40,18 @@ import {
 } from "@/components/ui/breadcrumb"
 
 function QuestionPage() {
-        const {
-            users,
-            open,
-            editing,
-            form,
-            openEditForm,
-            handleChange,
-            handleCreate,
-            handleUpdate,
-            handleDelete,
-            setOpen,
-        } = useUser();
+    const {
+        questions,
+        open,
+        form,
+        editing,
+        setOpen,
+        handleCreate,
+        handleChange,
+        handleUpdate,
+        handleDelete,
+        openEditForm,
+    } = useQuestion();
     return (
         <div className="space-y-4 p-5">
             <div className="flex flex-col gap-5 scrollbar-none scroll-smooth overflow-y-auto h-[89vh]">
@@ -95,21 +95,21 @@ function QuestionPage() {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {users.length > 0 ? (
-                                users.map((user) => (
+                            {questions.length > 0 ? (
+                                questions.map((question) => (
                                     <TableRow
-                                        key={user.id}
+                                        key={question.question_id}
                                         className="hover:bg-blue-50 transition border-b border-gray-400"
                                     >
-                                        <TableCell>{user.id}</TableCell>
-                                        <TableCell>{user.name}</TableCell>
-                                        <TableCell>{user.name}</TableCell>
+                                        <TableCell>{question.name}</TableCell>
+                                        <TableCell>{question.type}</TableCell>
+                                        <TableCell>{question.note}</TableCell>
                                         <TableCell className="space-x-2">
                                             <Button
                                                 size="sm"
                                                 variant="outline"
                                                 className="border-blue-500 text-blue-600 hover:bg-blue-100"
-                                                onClick={() => openEditForm(user)}
+                                                onClick={() => openEditForm(question)}
                                             >
                                                 Edit
                                             </Button>
@@ -147,7 +147,7 @@ function QuestionPage() {
                                                     </AlertDialogCancel>
                                                     <AlertDialogAction
                                                     className="bg-red-500 hover:bg-red-600 text-white"
-                                                    onClick={() => handleDelete(user.id)}
+                                                    onClick={() => handleDelete(question.question_id)}
                                                     >
                                                     Ya, Hapus
                                                     </AlertDialogAction>
@@ -181,7 +181,6 @@ function QuestionPage() {
                         {editing ? "Edit User" : "Create User"}
                     </DialogTitle>
                     </DialogHeader>
-
                     <div className="grid grid-cols-3 gap-3 py-2">
                     <Input
                         placeholder="Id"

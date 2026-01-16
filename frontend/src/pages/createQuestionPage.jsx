@@ -3,10 +3,10 @@ import { Input } from "@/components/ui/input"
 import { DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
 import { Link, useNavigate } from "react-router-dom"
-import useUser from "../hooks/useUser"
+import useQuestions from "../hooks/useQuestions"
 import { FilePond } from "react-filepond";
 export default function CreateQuestionPage() {
-    const { form, handleChange, handleCreate, files, setFiles, setForm } = useUser()
+    const { form, handleChange, handleCreate, files, setFiles, setForm } = useQuestions()
     const navigate = useNavigate()
     const submit = async () => {
         await handleCreate()
