@@ -15,15 +15,15 @@ function HomePage() {
     return (
         <div className="scroll-smooth overflow-y-hidden">
             <section className="hero h-screen flex flex-col items-center justify-center bg-[url('./assets/hero.jpg')] bg-cover bg-center text-white">
-                <h1 className="text-3xl lg:text-7xl font-bold lg:mb-4">Welcome to the Home Page</h1>
-                <p className="text-lg lg:text-xl">This is the home page of the application.</p>
-                <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-2xl transition duration-300 hover:bg-blue-600" onClick={() => navigate("/survei")}>Get Started</button>
+                <h1 className="text-3xl md:text-6xl font-bold lg:mb-4">Welcome to the Home Page</h1>
+                <p className="text-lg lg:text-3xl">This is the home page of the application.</p>
+                <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-2xl transition duration-300 hover:bg-blue-600 cursor-pointer" onClick={() => navigate("/survei")}>Get Started</button>
             </section>
-            <section className="flex flex-col items-center text-white gap-5 px-3 mt-10 w-full">
-                <h1 className="text-black font-bold text-xl md:text-2xl text-center">
+            <section className="flex flex-col items-center text-white gap-10 px-5 mt-10 w-full">
+                <h1 className="text-black font-bold text-xl md:text-3xl text-center">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta, sit.
                 </h1>
-                <div className="flex justify-start w-full overflow-x-auto scrollbar-hide snap-x pb-5 md:justify-center">
+                <div className="flex justify-start w-full overflow-x-auto scrollbar-hide snap-x pb-5 lg:justify-center touchpan">
                     <div className="flex gap-5">
                         <div className="snap-center min-w-[320px] h-96 bg-[url('./assets/image2.jpg')] bg-cover bg-center flex flex-col justify-end rounded-2xl p-3">
                             <div className="bg-white/20 rounded-xl p-5 backdrop-blur-sm h-32 transition-all duration-700 hover:h-full">
