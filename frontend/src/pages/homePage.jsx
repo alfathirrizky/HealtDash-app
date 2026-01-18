@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import CardSwap, { Card } from "../components/CardSwap"
+import SpotlightCard from '../components/SpotlightCard';
 
 function HomePage() {
     const navigate = useNavigate();
@@ -44,6 +45,24 @@ function HomePage() {
                         <Card className="bg-[url('./assets/hero.jpg')] bg-cover bg-center">
                         </Card>
                     </CardSwap>
+                </div>
+            </section>
+            <section className="benefit flex flex-col items-center justify-center mt-85">
+                <div className="container flex flex-col justify-center items-center mx-auto px-4 py-8">
+                    <h2 className="text-xl md:text-3xl lg:text-5xl font-bold mb-2">Benefits of Using This Facility</h2>
+                    <p className="text-center text-xs">Using this facility can help employees manage stress, improve focus, and maintain a healthy work-life balance.</p>
+                </div>
+                <div className="flex flex-row gap-5">
+                    <SpotlightCard className="custom-spotlight-card bg-slate-50 w-2xl" spotlightColor="rgba(0, 229, 255, 0.2)">
+                        <h1>hai</h1>
+                        <h3 className=" font-medium">For Employees</h3>
+                        <p>isi benefit</p>
+                    </SpotlightCard>
+                    <SpotlightCard className="custom-spotlight-card bg-slate-50 w-2xl" spotlightColor="rgba(0, 229, 255, 0.2)">
+                        <h1>hai</h1>
+                        <h3 className=" font-medium">For Management</h3>
+                        <p>isi benefit</p>
+                    </SpotlightCard>
                 </div>
             </section>
             <section className="features flex flex-col md:flex-row items-center justify-center mt-55">
