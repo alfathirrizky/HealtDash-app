@@ -20,10 +20,27 @@ function HomePage() {
                 <p className="text-sm text-center md:text-lg lg:text-2xl">An internal platform provided by the company to help employees manage work-related stress, maintain mental wellbeing, and stay productive.</p>
                 <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-2xl transition duration-300 hover:bg-blue-600 cursor-pointer" onClick={() => navigate("/survei")}>Get Started</button>
             </section>
-            <section className="flex flex-col md:flex-row items-center justify-center">
+            <section className="flex flex-col items-center justify-center m-10">
                 <div className="container mx-auto px-4 py-8 flex flex-col items-center justify-center">
                     <h1 className="text-xl md:text-3xl lg:text-4xl font-bold mb-2">About This Mental Health Facility</h1>
                     <p className="text-center text-xs">A company-provided facility to support employee mental wellbeing and reduce work-related stress.</p>
+                </div>
+                <div className="flex gap-5">
+                    <div className="a w-md h-60 rounded-2xl shadow-md flex flex-col justify-center items-center">
+                        <h1>ini icon nanti</h1>
+                        <h1 className="font-semibold text-lg">hai</h1>
+                        <p>test</p>
+                    </div>
+                    <div className="a w-md h-60 rounded-2xl shadow-md flex flex-col justify-center items-center">
+                        <h1>ini icon nanti</h1>
+                        <h1 className="font-semibold text-lg">hai</h1>
+                        <p>test</p>
+                    </div>
+                    <div className="a w-md h-60 rounded-2xl shadow-md flex flex-col justify-center items-center">
+                        <h1>ini icon nanti</h1>
+                        <h1 className="font-semibold text-lg">hai</h1>
+                        <p>test</p>
+                    </div>
                 </div>
             </section>
             <section className="flex items-center justify-between px-78">
