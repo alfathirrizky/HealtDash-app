@@ -34,7 +34,6 @@ function LoginPage() {
                 } else {
                     navigate("/home");
                 }
-                // navigate("/home");
             } else {
                 setError("Login gagal: Token tidak ditemukan di respons server.");
             }
@@ -51,12 +50,12 @@ function LoginPage() {
             <div className="hidden md:block h-screen w-full">
                 <img src={Bg} alt="Background" className="h-screen w-full object-cover rounded-r-2xl" />
             </div>
-            <div className="h-screen w-full p-10 flex flex-col">
-                <div className="flex justify-end mb-25">
+            <div className="h-screen w-full p-10 flex flex-col justify-between">
+                <div className="flex justify-end">
                     <img src={Logo} alt="Logo" className="w-32" />
                 </div>
-                <div className=" flex flex-col md:px-15">
-                    <div className="flex flex-col mb-10 justify-center items-center">
+                <div className="flex flex-col md:px-32">
+                    <div className="flex flex-col mb-10 items-center">
                         <h1 className="font-bold text-2xl">Login Page</h1>
                         <p className="text-gray-600 text-lg text-center">Silakan login untuk melanjutkan</p>
                     </div>
@@ -127,6 +126,9 @@ function LoginPage() {
                             )}
                         </button>
                     </form>
+                </div>
+                <div className="flex">
+                    <p className="text-gray-500 text-xs">© 2026 InJourney. All rights reserved.</p>
                 </div>
             </div>
         </div>
