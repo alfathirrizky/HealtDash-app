@@ -111,10 +111,12 @@ export default function surveiDashPage() {
                     <Table>
                         <TableHeader>
                             <TableRow className="bg-blue-50 border-b border-blue-100">
+                                <TableHead className="text-blue-600 font-semibold">ID</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Image</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Title</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Caption</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Description</TableHead>
+                                <TableHead className="text-blue-600 font-semibold">Question</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Question</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Status</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Action</TableHead>
@@ -127,6 +129,7 @@ export default function surveiDashPage() {
                                         key={survey.id}
                                         className="hover:bg-blue-50 transition border-b border-gray-400"
                                     >
+                                        <TableCell>{survey.id}</TableCell>
                                         <TableCell>
                                             <img
                                                 src={`http://localhost:5000/uploads/${survey.image}`}
@@ -139,8 +142,9 @@ export default function surveiDashPage() {
                                         </TableCell>
                                         <TableCell>{survey.title}</TableCell>
                                         <TableCell>{survey.caption}</TableCell>
-                                        <TableCell className="">{survey.description}</TableCell>
-                                        <TableCell className="">{survey.description}</TableCell>
+                                        <TableCell>{survey.description}</TableCell>
+                                        <TableCell>{survey.description}</TableCell>
+                                        <TableCell>{survey.total_question}</TableCell>
                                         <TableCell>{survey.is_active === 1 ? "Aktif" : "Nonaktif"}</TableCell>
                                         <TableCell className="space-x-2">
                                             <Button

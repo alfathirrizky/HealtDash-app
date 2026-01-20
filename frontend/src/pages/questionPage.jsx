@@ -89,6 +89,8 @@ function QuestionPage() {
                         <TableHeader>
                             <TableRow className="bg-blue-50 border-b border-blue-100">
                                 <TableHead className="text-blue-600 font-semibold">Question</TableHead>
+                                <TableHead className="text-blue-600 font-semibold">Survey ID</TableHead>
+                                <TableHead className="text-blue-600 font-semibold">Label</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Category</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Note</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Action</TableHead>
@@ -102,6 +104,8 @@ function QuestionPage() {
                                         className="hover:bg-blue-50 transition border-b border-gray-400"
                                     >
                                         <TableCell>{question.name}</TableCell>
+                                        <TableCell>{question.survey_id}</TableCell>
+                                        <TableCell>{question.label}</TableCell>
                                         <TableCell>{question.type}</TableCell>
                                         <TableCell>{question.note}</TableCell>
                                         <TableCell className="space-x-2">
