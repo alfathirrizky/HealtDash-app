@@ -202,16 +202,16 @@ function StepIndicator({ step, currentStep, onClickStep, disableStepIndicators }
       initial={false}>
       <motion.div
         variants={{
-          inactive: { scale: 1, backgroundColor: '#222', color: '#a3a3a3' },
-          active: { scale: 1, backgroundColor: '#5227FF', color: '#5227FF' },
-          complete: { scale: 1, backgroundColor: '#5227FF', color: '#3b82f6' }
+          inactive: { scale: 1, backgroundColor: '#F9FAFB', color: '#2563eb' },
+          active: { scale: 1, backgroundColor: '#2563eb', color: '#ffffff' },
+          complete: { scale: 1, backgroundColor: '#2563eb', color: '#fffff' }
         }}
         transition={{ duration: 0.3 }}
         className="flex h-8 w-8 items-center justify-center rounded-full font-semibold">
         {status === 'complete' ? (
-          <CheckIcon className="h-4 w-4 text-black" />
+          <CheckIcon className="h-4 w-4 text-white" />
         ) : status === 'active' ? (
-          <div className="h-3 w-3 rounded-full bg-[#060010]" />
+          <div className="h-3 w-3 rounded-full bg-[#ffffff]" />
         ) : (
           <span className="text-sm">{step}</span>
         )}
