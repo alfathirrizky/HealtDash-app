@@ -21,6 +21,7 @@ const CreateQuestionPage = lazy(() => import("../pages/createQuestionPage"));
 const CreateGalleryPage = lazy(() => import("../pages/createGalleryPage"));
 const SurveiDashPage = lazy(() => import("../pages/surveiDashPage"));
 const CreateSurveyPage = lazy(() => import("../pages/createSurveyPage"));
+const DetailSurvey = lazy(() => import("../pages/detailSurvey"));
 
 
 function AppRoutes() {
@@ -46,6 +47,7 @@ function AppRoutes() {
                     <Route path="/users/create" element={<CreateUserPage />} />
                     <Route path="/surveiDash" element={<SurveiDashPage />} />
                     <Route path="/surveiDash/create" element={<CreateSurveyPage />} />
+                    <Route path="/surveiDash/detail" element={<DetailSurvey />} />
                 </Route>
             </Routes>
         </Suspense>
