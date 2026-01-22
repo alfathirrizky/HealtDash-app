@@ -5,6 +5,7 @@ import "aos/dist/aos.css";
 import CardSwap, { Card } from "../components/CardSwap"
 import SpotlightCard from '../components/SpotlightCard';
 import Stepper, { Step } from '../components/Stepper';
+import imgComponent from "../assets/image-sugestion.png";
 
 function HomePage() {
     const navigate = useNavigate();
@@ -83,7 +84,7 @@ function HomePage() {
                     </SpotlightCard>
                 </div>
             </section>
-            <section className="features flex flex-col items-center justify-center gap-5 h-screen">
+            <section className="features flex flex-col items-center justify-center gap-5">
                 <div className="container flex flex-col justify-center items-center mx-auto px-4 py-8">
                     <h1 className="text-xl md:text-3xl lg:text-5xl font-bold mb-2">Features</h1>
                     <p className="text-center text-xs">Our mental health facility offers a range of features to support employee wellbeing:</p>
@@ -116,6 +117,17 @@ function HomePage() {
                             <p>You made it!</p>
                         </Step>
                     </Stepper>
+                </div>
+            </section>
+            <section className="p-40">
+                <div className="flex items-center justify-center gap-20 bg-white p-10 rounded-3xl shadow-md">
+                    <img src={imgComponent} alt="" srcset="" className="w-lg rounded-2xl" />
+                    <div className="flex flex-col w-2xl gap-5">
+                        <h2 className=" text-4xl font-bold">Saran & Masukan</h2>
+                        <p className=" text-lg text-slate-500">Bantu kami menciptakan lingkungan kerja yang lebih sehat. Gunakan kolom ini untuk menyampaikan aspirasi atau kondisi mental Anda sebagai bahan evaluasi rutin manajemen.</p>
+                        <input type="text" name="" id="" placeholder="Isi Saran dan masukanmu disini" className="py-3 px-6 border border-slate-300 shadow-md rounded-3xl"/>
+                        <button type="submit" className="bg-blue-500 rounded-2xl text-white font-medium w-40 p-1">Send</button>
+                    </div>
                 </div>
             </section>
         </div>
