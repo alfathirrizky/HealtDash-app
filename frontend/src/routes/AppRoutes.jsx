@@ -47,7 +47,7 @@ function AppRoutes() {
                     <Route path="/users/create" element={<CreateUserPage />} />
                     <Route path="/surveiDash" element={<SurveiDashPage />} />
                     <Route path="/surveiDash/create" element={<CreateSurveyPage />} />
-                    <Route path="/surveiDash/detail" element={<DetailSurvey />} />
+                    <Route path="/surveiDash/:id" element={<DetailSurvey />} />
                 </Route>
             </Routes>
         </Suspense>

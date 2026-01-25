@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import {
   Table, TableBody, TableCaption, TableCell, TableHead,
   TableHeader, TableRow,
@@ -61,7 +62,7 @@ registerPlugin(
     FilePondPluginImageResize,
     FilePondPluginImageTransform
 );
-export default function surveiDashPage() {
+export default function SurveiDashPage() {
     const {
         surveys,
         open,
@@ -75,6 +76,8 @@ export default function surveiDashPage() {
         handleDelete,
         setOpen,
     } = UseSurvey();
+    const navigate = useNavigate();
+
     return(
         <div className="space-y-4 p-5">
             <div className="flex flex-col gap-5 scrollbar-none scroll-smooth overflow-y-auto h-[89vh]">
@@ -106,7 +109,6 @@ export default function surveiDashPage() {
                         <BreadcrumbSeparator />
                     </BreadcrumbList>
                 </Breadcrumb>
-
                 <div className="border border-blue-200 rounded-xl p-3 bg-white">
                     <Table>
                         <TableHeader>
@@ -117,8 +119,8 @@ export default function surveiDashPage() {
                                 <TableHead className="text-blue-600 font-semibold">Caption</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Description</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Question</TableHead>
-                                <TableHead className="text-blue-600 font-semibold">Question</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Status</TableHead>
+                                <TableHead className="text-blue-600 font-semibold">Detail</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Action</TableHead>
                             </TableRow>
                         </TableHeader>
@@ -143,9 +145,11 @@ export default function surveiDashPage() {
                                         <TableCell>{survey.title}</TableCell>
                                         <TableCell>{survey.caption}</TableCell>
                                         <TableCell>{survey.description}</TableCell>
-                                        <TableCell>{survey.description}</TableCell>
                                         <TableCell>{survey.total_question}</TableCell>
                                         <TableCell>{survey.is_active === 1 ? "Aktif" : "Nonaktif"}</TableCell>
+                                        <TableCell>
+                                            <button className="bg-blue-500 text-white py-1 px-3 rounded-md cursor-pointer" onClick={()=> navigate(`/surveiDash/${survey.id}`)}>Lihat detail</button>
+                                        </TableCell>
                                         <TableCell className="space-x-2">
                                             <Button
                                                 size="sm"
