@@ -16,9 +16,9 @@ export default function DetailSurvey() {
     }
 
     return (
-        <div className="p-5">
+        <div className="p-5 overflow-y-auto h-[96vh] scrollbar-none">
             <h1 className="font-bold text-4xl mb-6">Survey Detail</h1>
-            <div className="flex flex-col gap-4 p-6 bg-white rounded-2xl shadow-sm max-w-3xl">
+            <div className="flex flex-col gap-4 p-6 bg-white rounded-2xl shadow-sm">
                 <div>
                     <h2 className="font-semibold">ID</h2>
                     <p>{survey.id}</p>
@@ -28,7 +28,7 @@ export default function DetailSurvey() {
                     <img
                         src={`http://localhost:5000/uploads/${survey.image}`}
                         alt={survey.caption}
-                        className="w-full max-w-md rounded-xl mt-2"
+                        className="h-64 max-w-md rounded-xl mt-2"
                     />
                 </div>
                 <div>
