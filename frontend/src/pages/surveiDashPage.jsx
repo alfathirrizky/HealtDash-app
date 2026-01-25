@@ -80,7 +80,7 @@ export default function SurveiDashPage() {
 
     return(
         <div className="space-y-4 p-5">
-            <div className="flex flex-col gap-5 scrollbar-none scroll-smooth overflow-y-auto h-[89vh]">
+            <div className="flex flex-col gap-5 scrollbar-none scroll-smooth overflow-y-auto h-[92vh]">
                 <div className=" flex w-full items-center justify-between gap-5">
                     <h1 className=" font-bold text-4xl">Survei Dashboard</h1>
                     <div className=" flex gap-4 w-2xl justify-end">
