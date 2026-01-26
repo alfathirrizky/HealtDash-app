@@ -22,6 +22,7 @@ const CreateGalleryPage = lazy(() => import("../pages/createGalleryPage"));
 const SurveiDashPage = lazy(() => import("../pages/surveiDashPage"));
 const CreateSurveyPage = lazy(() => import("../pages/createSurveyPage"));
 const DetailSurvey = lazy(() => import("../pages/detailSurvey"));
+const DetailContent = lazy(() => import("../pages/detailContent"));
 
 
 function AppRoutes() {
@@ -34,6 +35,7 @@ function AppRoutes() {
                     <Route path="/home" element={<Home />} />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/content" element={<Content/>}/>
+                    <Route path="/content/:id" element={<DetailContent/>}/>
                     <Route path="/survei/:id" element={<SurveiContent/>}/>
                 </Route>
                 <Route element={<Layout />}>

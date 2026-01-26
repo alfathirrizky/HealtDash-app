@@ -21,7 +21,7 @@ export default function DetailSurvey() {
             <div className="flex flex-col gap-4 p-6 bg-white rounded-2xl shadow-sm">
                 <div>
                     <h2 className="font-semibold">ID</h2>
-                    <p>{survey.id}</p>
+                    <p className="text-slate-600">{survey.id}</p>
                 </div>
                 <div>
                     <h2 className="font-semibold">Image</h2>
@@ -33,19 +33,19 @@ export default function DetailSurvey() {
                 </div>
                 <div>
                     <h2 className="font-semibold">Title</h2>
-                    <p>{survey.title}</p>
+                    <p className="text-slate-600">{survey.title}</p>
                 </div>
                 <div>
                     <h2 className="font-semibold">Caption</h2>
-                    <p>{survey.caption}</p>
+                    <p className="text-slate-600">{survey.caption}</p>
                 </div>
                 <div>
                     <h2 className="font-semibold">Description</h2>
-                    <p>{survey.description}</p>
+                    <p className="text-slate-600">{survey.description}</p>
                 </div>
                 <div>
                     <h2 className="font-semibold">Status</h2>
-                    <p>{survey.is_active === 1 ? "Aktif" : "Nonaktif"}</p>
+                    <p className="text-slate-600">{survey.is_active === 1 ? "Aktif" : "Nonaktif"}</p>
                 </div>
             </div>
         </div>
