@@ -45,26 +45,26 @@ function HomePage() {
                     </div>
                 </div>
             </section>
-            <section className="flex items-center justify-between px-78">
+            <section className="flex items-center justify-center px-6">
                 <div className="w-2xl">
                     <h1 className="text-xl md:text-3xl font-bold mb-4">Why Mental Health Matters at Work?</h1>
                     <p>This platform is an official internal facility provided by the company to support the mental wellbeing of employees.It is not an external service and not a commercial offering.</p>
                 </div>
-                <div style={{ height: '500px', position: 'relative' }}>
-                    <CardSwap
-                        cardDistance={60}
-                        verticalDistance={70}
-                        delay={4000}
-                        pauseOnHover={true}
-                    >
-                        <Card className="bg-[url('./assets/hero.jpg')] bg-cover bg-center">
-                        </Card>
-                        <Card className="bg-[url('./assets/hero.jpg')] bg-cover bg-center">
-                        </Card>
-                        <Card className="bg-[url('./assets/hero.jpg')] bg-cover bg-center">
-                        </Card>
-                    </CardSwap>
-                </div>
+                    <div style={{ height: '500px', position: 'relative' }}>
+                        <CardSwap
+                            cardDistance={60}
+                            verticalDistance={70}
+                            delay={4000}
+                            pauseOnHover={true}
+                        >
+                            <Card className="bg-[url('./assets/hero.jpg')] bg-cover bg-center">
+                            </Card>
+                            <Card className="bg-[url('./assets/hero.jpg')] bg-cover bg-center">
+                            </Card>
+                            <Card className="bg-[url('./assets/hero.jpg')] bg-cover bg-center">
+                            </Card>
+                        </CardSwap>
+                    </div>
             </section>
             <section className="benefit flex flex-col items-center justify-center mt-85">
                 <div className="container flex flex-col justify-center items-center mx-auto px-4 py-8">
