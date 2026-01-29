@@ -48,12 +48,12 @@ function HomePage() {
             <section className="flex items-center justify-between px-80">
                 <div className="w-2xl">
                     <h1 className="text-xl md:text-3xl font-bold mb-4">Why Mental Health Matters at Work?</h1>
-                    <p>This platform is an official internal facility provided by the company to support the mental wellbeing of employees.It is not an external service and not a commercial offering.</p>
+                    <p>Mental health directly affects focus, motivation, and work performance. By supporting employee wellbeing, the company helps create a healthier and more productive work environment.</p>
                     <div className="mt-4 grid grid-cols-2 gap-4">
-                        <div className=" bg-white font-medium text-sm shadow-sm rounded-lg p-5">Tekanan kerja dapat memengaruhi kondisi mental dan emosional karyawan</div>
-                        <div className=" bg-white font-medium text-sm shadow-sm rounded-lg p-5">Stres berkepanjangan dapat menurunkan fokus, motivasi, dan kinerja</div>
-                        <div className=" bg-white font-medium text-sm shadow-sm rounded-lg p-5">Kesejahteraan individu berkontribusi langsung pada lingkungan kerja yang positif</div>
-                        <div className=" bg-white font-medium text-sm shadow-sm rounded-lg p-5">Dukungan perusahaan membantu mencegah kelelahan kerja (burnout)</div>
+                        <div className=" bg-white font-semibold text-slate-600 text-sm shadow-sm rounded-lg p-5">Tekanan kerja dapat memengaruhi kondisi mental dan emosional karyawan</div>
+                        <div className=" bg-white font-semibold text-slate-600 text-sm shadow-sm rounded-lg p-5">Stres berkepanjangan dapat menurunkan fokus, motivasi, dan kinerja</div>
+                        <div className=" bg-white font-semibold text-slate-600 text-sm shadow-sm rounded-lg p-5">Kesejahteraan individu berkontribusi langsung pada lingkungan kerja yang positif</div>
+                        <div className=" bg-white font-semibold text-slate-600 text-sm shadow-sm rounded-lg p-5">Dukungan perusahaan membantu mencegah kelelahan kerja (burnout)</div>
                     </div>
                 </div>
                     <div style={{ height: '500px', position: 'relative' }} className="bg-black">
