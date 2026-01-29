@@ -28,29 +28,29 @@ function HomePage() {
                     <p className="text-center text-xs">A company-provided facility to support employee mental wellbeing and reduce work-related stress.</p>
                 </div>
                 <div className="flex gap-5">
-                    <div className="a w-md h-60 rounded-2xl shadow-md flex flex-col justify-center items-center">
+                    <div className="h-60 w-md p-10 rounded-2xl shadow-md flex flex-col justify-center items-center gap-2">
                         <h1>ini icon nanti</h1>
-                        <h1 className="font-semibold text-lg">hai</h1>
-                        <p>test</p>
+                        <h1 className="font-semibold text-lg">Who Can Use This Facility</h1>
+                        <p className="text-sm text-center text-slate-600">This facility is available to all active employees as part of the company’s internal wellbeing support.</p>
                     </div>
-                    <div className="a w-md h-60 rounded-2xl shadow-md flex flex-col justify-center items-center">
+                    <div className="h-60 w-md p-10 rounded-2xl shadow-md flex flex-col justify-center items-center gap-2">
                         <h1>ini icon nanti</h1>
-                        <h1 className="font-semibold text-lg">hai</h1>
-                        <p>test</p>
+                        <h1 className="font-semibold text-lg">When and How It Can Be Used</h1>
+                        <p className="text-sm text-center text-slate-600">Employees can access the platform anytime during their employment and use it independently based on personal needs.</p>
                     </div>
-                    <div className="a w-md h-60 rounded-2xl shadow-md flex flex-col justify-center items-center">
+                    <div className="h-60 w-md p-10 rounded-2xl shadow-md flex flex-col justify-center items-center gap-2">
                         <h1>ini icon nanti</h1>
-                        <h1 className="font-semibold text-lg">hai</h1>
-                        <p>test</p>
+                        <h1 className="font-semibold text-lg">Separation from Performance Evaluation</h1>
+                        <p className="text-sm text-center text-slate-600">Information and results from this platform are not linked to performance reviews, promotions, or disciplinary actions.</p>
                     </div>
                 </div>
             </section>
-            <section className="flex items-center justify-center px-6">
+            <section className="flex items-center justify-between px-80">
                 <div className="w-2xl">
                     <h1 className="text-xl md:text-3xl font-bold mb-4">Why Mental Health Matters at Work?</h1>
                     <p>This platform is an official internal facility provided by the company to support the mental wellbeing of employees.It is not an external service and not a commercial offering.</p>
                 </div>
-                    <div style={{ height: '500px', position: 'relative' }}>
+                    <div style={{ height: '500px', position: 'relative' }} className="bg-black">
                         <CardSwap
                             cardDistance={60}
                             verticalDistance={70}
