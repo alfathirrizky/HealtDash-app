@@ -75,18 +75,32 @@ function HomePage() {
             <section className="benefit flex flex-col items-center justify-center mt-85">
                 <div className="container flex flex-col justify-center items-center mx-auto px-4 py-8">
                     <h2 className="text-xl md:text-3xl lg:text-5xl font-bold mb-2">Benefits of Using This Facility</h2>
-                    <p className="text-center text-xs">Using this facility can help employees manage stress, improve focus, and maintain a healthy work-life balance.</p>
+                    <p className="text-center text-xs">Supporting mental wellbeing benefits not only employees, but also the company as a whole. A healthy mind helps create a healthier workplace.</p>
                 </div>
                 <div className="flex flex-row gap-5">
                     <SpotlightCard className="custom-spotlight-card bg-slate-50 w-2xl" spotlightColor="rgba(0, 229, 255, 0.2)">
                         <h1>hai</h1>
-                        <h3 className=" font-medium">For Employees</h3>
-                        <p>isi benefit</p>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">For Employees</h3>
+                        <ul class="space-y-3 text-gray-700 text-sm">
+                            <li>• Better awareness of personal mental wellbeing</li>
+                            <li>• Improved stress management at work</li>
+                            <li>• Increased focus and emotional balance</li>
+                            <li>• Healthier work-life balance</li>
+                            <li>• Stronger sense of support from the company</li>
+                        </ul>
                     </SpotlightCard>
                     <SpotlightCard className="custom-spotlight-card bg-slate-50 w-2xl" spotlightColor="rgba(0, 229, 255, 0.2)">
                         <h1>hai</h1>
-                        <h3 className=" font-medium">For Management</h3>
-                        <p>isi benefit</p>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                            For the Management
+                            </h3>
+                        <ul class="space-y-3 text-gray-700 text-sm">
+                            <li>• More emotionally stable workforce</li>
+                            <li>• Improved productivity and work quality</li>
+                            <li>• Healthier and more supportive work culture</li>
+                            <li>• Reduced burnout and absenteeism risk</li>
+                            <li>• Stronger employee engagement and retention</li>
+                        </ul>
                     </SpotlightCard>
                 </div>
             </section>
