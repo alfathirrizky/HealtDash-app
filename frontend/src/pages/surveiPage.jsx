@@ -14,7 +14,7 @@ export default function SurveiPage() {
                             <h1 className="text-md md:text-2xl font-bold">{survey.title}</h1>
                             <p className="text-sm">{survey.caption}</p>
                         </div>
-                        <button className="bg-blue-500 text-white px-5 py-2 rounded-2xl font-semibold cursor-pointer text-xs" onClick={()=> navigate('/survei/${survey.id}')}>Start Survey</button>
+                        <button className="bg-blue-500 text-white px-5 py-2 rounded-2xl font-semibold cursor-pointer text-xs" onClick={() => navigate(`/survei/${survey.id}`)}>Start Survey</button>
                     </div>
                 </div>
             ))}
