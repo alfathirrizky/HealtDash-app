@@ -79,7 +79,6 @@ function HomePage() {
                 </div>
                 <div className="flex flex-row gap-5">
                     <SpotlightCard className="custom-spotlight-card bg-slate-50 w-2xl" spotlightColor="rgba(0, 229, 255, 0.2)">
-                        <h1>hai</h1>
                         <h3 className="text-lg font-semibold text-gray-900 mb-4">For Employees</h3>
                         <ul class="space-y-3 text-gray-700 text-sm">
                             <li>• Better awareness of personal mental wellbeing</li>
@@ -90,11 +89,8 @@ function HomePage() {
                         </ul>
                     </SpotlightCard>
                     <SpotlightCard className="custom-spotlight-card bg-slate-50 w-2xl" spotlightColor="rgba(0, 229, 255, 0.2)">
-                        <h1>hai</h1>
-                            <h3 class="text-lg font-semibold text-gray-900 mb-4">
-                            For the Management
-                            </h3>
-                        <ul class="space-y-3 text-gray-700 text-sm">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">For the Management</h3>
+                        <ul className="space-y-3 text-gray-700 text-sm">
                             <li>• More emotionally stable workforce</li>
                             <li>• Improved productivity and work quality</li>
                             <li>• Healthier and more supportive work culture</li>
