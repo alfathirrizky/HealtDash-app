@@ -66,6 +66,8 @@ export default function DetailSurvey() {
     if (!survey) {
         return <p className="p-5">Survey tidak ditemukan</p>;
     }
+    const filteredQuestions = Array.isArray(questions) ? questions.filter((q) => String(q.survey_id) === String(id)) : [];
+
 
     return (
         <div className="p-5 overflow-y-auto h-[96vh] scrollbar-none">
@@ -144,8 +146,8 @@ export default function DetailSurvey() {
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
-                                        {questions.length > 0 ? (
-                                            questions.map((question) => (
+                                        {filteredQuestions.length > 0 ? (
+                                            filteredQuestions.map((question) => (
                                                 <TableRow
                                                     key={question.question_id}
                                                     className="hover:bg-blue-50 transition border-b border-gray-400"
