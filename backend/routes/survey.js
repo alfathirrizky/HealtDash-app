@@ -57,14 +57,14 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
-        const { image, title, caption, description, is_active } = req.body;
+        const { image, title, caption, description, total_question, is_active } = req.body;
         if (!image) {
         return res.status(400).json({ message: "Image required" });
         }
         const id = uuidv4();
         await db.query(
-            "INSERT INTO surveys (id, image, title, caption, description, is_active) VALUES (?, ?, ?, ?, ?, ?)",
-            [id, image, title, caption, description, is_active]
+            "INSERT INTO surveys (id, image, title, caption, description, total_question, is_active) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            [id, image, title, caption, description, total_question, is_active]
         );
         const [rows] = await db.query("SELECT * FROM surveys WHERE id = ?", [id]);
         res.status(201).json(rows[0]);
@@ -83,7 +83,7 @@ router.post("/upload", upload.single("file"), (req, res) => {
 
 router.put("/:id", async (req, res)=>{
     try {
-        const { title, caption, description, is_active, image } = req.body;
+        const { title, caption, description, total_question, is_active, image } = req.body;
         const [rows] = await db.query("SELECT * FROM surveys WHERE id = ?", [req.params.id]);
         if (!rows.length) {
             return res.status(404).json({ message: "Survey not found" });
@@ -94,7 +94,7 @@ router.put("/:id", async (req, res)=>{
             if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
             filename = image;
         }
-        await db.query("UPDATE surveys SET image=?, title=?, caption=?, description=?, is_active=? WHERE id=?", [filename, title, caption, description, is_active, req.params.id]);
+        await db.query("UPDATE surveys SET image=?, title=?, caption=?, description=?, total_question=?, is_active=? WHERE id=?", [filename, title, caption, description, total_question, is_active, req.params.id]);
         const [updated] = await db.query("SELECT * FROM surveys WHERE id = ?", [req.params.id]);
         res.json(updated[0]);
     } catch (error) {

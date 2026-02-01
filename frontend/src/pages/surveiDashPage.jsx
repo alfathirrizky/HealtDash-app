@@ -113,7 +113,6 @@ export default function SurveiDashPage() {
                     <Table>
                         <TableHeader>
                             <TableRow className="bg-blue-50 border-b border-blue-100">
-                                <TableHead className="text-blue-600 font-semibold">ID</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Image</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Title</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Caption</TableHead>
@@ -131,7 +130,6 @@ export default function SurveiDashPage() {
                                         key={survey.id}
                                         className="hover:bg-blue-50 transition border-b border-gray-400"
                                     >
-                                        <TableCell>{survey.id}</TableCell>
                                         <TableCell>
                                             <img
                                                 src={`http://localhost:5000/uploads/${survey.image}`}
