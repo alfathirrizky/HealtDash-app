@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import UseQuestion from "../hooks/useQuestions";
 import {
   Table, TableBody, TableCaption, TableCell, TableHead,
   TableHeader, TableRow,
@@ -76,11 +77,12 @@ export default function SurveiDashPage() {
         handleDelete,
         setOpen,
     } = UseSurvey();
+    const { questions } = UseQuestion();
     const navigate = useNavigate();
 
     return(
-        <div className="space-y-4 p-5">
-            <div className="flex flex-col gap-5 scrollbar-none scroll-smooth overflow-y-auto h-[92vh]">
+        <div className="p-5">
+            <div className="flex flex-col gap-5 scrollbar-none scroll-smooth overflow-y-auto h-[95vh]">
                 <div className=" flex w-full items-center justify-between gap-5">
                     <h1 className=" font-bold text-4xl">Survei Dashboard</h1>
                     <div className=" flex gap-4 w-2xl justify-end">
@@ -143,7 +145,7 @@ export default function SurveiDashPage() {
                                         <TableCell>{survey.title}</TableCell>
                                         <TableCell>{survey.caption}</TableCell>
                                         <TableCell>{survey.description}</TableCell>
-                                        <TableCell>{survey.total_question}</TableCell>
+                                        <TableCell> {Array.isArray(questions) ? questions.filter((q) => String(q.survey_id) === String(survey.id)).length : 0 }</TableCell>
                                         <TableCell>{survey.is_active === 1 ? "Aktif" : "Nonaktif"}</TableCell>
                                         <TableCell>
                                             <button className="bg-blue-500 text-white py-1 px-3 rounded-md cursor-pointer" onClick={()=> navigate(`/surveiDash/${survey.id}`)}>Lihat detail</button>

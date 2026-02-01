@@ -105,7 +105,10 @@ export default function DetailSurvey() {
                     <div className="space-y-4">
                         <div className="flex flex-col gap-5 scrollbar-none scroll-smooth overflow-y-auto h-[89vh]">
                             <div className=" flex w-full items-center justify-between gap-5">
-                                <h1 className="text-xl font-semibold">Question List</h1>
+                                <div>
+                                    <h1 className="text-xl font-semibold">Question List</h1>
+                                    <p className="text-slate-600">{filteredQuestions.length} Questions</p>
+                                </div>
                                 <div className=" flex gap-4 w-2xl justify-end">
                                     <div className="w-full md:w-1/3">
                                             <InputGroup>
