@@ -4,13 +4,15 @@ import { DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
 import { Link, useNavigate } from "react-router-dom"
 import useQuestions from "../hooks/useQuestions"
+import useSurvey from "@/hooks/useSurvey"
 import { FilePond } from "react-filepond";
 export default function CreateQuestionPage() {
-    const { form, handleChange, handleCreate, files, setFiles, setForm } = useQuestions()
+    const { form, handleChange, handleCreate } = useQuestions()
+    const { surveys = [] } = useSurvey();
     const navigate = useNavigate()
     const submit = async () => {
         await handleCreate()
-        navigate("/users") // kembali ke halaman user setelah create
+        navigate("/question") // kembali ke halaman user setelah create
     }
     return(
     <div className="p-5 space-y-6">
@@ -37,56 +39,41 @@ export default function CreateQuestionPage() {
             <div className="bg-white w-full">
                     <div className="grid grid-cols-2 gap-3 py-4">
                         <div className="flex flex-col gap-1">
-                            <h1 className="font-semibold">ID</h1>
-                            <Input name="id" placeholder="Masukan Id" value={form.id} onChange={handleChange} className="border border-gray-400" />
+                            <h1 className="font-semibold">Survey</h1>
+                            <select
+                                name="survey_id"
+                                value={form.survey_id || ""}
+                                onChange={handleChange}
+                                className="border border-gray-400 rounded-md p-2"
+                            >
+                                <option value="">-- Pilih Survey --</option>
+                                {Array.isArray(surveys) &&
+                                surveys.map((survey) => (
+                                    <option key={survey.id} value={survey.id}>
+                                    {survey.title} {/* atau survey.name */}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
                         <div className="flex flex-col gap-1">
-                            <h1 className="font-semibold">Telepon</h1>
-                            <Input name="telepon" placeholder="Masukan No.Telepon" value={form.telepon} onChange={handleChange} className="border border-gray-400"/>
+                            <h1 className="font-semibold">Question</h1>
+                            <Input name="question" placeholder="Masukan Question" value={form.question} onChange={handleChange} className="border border-gray-400"/>
                         </div>
                         <div className="flex flex-col gap-1">
                             <h1 className="font-semibold">Name</h1>
                             <Input name="name" placeholder="Name" value={form.name} onChange={handleChange} className="border border-gray-400"/>
                         </div>
                         <div className="flex flex-col gap-1">
-                            <h1 className="font-semibold">Email</h1>
-                            <Input name="email" placeholder="Email" value={form.email} onChange={handleChange} className="border border-gray-400"/>
+                            <h1 className="font-semibold">Label</h1>
+                            <Input name="label" placeholder="Label" value={form.label} onChange={handleChange} className="border border-gray-400"/>
                         </div>
                         <div className="flex flex-col gap-1">
-                            <h1 className="font-semibold">Position</h1>
-                            <Input name="position" placeholder="Position" value={form.position} onChange={handleChange} className="border border-gray-400"/>
+                            <h1 className="font-semibold">Note</h1>
+                            <Input name="note" placeholder="Note" value={form.note} onChange={handleChange} className="border border-gray-400"/>
                         </div>
                         <div className="flex flex-col gap-1">
-                            <h1 className="font-semibold">Gender</h1>
-                            <Input type="select" name="gender" placeholder="Gender" value={form.gender} onChange={handleChange} className="border border-gray-400"/>
-                        </div>
-                        <div className="flex flex-col gap-1">
-                            <h1 className="font-semibold">Password</h1>
-                            <Input type="password" name="password" placeholder="Password" value={form.password} onChange={handleChange} className="border border-gray-400"/>
-                        </div>
-                        <div className="flex flex-col gap-1">
-                            <h1 className="font-semibold">Role</h1>
-                            <Input name="role" placeholder="Role" value={form.role} onChange={handleChange} className="border border-gray-400"/>
-                        </div>
-                        <div className="flex flex-col gap-1">
-                            <h1 className="font-semibold mb-2">Image</h1>
-                            <FilePond
-                                files={files}
-                                onupdatefiles={(items) => {
-                                setFiles(items);
-                                setForm({ ...form, image: items[0]?.file || null });
-                                }}
-                                allowMultiple={false}
-                                allowReplace={true}
-                                name="image"
-                                labelIdle='Drag & Drop atau <span class="filepond--label-action">Pilih Gambar</span>'
-                                stylePanelAspectRatio="1:1"
-                                imagePreviewHeight={180}
-                                allowImagePreview={true}
-                                allowImageEdit={true}
-                                imageEditInstantEdit={true}
-                                credits={false}
-                            />
+                            <h1 className="font-semibold">Type</h1>
+                            <Input type="select" name="type" placeholder="Type" value={form.type} onChange={handleChange} className="border border-gray-400"/>
                         </div>
                     </div>
                     <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white" onClick={submit}>

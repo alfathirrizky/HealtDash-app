@@ -1,4 +1,6 @@
 import API from "../api/api"
+import { useMemo } from "react"
+import useSurvey from "@/hooks/useSurvey"
 import useQuestion from "../hooks/useQuestions"
 import {
   Table, TableBody, TableCaption, TableCell, TableHead,
@@ -52,6 +54,14 @@ function QuestionPage() {
         handleDelete,
         openEditForm,
     } = useQuestion();
+    const { surveys = [] } = useSurvey();
+    const surveyMap = useMemo(() => {
+        const map = {};
+        surveys.forEach((s) => {
+            map[String(s.id)] = s.title;
+        });
+        return map;
+        }, [surveys]);
     return (
         <div className="space-y-4 p-5">
             <div className="flex flex-col gap-5 scrollbar-none scroll-smooth overflow-y-auto h-[89vh]">
@@ -89,7 +99,7 @@ function QuestionPage() {
                         <TableHeader>
                             <TableRow className="bg-blue-50 border-b border-blue-100">
                                 <TableHead className="text-blue-600 font-semibold">Question</TableHead>
-                                <TableHead className="text-blue-600 font-semibold">Survey ID</TableHead>
+                                <TableHead className="text-blue-600 font-semibold">Survey Name</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Label</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Category</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Note</TableHead>
@@ -104,7 +114,7 @@ function QuestionPage() {
                                         className="hover:bg-blue-50 transition border-b border-gray-400"
                                     >
                                         <TableCell>{question.name}</TableCell>
-                                        <TableCell>{question.survey_id}</TableCell>
+                                        <TableCell>{surveyMap[String(question.survey_id)] || "-"}</TableCell>
                                         <TableCell>{question.label}</TableCell>
                                         <TableCell>{question.type}</TableCell>
                                         <TableCell>{question.note}</TableCell>
