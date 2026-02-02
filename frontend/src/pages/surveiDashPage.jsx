@@ -81,8 +81,7 @@ export default function SurveiDashPage() {
     const navigate = useNavigate();
 
     return(
-        <div className="p-5">
-            <div className="flex flex-col gap-5 scrollbar-none scroll-smooth overflow-y-auto h-[95vh]">
+        <div className="flex flex-col gap-5 scrollbar-none scroll-smooth overflow-y-auto h-[95vh]">
                 <div className=" flex w-full items-center justify-between gap-5">
                     <h1 className=" font-bold text-4xl">Survei Dashboard</h1>
                     <div className=" flex gap-4 w-2xl justify-end">
@@ -326,7 +325,6 @@ export default function SurveiDashPage() {
                     </div>
                 </DialogContent>
                 </Dialog>
-            </div>
         </div>
     )
 }

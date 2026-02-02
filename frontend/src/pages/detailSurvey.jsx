@@ -125,16 +125,6 @@ export default function DetailSurvey() {
                                     </Link>
                                 </div>
                             </div>
-                            <Breadcrumb>
-                                <BreadcrumbList>
-                                    <BreadcrumbItem>
-                                    <BreadcrumbLink asChild>
-                                        <Link to="/question">Question</Link>
-                                    </BreadcrumbLink>
-                                    </BreadcrumbItem>
-                                    <BreadcrumbSeparator />
-                                </BreadcrumbList>
-                            </Breadcrumb>
                             {/* TABLE */}
                             <div className="border border-blue-200 rounded-xl p-3 bg-white">
                                 <Table>

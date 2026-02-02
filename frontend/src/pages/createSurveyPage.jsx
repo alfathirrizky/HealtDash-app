@@ -103,10 +103,6 @@ export default function CreateSurveyPage() {
                             <Input type="textarea" name="description" placeholder="Description" value={form.description} onChange={handleChange} className="border border-gray-400"/>
                         </div>
                         <div className="flex flex-col gap-1">
-                            <h1 className="font-semibold">Total Question</h1>
-                            <Input type="textarea" name="total_question" placeholder="Total Question" value={form.total_question} onChange={handleChange} className="border border-gray-400"/>
-                        </div>
-                        <div className="flex flex-col gap-1">
                             <h1 className="font-semibold">Status</h1>
                             <Select
                                 value={String(form.is_active)} onValueChange={(value) =>setForm({ ...form, is_active: value })}>
