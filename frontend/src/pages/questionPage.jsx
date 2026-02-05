@@ -189,87 +189,74 @@ function QuestionPage() {
                 </div>
                 {/* POP-UP FORM */}
                 <Dialog open={open} onOpenChange={setOpen}>
-                <DialogContent className="bg-white border border-blue-200 shadow-xl rounded-xl w-2xl">
+                <DialogContent className="bg-white border-blue-100 rounded-xl shadow-lg">
                     <DialogHeader>
-                    <DialogTitle className="text-blue-700 font-semibold">
-                        {editing ? "Edit User" : "Create User"}
+                    <DialogTitle className="text-blue-500 font-bold text-2xl">
+                        {editing ? "Edit Question" : "Create Question"}
                     </DialogTitle>
                     </DialogHeader>
-                    <div className="grid grid-cols-3 gap-3 py-2">
-                    <Input
-                        placeholder="Id"
-                        name="id"
-                        value={form.id}
-                        onChange={handleChange}
-                        className="border-blue-300 focus:ring-blue-500"
-                    />
-
-                    <Input
-                        placeholder="Image"
-                        name="image"
-                        value={form.image}
-                        onChange={handleChange}
-                        className="border-blue-300 focus:ring-blue-500"
-                    />
-
-                    <Input
-                        placeholder="Telepon"
-                        name="telepon"
-                        value={form.telepon}
-                        onChange={handleChange}
-                        className="border-blue-300 focus:ring-blue-500"
-                    />
-
-                    <Input
-                        placeholder="Name"
-                        name="name"
-                        value={form.name}
-                        onChange={handleChange}
-                        className="border-blue-300 focus:ring-blue-500"
-                    />
-
-                    <Input
-                        placeholder="Email"
-                        name="email"
-                        value={form.email}
-                        onChange={handleChange}
-                        className="border-blue-300 focus:ring-blue-500"
-                    />
-
-                    <Input
-                        placeholder="Position"
-                        name="position"
-                        value={form.position}
-                        onChange={handleChange}
-                        className="border-blue-300 focus:ring-blue-500"
-                    />
-
-                    <Input
-                        placeholder="Gender"
-                        name="gender"
-                        value={form.gender}
-                        onChange={handleChange}
-                        className="border-blue-300 focus:ring-blue-500"
-                    />
-
-                    <Input
-                        placeholder="Password"
-                        name="password"
-                        value={form.password}
-                        type="password"
-                        onChange={handleChange}
-                        className="border-blue-300 focus:ring-blue-500"
-                    />
-
-                    <Input
-                        placeholder="Role"
-                        name="role"
-                        value={form.role}
-                        onChange={handleChange}
-                        className="border-blue-300 focus:ring-blue-500"
-                    />
+                    <div className="flex flex-col gap-3">
+                        <div className="flex flex-col gap-1">
+                            <p className=" font-semibold">ID Question</p>
+                            <Input
+                                placeholder="Id"
+                                name="question_id"
+                                value={form.question_id}
+                                onChange={handleChange}
+                                className="border-blue-300 focus:ring-blue-500"
+                            />
+                        </div>
+                        <div className="flex flex-col gap-1">
+                            <p className=" font-semibold">Survey ID</p>
+                            <Input
+                                placeholder="Survey_id"
+                                name="survey_id"
+                                value={form.survey_id}
+                                onChange={handleChange}
+                                className="border-blue-300 focus:ring-blue-500"
+                            />
+                        </div>
+                        <div className="flex flex-col gap-1">
+                            <p className=" font-semibold">Name</p>
+                            <Input
+                                placeholder="Name"
+                                name="name"
+                                value={form.name}
+                                onChange={handleChange}
+                                className="border-blue-300 focus:ring-blue-500"
+                            />
+                        </div>
+                        <div className="flex flex-col gap-1">
+                            <p className=" font-semibold">Label</p>
+                            <Input
+                                placeholder="Label"
+                                name="label"
+                                value={form.label}
+                                onChange={handleChange}
+                                className="border-blue-300 focus:ring-blue-500"
+                            />
+                        </div>
+                        <div className="flex flex-col gap-1">
+                            <p className=" font-semibold">Note</p>
+                            <Input
+                                placeholder="Note"
+                                name="note"
+                                value={form.note}
+                                onChange={handleChange}
+                                className="border-blue-300 focus:ring-blue-500"
+                            />
+                        </div>
+                        <div className="flex flex-col gap-1">
+                            <p className=" font-semibold">Type</p>
+                            <Input
+                                placeholder="Type"
+                                name="type"
+                                value={form.type}
+                                onChange={handleChange}
+                                className="border-blue-300 focus:ring-blue-500"
+                            />
+                        </div>
                     </div>
-
                     <div className="pt-4">
                     <Button
                         className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow"
