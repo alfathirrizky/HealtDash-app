@@ -37,7 +37,7 @@ function Navbar() {
                             <NavLink to="/survei" onClick={() => setOpen(false)} className={navClass}>Survei</NavLink>
                         </li>
                         <li>
-                            <NavLink to="/gallery" onClick={() => setOpen(false)} className={navClass}>Education</NavLink>
+                            <NavLink to="/content" onClick={() => setOpen(false)} className={navClass}>Education</NavLink>
                         </li>
                         <li className="flex items-center gap-3 cursor-pointer" onClick={() => navigate("/profile")}>
                             <img src={Profile} className="h-10 w-10 object-cover rounded-full" />

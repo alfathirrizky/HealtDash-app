@@ -80,7 +80,7 @@ function HomePage() {
                 <div className="flex flex-row gap-5">
                     <SpotlightCard className="custom-spotlight-card bg-slate-50 w-2xl" spotlightColor="rgba(0, 229, 255, 0.2)">
                         <h3 className="text-lg font-semibold text-gray-900 mb-4">For Employees</h3>
-                        <ul class="space-y-3 text-gray-700 text-sm">
+                        <ul className="space-y-3 text-gray-700 text-sm">
                             <li>• Better awareness of personal mental wellbeing</li>
                             <li>• Improved stress management at work</li>
                             <li>• Increased focus and emotional balance</li>
@@ -137,7 +137,7 @@ function HomePage() {
             </section>
             <section className="p-40">
                 <div className="flex items-center justify-center gap-20 bg-white p-10 rounded-3xl shadow-md">
-                    <img src={imgComponent} alt="" srcset="" className="w-lg rounded-2xl" />
+                    <img src={imgComponent} alt="" className="w-lg rounded-2xl" />
                     <div className="flex flex-col w-2xl gap-5">
                         <h2 className=" text-4xl font-bold">Saran & Masukan</h2>
                         <p className=" text-lg text-slate-500">Bantu kami menciptakan lingkungan kerja yang lebih sehat. Gunakan kolom ini untuk menyampaikan aspirasi atau kondisi mental Anda sebagai bahan evaluasi rutin manajemen.</p>
