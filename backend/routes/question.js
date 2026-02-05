@@ -85,13 +85,15 @@ router.put("/:id", async (req, res) => {
 
 // DELETE question
 router.delete("/:id", async (req, res) => {
-  const [result] = await db.query(
-    "DELETE FROM questions WHERE question_id = ?",
-    [req.params.id]
-  );
-  if (result.affectedRows === 0)
-    return res.status(404).json({ error: "Question not found" });
-  res.json({ message: "Deleted" });
+  try {
+    const [result] = await db.query("DELETE FROM questions WHERE question_id = ?", [req.params.id], );
+    if (result.affectedRows === 0)
+      return res.status(404).json({ error: "Question not found" });
+    res.json({ message: "Deleted" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Database error" });
+  }
 });
 
 

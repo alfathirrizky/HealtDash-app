@@ -74,9 +74,9 @@ export default function useQuestions() {
     resetForm();
   };
   //delete question
-  const handleDelete = async () => {
-    await API.delete(`/questions/${form.question_id}`);
-    setQuestions((prev) => prev.filter((q) => q.question_id !== form.question_id));
+  const handleDelete = async (question_id) => {
+    await API.delete(`/questions/${question_id}`);
+    setQuestions((prev) => prev.filter((q) => q.question_id !== question_id));
     toast.error("Question berhasil dihapus.");
   };
 
