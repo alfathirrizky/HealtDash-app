@@ -19,12 +19,15 @@ export default function useUser() {
   const [users, setUsers] = useState([]);
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState(null);
-
-  const [files, setFiles] = useState([]); // FilePond File State
-
-  const [form, setForm] = useState({
-    id: "",
-    image: null,
+  const [files, setFiles] = useState([]);
+  const resetForm = () => {
+    setForm(initialForm);
+    setEditing(false);
+    setOpen(false);
+  };
+  const initialForm = {
+    image: "",
+    newImage: null,
     telepon: "",
     name: "",
     email: "",
@@ -32,11 +35,17 @@ export default function useUser() {
     gender: "",
     password: "",
     role: "",
-  });
+  };
+  const [form, setForm] = useState(initialForm);
 
   const fetchUser = async () => {
-    const res = await API.get("/users");
-    setUsers(res.data);
+    try {
+      const res = await API.get("/users");
+      console.log("API RESPONSE:", res.data);
+      setUsers(res.data);
+    } catch (err) {
+      console.error("Error fetching users:", err);
+    }
   };
 
   useEffect(() => {
@@ -49,25 +58,42 @@ export default function useUser() {
 
   // CREATE
   const handleCreate = async () => {
-    const data = { ...form, image: files[0]?.file || null };
-    const res = await API.post("/users", data);
-    setUsers((prev) => [res.data, ...prev]);
     toast.success("User berhasil dibuat");
-    setOpen(false);
-    resetForm();
+    await API.post("/users", {
+      image: form.image,
+      telepon: form.telepon,
+      name: form.name,
+      email: form.email,
+      position: form.position,
+      gender: form.gender,
+      password: form.password,
+      role: form.role,
+    });
   };
 
   // UPDATE
   const handleUpdate = async () => {
-    const data = { ...form, image: files[0]?.file || form.image };
-
-    const res = await API.put(`/users/${editing.id}`, data);
-    setUsers((prev) => prev.map((u) => (u.id === editing.id ? res.data : u)));
-    toast.success("User berhasil diupdate");
-
-    setOpen(false);
-    setEditing(null);
-    resetForm();
+    try {
+      const payload = {
+        telepon: form.telepon,
+        name: form.name,
+        email: form.email,
+        position: form.position,
+        gender: form.gender,
+        password: form.password,
+        role: form.role,
+      };
+      if (form.newImage) {
+        payload.image = form.newImage;
+      }
+      await API.put(`/users/${form.id}`, payload);
+      toast.success("User berhasil diperbarui ✅");
+      fetchUser();
+      resetForm();
+    } catch (err) {
+      console.error("Error updating user:", err);
+      toast.error("Gagal memperbarui user");
+    }
   };
 
   const handleDelete = async (id) => {
@@ -79,7 +105,6 @@ export default function useUser() {
   const openEditForm = (user) => {
     setEditing(user);
     setForm({
-      id: user.id,
       image: user.image,
       telepon: user.telepon,
       name: user.name,
@@ -89,8 +114,6 @@ export default function useUser() {
       password: user.password,
       role: user.role,
     });
-
-    // Load existing image if exists
     if (user.image) {
       setFiles([
         {
@@ -106,21 +129,6 @@ export default function useUser() {
     setEditing(null);
     resetForm();
     setOpen(true);
-  };
-
-  const resetForm = () => {
-    setForm({
-      id: "",
-      image: null,
-      telepon: "",
-      name: "",
-      email: "",
-      position: "",
-      gender: "",
-      password: "",
-      role: "",
-    });
-    setFiles([]);
   };
 
   return {

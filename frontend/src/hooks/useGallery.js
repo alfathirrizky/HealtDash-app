@@ -58,14 +58,10 @@ function useContent() {
         caption: form.caption,
         description: form.description,
       };
-
-      // ⬇️ hanya kirim jika user upload gambar baru
       if (form.newImage) {
         payload.image = form.newImage;
       }
-
       await API.put(`/gallery/${form.id}`, payload);
-
       toast.success("Content berhasil diperbarui ✅");
       fetchContent();
       resetForm();

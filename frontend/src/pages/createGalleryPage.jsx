@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
 import { Link, useNavigate } from "react-router-dom"
 import useGallery from "../hooks/useGallery"
@@ -15,11 +14,11 @@ import FilePondPluginImageResize from "filepond-plugin-image-resize";
 import FilePondPluginImageTransform from "filepond-plugin-image-transform";
 
 registerPlugin(
-  FilePondPluginImagePreview,
-  FilePondPluginImageEdit,
-  FilePondPluginImageCrop,
-  FilePondPluginImageResize,
-  FilePondPluginImageTransform
+    FilePondPluginImagePreview,
+    FilePondPluginImageEdit,
+    FilePondPluginImageCrop,
+    FilePondPluginImageResize,
+    FilePondPluginImageTransform
 );
 
 export default function CreateGalleryPage() {
@@ -29,6 +28,7 @@ export default function CreateGalleryPage() {
         await handleCreate()
         navigate("/galleryDash") // kembali ke halaman user setelah create
     }
+
     return(
     <div className="p-5 space-y-6">
         <div className=" gap-5 scrollbar-none scroll-smooth overflow-y-auto h-[91vh]">
