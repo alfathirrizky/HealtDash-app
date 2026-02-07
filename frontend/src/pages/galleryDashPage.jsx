@@ -123,7 +123,7 @@ function QuestionPage() {
                                             <img
                                                 src={`http://localhost:5000/uploads/${content.image}`}
                                                 alt={content.caption}
-                                                className="w-40 h-24 object-cover rounded-md"
+                                                className="w-40 h-20 object-cover"
                                                 onError={(e) => {
                                                     e.currentTarget.src = "/no-image.png";
                                                 }}

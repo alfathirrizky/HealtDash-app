@@ -135,7 +135,7 @@ export default function SurveiDashPage() {
                                             <img
                                                 src={`http://localhost:5000/uploads/${survey.image}`}
                                                 alt={survey.caption}
-                                                className="w-40 h-24 object-cover rounded-md"
+                                                className="w-40 h-20 object-cover rounded-md"
                                                 onError={(e) => {
                                                     e.currentTarget.src = "/no-image.png";
                                                 }}
