@@ -69,14 +69,15 @@ router.get("/:id", async (req, res) => {
 // CREATE user
 router.post("/", async (req, res) => {
   try {
-    const { image, telepon, name, email, position, gender, password } = req.body;
+    const { image, telepon, name, email, position, gender, password, role } =
+      req.body;
     if (!image) {
       return res.status(400).json({ message: "Image required" });
     }
     const id = uuidv4();
     await db.query(
-      "INSERT INTO users (image, telepon, name, email, position, gender, password, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-      [image, telepon, name, email, position, gender, password, role],
+      "INSERT INTO users (id, image, telepon, name, email, position, gender, password, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      [id, image, telepon, name, email, position, gender, password, role],
     );
     const [rows] = await db.query("SELECT * FROM users WHERE id = ?", [id]);
     res.status(201).json(rows[0]);
@@ -97,7 +98,8 @@ router.post("/upload", upload.single("file"), (req, res) => {
 //UPDATE (REPLACE IMAGE)
 router.put("/:id", async (req, res) => {
   try {
-    const { image, telepon, name, email, position, gender, password } = req.body;
+    const { image, telepon, name, email, position, gender, password, role } =
+      req.body;
     const [rows] = await db.query("SELECT * FROM users WHERE id=?", [
       req.params.id,
     ]);
@@ -112,8 +114,18 @@ router.put("/:id", async (req, res) => {
       filename = image;
     }
     await db.query(
-      "UPDATE users SET image=?, telepon=?, name=?, email=?, position=?, gender=?, password=? WHERE id=?",
-      [filename, telepon, name, email, position, gender, password, req.params.id]
+      "UPDATE users SET image=?, telepon=?, name=?, email=?, position=?, gender=?, password=?, role=? WHERE id=?",
+      [
+        filename,
+        telepon,
+        name,
+        email,
+        position,
+        gender,
+        password,
+        role,
+        req.params.id,
+      ],
     );
     const [updated] = await db.query("SELECT * FROM users WHERE id=?", [
       req.params.id,

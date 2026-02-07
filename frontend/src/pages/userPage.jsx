@@ -90,7 +90,6 @@ export default function UserPage() {
                     <Table>
                         <TableHeader>
                             <TableRow className="bg-blue-50 border-b border-blue-100">
-                                <TableHead className="text-blue-600 font-semibold">ID</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Image</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Name</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Email</TableHead>
@@ -109,8 +108,9 @@ export default function UserPage() {
                                         key={user.id}
                                         className="hover:bg-blue-50 transition border-b border-gray-400"
                                     >
-                                        <TableCell>{user.id}</TableCell>
-                                        <TableCell>{user.image}</TableCell>
+                                        <TableCell>
+                                            <img src={`http://localhost:5000/uploads/${user.image}`} alt="User" className="w-10 h-10 rounded-full object-cover" />
+                                        </TableCell>
                                         <TableCell>{user.name}</TableCell>
                                         <TableCell>{user.email}</TableCell>
                                         <TableCell>{user.telepon}</TableCell>

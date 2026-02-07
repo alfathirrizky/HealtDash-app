@@ -25,7 +25,7 @@ export default function CreateUserPage() {
     const navigate = useNavigate()  
     const submit = async () => {
         await handleCreate()
-        navigate("/users")
+        navigate("/user")
     }
 
     return (
@@ -100,7 +100,11 @@ export default function CreateUserPage() {
                         </div>
                         <div className="flex flex-col gap-1">
                             <h1 className="font-semibold">Gender</h1>
-                            <Input type="select" name="gender" placeholder="Gender" value={form.gender} onChange={handleChange} className="border border-gray-400"/>
+                            <select name="gender" value={form.gender} onChange={handleChange} className="border border-gray-400 rounded-md px-3 py-2">
+                                <option value="">Pilih Gender</option>
+                                <option value="Pria">Pria</option>
+                                <option value="Wanita">Wanita</option>
+                            </select>
                         </div>
                         <div className="flex flex-col gap-1">
                             <h1 className="font-semibold">Password</h1>
@@ -108,7 +112,16 @@ export default function CreateUserPage() {
                         </div>
                         <div className="flex flex-col gap-1">
                             <h1 className="font-semibold">Role</h1>
-                            <Input name="role" placeholder="Role" value={form.role} onChange={handleChange} className="border border-gray-400"/>
+                            <select
+                                name="role"
+                                value={form.role}
+                                onChange={handleChange}
+                                className="border border-gray-400 rounded-md px-3 py-2"
+                            >
+                                <option value="">Pilih Role</option>
+                                <option value="User">User</option>
+                                <option value="Admin">Admin</option>
+                            </select>
                         </div>
                     </div>
                     <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white" onClick={submit}>
