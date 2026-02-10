@@ -13,6 +13,11 @@ function ProfilePage() {
         }
     }, [navigate]);
     if (!user) return <p className="p-5 text-lg">Loading user data...</p>;
+    const handleLogout = () => {
+        localStorage.removeItem("user");
+        navigate("/");                  
+    };
+
     return(
         <>
             <div className=" bg-white p-6 flex flex-col mt-20">
@@ -44,7 +49,7 @@ function ProfilePage() {
                             <p className="text-gray-800 border-1 border-gray-200 rounded-md p-2 text-lg">{user.gender}</p>
                         </div>
                     </div>
-                <button className="mt-4 w-full px-10 py-2 bg-blue-600 text-white rounded-3xl shadow-md hover:bg-blue-700 text-xl font-semibold" onClick={() => navigate("/")}>Logout</button>
+                <button className="mt-4 w-full px-10 py-2 bg-blue-600 text-white rounded-3xl shadow-md hover:bg-blue-700 text-xl font-semibold" onClick={handleLogout}>Logout</button>
                 </div>
             </div>
         </>
