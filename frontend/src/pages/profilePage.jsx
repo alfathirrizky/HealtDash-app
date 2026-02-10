@@ -1,4 +1,3 @@
-import Profile from "../assets/image.png";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -18,7 +17,7 @@ function ProfilePage() {
         <>
             <div className=" bg-white p-6 flex flex-col mt-20">
                 <div className="profile flex flex-row gap-4 items-center pb-4 border-gray-200 mb-5">
-                    <img src={Profile} alt="Profile" className="w-20 h-20 object-cover rounded-full" />
+                    <img src={`http://localhost:5000/uploads/${user.image}`} alt="Profile" className="w-20 h-20 object-cover rounded-full" />
                     <h1 className="font-bold text-3xl">Hai, {user.name} !</h1>
                 </div>
                 <div className="PersonalInfo border-b-2 pb-4 border-gray-200">

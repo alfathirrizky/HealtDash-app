@@ -111,7 +111,7 @@ export default function useUser() {
       email: user.email,
       position: user.position,
       gender: user.gender,
-      password: user.password,
+      password: "",
       role: user.role,
     });
     if (user.image) {

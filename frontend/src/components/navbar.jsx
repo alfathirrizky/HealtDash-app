@@ -1,12 +1,22 @@
-import { useState } from "react";
-import Logo from "../assets/injourney-logo.png";
+import { useEffect, useState } from "react";
 import Profile from "../assets/image.png";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
+import Logo from "../assets/injourney-logo.png";
 
 function Navbar() {
     const navigate = useNavigate();
     const [open, setOpen] = useState(false);
+    const [user, setUser] = useState(null);
+        useEffect(() => {
+            const storedUser = localStorage.getItem("user");
+            if (!storedUser) {
+                navigate("/");
+            } else {
+                setUser(JSON.parse(storedUser));
+            }
+        }, [navigate]);
+        if (!user) return <p className="p-5 text-lg">Loading user data...</p>;
     const navClass = ({ isActive }) => isActive ? "text-blue-600 border-b-2 border-blue-600 pb-1" : "hover:text-blue-600";
 
     return (
@@ -23,7 +33,7 @@ function Navbar() {
                     <NavLink to="/content" className={navClass}>Content</NavLink>
                 </li>
             </ul>
-            <img src={Profile} alt="Profile" className="hidden md:block h-13 w-13 rounded-full cursor-pointer object-cover" onClick={() => navigate("/profile")} />
+            <img src={`http://localhost:5000/uploads/${user.image}`} alt="Profile" className="hidden md:block h-13 w-13 rounded-full cursor-pointer object-cover" onClick={() => navigate("/profile")} />
             <button className="md:hidden" onClick={() => setOpen(!open)}>
                 {open ? <X size={28} /> : <Menu size={28} />}
             </button>

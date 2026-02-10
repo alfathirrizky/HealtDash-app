@@ -2,6 +2,7 @@ import db from "../db.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import { image } from "framer-motion/client";
 dotenv.config();
 
 export const login = async (req, res) => {
@@ -15,7 +16,6 @@ export const login = async (req, res) => {
   try {
     console.log("STEP 1: Query user...");
     const [results] = await db
-      .promise()
       .query("SELECT * FROM users WHERE email = ?", [email]);
     console.log("STEP 2: Hasil query:", results);
 
@@ -45,7 +45,8 @@ export const login = async (req, res) => {
       token,
       user: { 
         id: user.users_id, 
-        email: user.email, 
+        email: user.email,
+        image : user.image,
         role: user.role, 
         name: user.name, 
         telepon: user.telepon, 

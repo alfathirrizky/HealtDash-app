@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import multer from "multer";
 import fs from "fs";
 import path from "path";
+import bcrypt from "bcryptjs";
 
 const router = express.Router();
 
@@ -74,10 +75,11 @@ router.post("/", async (req, res) => {
     if (!image) {
       return res.status(400).json({ message: "Image required" });
     }
+    const hashedPassword = await bcrypt.hash(password, 10);
     const id = uuidv4();
     await db.query(
       "INSERT INTO users (id, image, telepon, name, email, position, gender, password, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-      [id, image, telepon, name, email, position, gender, password, role],
+      [id, image, telepon, name, email, position, gender, hashedPassword, role],
     );
     const [rows] = await db.query("SELECT * FROM users WHERE id = ?", [id]);
     res.status(201).json(rows[0]);
@@ -113,6 +115,12 @@ router.put("/:id", async (req, res) => {
       if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
       filename = image;
     }
+
+    let finalPassword = rows[0].password;
+    if (password && password !== "") {
+      finalPassword = await bcrypt.hash(password, 10);
+    }
+
     await db.query(
       "UPDATE users SET image=?, telepon=?, name=?, email=?, position=?, gender=?, password=?, role=? WHERE id=?",
       [
@@ -122,7 +130,7 @@ router.put("/:id", async (req, res) => {
         email,
         position,
         gender,
-        password,
+        finalPassword,
         role,
         req.params.id,
       ],
