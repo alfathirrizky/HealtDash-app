@@ -9,6 +9,7 @@ function Sidebar() {
         { name: "Question", path: "/question" },
         { name: "User", path: "/user" },
         { name: "Survei", path: "/surveiDash" },
+        { name: "Suggestion", path: "/suggestion" },
     ];
     return(
         <div className=" flex flex-col bg-white shadow-md w-64 min-w-64 h-screen p-5">
