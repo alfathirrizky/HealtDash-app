@@ -14,31 +14,19 @@ export default function SuggestioPage() {
                     <Table>
                         <TableHeader>
                             <TableRow className="bg-blue-50 border-b border-blue-100">
-                                <TableHead className="text-blue-600 font-semibold">Image</TableHead>
-                                <TableHead className="text-blue-600 font-semibold">Caption</TableHead>
-                                <TableHead className="text-blue-600 font-semibold">Description</TableHead>
-                                <TableHead className="text-blue-600 font-semibold">Action</TableHead>
+                                <TableHead className="text-blue-600 font-semibold">Username</TableHead>
+                                <TableHead className="text-blue-600 font-semibold">Message</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {suggestions.length > 0 ? (
-                                suggestions.map((content) => (
+                                suggestions.map((suggestion) => (
                                     <TableRow
-                                        key={content.id}
+                                        key={suggestion.sugestion_id}
                                         className="hover:bg-blue-50 transition border-b border-gray-400"
                                     >
-                                        <TableCell>
-                                            <img
-                                                src={`http://localhost:5000/uploads/${content.image}`}
-                                                alt={content.caption}
-                                                className="w-40 h-20 object-cover"
-                                                onError={(e) => {
-                                                    e.currentTarget.src = "/no-image.png";
-                                                }}
-                                            />
-                                        </TableCell>
-                                        <TableCell>{content.caption}</TableCell>
-                                        <TableCell>{content.description}</TableCell>
+                                        <TableCell>{suggestion.name}</TableCell>
+                                        <TableCell>{suggestion.pesan}</TableCell>
                                     </TableRow>
                                 ))
                             ) : (

@@ -7,7 +7,7 @@ const router = express.Router();
 //get all suggestions
 router.get('/', async(req, res) => {
     try {
-        const [results] = await db.query('SELECT * FROM sugestions');
+        const [results] = await db.query(`SELECT sugestions.sugestion_id, sugestions.pesan, sugestions.created_at, users.name FROM sugestions JOIN users ON sugestions.user_id = users.id ORDER BY sugestions.created_at DESC`);
         res.json(results);
     } catch (error) {
         console.error('❌ Error fetching sugestions:', error);
@@ -51,3 +51,4 @@ router.delete('/:id', async(req, res)=>{
     }
 })
 
+export default router;

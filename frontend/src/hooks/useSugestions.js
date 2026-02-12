@@ -1,5 +1,5 @@
 import API from "@/api/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function useSuggestions() {
     const [suggestions, setSuggestions] = useState([]);
@@ -11,6 +11,9 @@ export default function useSuggestions() {
             console.error("Error fetching suggestions:", error);
         }
     }
+    useEffect(()=>{
+        fetchSuggestions();
+    }, []);
     return {
         suggestions,
         fetchSuggestions
