@@ -10,6 +10,7 @@ import authRoutes from "./routes/auth.js";
 import galleryRoutes from "./routes/gallery.js";
 import dotenv from "dotenv";
 import surveyRoutes from "./routes/survey.js";
+import sugestionRoutes from "./routes/sugestions.js";
 import path from "path";
 
 dotenv.config();
@@ -45,6 +46,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/gallery", galleryRoutes);
 // Semua endpoint surveys diawali /surveys
 app.use("/api/surveys", surveyRoutes);
+// Semua endpoint sugestions diawali /suggestions
+app.use("/api/suggestions", sugestionRoutes);
 
 // Jalankan server
 app.listen(PORT, () => {
