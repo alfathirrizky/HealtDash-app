@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AOS from "aos";
+import axios from "axios";
 import "aos/dist/aos.css";
 import CardSwap, { Card } from "../components/CardSwap"
 import SpotlightCard from '../components/SpotlightCard';
@@ -9,6 +10,25 @@ import imgComponent from "../assets/image-sugestion.png";
 
 function HomePage() {
     const navigate = useNavigate();
+    const [pesan, setPesan] =  useState("");
+    const submit = async () => {
+        try {
+            const token = localStorage.getItem("token");
+            await axios.post(
+        "http://localhost:5000/api/suggestions",
+        { pesan },
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+            }
+        );
+        alert("Saran berhasil dikirim!");
+        setPesan("");
+        } catch (error) {
+            console.error("Error submitting suggestion:", error);
+        }
+    }
     useEffect(() => {
         AOS.init({
             duration: 1000
@@ -141,8 +161,8 @@ function HomePage() {
                     <div className="flex flex-col w-2xl gap-5">
                         <h2 className=" text-4xl font-bold">Saran & Masukan</h2>
                         <p className=" text-lg text-slate-500">Bantu kami menciptakan lingkungan kerja yang lebih sehat. Gunakan kolom ini untuk menyampaikan aspirasi atau kondisi mental Anda sebagai bahan evaluasi rutin manajemen.</p>
-                        <input type="text" name="" id="" placeholder="Isi Saran dan masukanmu disini" className="py-3 px-6 border border-slate-300 shadow-md rounded-3xl"/>
-                        <button type="submit" className="bg-blue-500 rounded-2xl text-white font-medium w-40 p-1">Send</button>
+                        <input type="text" value={pesan} onChange={(e) => setPesan(e.target.value)} id="" placeholder="Isi Saran dan masukanmu disini" className="py-3 px-6 border border-slate-300 shadow-md rounded-3xl"/>
+                        <button type="submit" className="bg-blue-500 rounded-2xl text-white font-medium w-40 p-1" onClick={submit}>Send</button>
                     </div>
                 </div>
             </section>
