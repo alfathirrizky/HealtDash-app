@@ -8,7 +8,7 @@ import axios from "axios";
 export default function SurveiContentPage() {
     const { id } = useParams();
     const { questions } = useQuestions();
-    const [answers, setAnswers] = useState([]);
+    const [answers, setAnswers] = useState({});
     const filteredQuestions = Array.isArray(questions) ? questions.filter((q) => String(q.survey_id) === String(id)) : [];
     const handleChange = (question_id, answer) => {
         setAnswers(prev => ({
@@ -17,24 +17,35 @@ export default function SurveiContentPage() {
         }));
     };
 
-    const handleSubmit = async () => {
-        try {
-            const formattedAnswers = Object.keys(answers).map((key) => ({
-                question_id: key,
-                answer: answers[key],
-            }));
+const handleSubmit = async () => {
+    try {
+        const token = localStorage.getItem("token");
 
-            await axios.post("http://localhost:5000/api/answers/submit", {
+        const formattedAnswers = Object.keys(answers).map((key) => ({
+            question_id: key,
+            answer: answers[key],
+        }));
+
+        await axios.post(
+            "http://localhost:5000/api/answers/submit",
+            {
                 survey_id: id,
                 answers: formattedAnswers,
-            });
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
 
-            alert("Survey submitted successfully!");
-        } catch (error) {
-            console.error(error);
-            alert("Failed to submit survey");
-        }
-    };
+        alert("Survey submitted successfully!");
+    } catch (error) {
+        console.error(error);
+        alert("Failed to submit survey");
+    }
+};
+
 
     return (
         <div className="mt-23 p-5 flex flex-col gap-5 h-full">
