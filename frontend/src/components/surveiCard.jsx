@@ -1,4 +1,4 @@
-function SurveiCard({ name, label }) {
+function SurveiCard({ name, label, onChange }) {
     return (
         <div className="p-5 rounded-2xl shadow-md bg-white">
             <div className="mb-6">
@@ -12,6 +12,7 @@ function SurveiCard({ name, label }) {
                     type="radio"
                     name={name}
                     value={val}
+                    onChange={(e) => onChange(e.target.value)}
                     className="text-blue-500 focus:ring-blue-400"
                     />
                     <span className="text-sm mt-1">{val}</span>

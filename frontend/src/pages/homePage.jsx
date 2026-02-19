@@ -15,7 +15,7 @@ function HomePage() {
         try {
             const token = localStorage.getItem("token");
             await axios.post(
-        "http://localhost:5000/api/suggestions",
+                "http://localhost:5000/api/suggestions",
         { pesan },
         {
             headers: {
@@ -66,7 +66,7 @@ function HomePage() {
                 </div>
             </section>
             <section className="flex items-center justify-between px-80">
-                <div className="w-2xl">
+                <div className="w-2xl mt-50">
                     <h1 className="text-xl md:text-3xl font-bold mb-4">Why Mental Health Matters at Work?</h1>
                     <p>Mental health directly affects focus, motivation, and work performance. By supporting employee wellbeing, the company helps create a healthier and more productive work environment.</p>
                     <div className="mt-4 grid grid-cols-2 gap-4">
