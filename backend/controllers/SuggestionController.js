@@ -6,21 +6,38 @@ class SuggestionController {
         const data = await SuggestionService.getAllSuggestions();
         res.json(data);
         } catch (error) {
-        console.error(error);
         res.status(500).json({ error: "Internal Server Error" });
         }
     }
 
-    static async submit(req, res) {
+    static async getById(req, res) {
         try {
-        const { survey_id, answers } = req.body;
+        const data = await SuggestionService.getSuggestionById(req.params.id);
+        res.json(data);
+        } catch (error) {
+        res.status(404).json({ message: error.message });
+        }
+    }
+
+    static async create(req, res) {
+        try {
         const user_id = req.user.id;
+        const { pesan } = req.body;
 
-        await SuggestionService.submitSuggestion(survey_id, user_id, answers);
+        const data = await SuggestionService.createSuggestion(user_id, pesan);
 
-        res.status(200).json({ message: "Survey submitted successfully" });
+        res.status(201).json(data);
         } catch (error) {
         res.status(400).json({ message: error.message });
+        }
+    }
+
+    static async delete(req, res) {
+        try {
+        await SuggestionService.deleteSuggestion(req.params.id);
+        res.json({ message: "Suggestion deleted successfully" });
+        } catch (error) {
+        res.status(404).json({ message: error.message });
         }
     }
 }

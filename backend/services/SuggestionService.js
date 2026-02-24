@@ -1,23 +1,41 @@
-import Suggestion from "../models/Suggestions.js";
+import { v4 as uuidv4 } from "uuid";
+import Suggestion from "../models/Suggestion.js";
 
 class SuggestionService {
     static async getAllSuggestions() {
-        return await Suggestion.getAll();
+        return await Suggestion.findAll();
     }
 
-    static async submitSuggestion(survey_id, user_id, answers) {
-        if (!survey_id || !answers || !Array.isArray(answers)) {
-            throw new Error("Invalid data");
+    static async getSuggestionById(id) {
+        const suggestion = await Suggestion.findById(id);
+        if (!suggestion) {
+        throw new Error("Suggestion not found");
+        }
+        return suggestion;
+    }
+
+    static async createSuggestion(user_id, pesan) {
+        if (!pesan) {
+        throw new Error("Pesan is required");
         }
 
-    const values = Suggestions.map((item) => [
-        survey_id,
-        item.question_id,
+        const data = {
+        sugestion_id: uuidv4(),
         user_id,
-        item.answer,
-    ]);
+        pesan,
+        };
 
-    return await Suggestion.bulkInsert(values);
+        return await Suggestion.create(data);
+    }
+
+    static async deleteSuggestion(id) {
+        const suggestion = await Suggestion.findById(id);
+        if (!suggestion) {
+        throw new Error("Suggestion not found");
+        }
+
+        await Suggestion.delete(id);
+        return true;
     }
 }
 

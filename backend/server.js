@@ -1,17 +1,17 @@
 import express from "express";
 import db from "./db.js";
 import cors from "cors";
+import { PORT } from "./config/index.js";
+import dotenv from "dotenv";
+import path from "path";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import questionRoutes from "./routes/question.js";
+import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/user.js";
 import answerRoutes from "./routes/answer.js";
-import { PORT } from "./config/index.js";
-import authRoutes from "./routes/auth.js";
 import galleryRoutes from "./routes/gallery.js";
-import dotenv from "dotenv";
 import surveyRoutes from "./routes/survey.js";
-import sugestionRoutes from "./routes/sugestions.js";
-import path from "path";
+import SuggestionRoute from "../backend/routes/SuggestionRoute.js"
 
 dotenv.config();
 const app = express();
@@ -47,7 +47,7 @@ app.use("/api/gallery", galleryRoutes);
 // Semua endpoint surveys diawali /surveys
 app.use("/api/surveys", surveyRoutes);
 // Semua endpoint sugestions diawali /suggestions
-app.use("/api/suggestions", sugestionRoutes);
+app.use("/api/suggestions", SuggestionRoute);
 
 // Jalankan server
 app.listen(PORT, () => {
