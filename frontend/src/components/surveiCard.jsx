@@ -1,8 +1,8 @@
 function SurveiCard({ label, onChange, question_id }) {
     return (
-        <div className="p-5 rounded-2xl shadow-md bg-white">
-            <div className="mb-6">
-                <label className="block text-gray-700 font-semibold mb-5 text-md">
+        <div className="p-6 sm:p-8 rounded-2xl border border-slate-200 bg-white transition-all hover:border-blue-300 hover:shadow-md">
+            <div className="mb-2">
+                <label className="block text-gray-800 font-bold mb-6 text-lg leading-relaxed">
                     {label}
                 </label>
 
