@@ -9,12 +9,16 @@ export const Card = forwardRef(({ customClass, ...rest }, ref) => (
 ));
 Card.displayName = 'Card';
 
-const makeSlot = (i, distX, distY, total) => ({
-  x: i * distX,
-  y: -i * distY,
-  z: -i * distX * 1.5,
-  zIndex: total - i
-});
+const makeSlot = (i, distX, distY, total) => {
+  const offsetX = -((total - 1) * distX) / 2;
+  const offsetY = ((total - 1) * distY) / 2;
+  return {
+    x: i * distX + offsetX,
+    y: -i * distY + offsetY,
+    z: -i * distX * 1.5,
+    zIndex: total - i
+  };
+};
 
 const placeNow = (el, slot, skew) =>
   gsap.set(el, {
@@ -166,7 +170,7 @@ const CardSwap = ({
   return (
     <div
       ref={container}
-      className="absolute bottom-0 right-0 transform translate-x-[5%] translate-y-[20%] origin-bottom-right perspective-[900px] overflow-visible max-[768px]:translate-x-[25%] max-[768px]:translate-y-[25%] max-[768px]:scale-[0.75] max-[480px]:translate-x-[25%] max-[480px]:translate-y-[25%] max-[480px]:scale-[0.55]"
+      className="relative mx-auto flex items-center justify-center perspective-[900px] overflow-visible max-[768px]:scale-[0.8] max-[480px]:scale-[0.6] origin-center"
       style={{ width, height }}>
       {rendered}
     </div>

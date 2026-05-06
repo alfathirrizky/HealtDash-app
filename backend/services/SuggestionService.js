@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import Suggestion from "../models/Suggestion.js";
+import Suggestion from "../models/Suggestions.js";
 
 class SuggestionService {
     static async getAllSuggestions() {
