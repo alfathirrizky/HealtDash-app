@@ -5,7 +5,6 @@ function SurveiCard({ label, onChange, question_id }) {
                 <label className="block text-gray-800 font-bold mb-6 text-lg leading-relaxed">
                     {label}
                 </label>
-
                 <div className="flex flex-row gap-4">
                     {[1,2,3,4,5].map((val) => (
                         <label key={val} className="flex items-center gap-2 text-center">
