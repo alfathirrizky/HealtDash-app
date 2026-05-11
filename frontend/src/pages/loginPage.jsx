@@ -5,6 +5,7 @@ import Bg from "../assets/hero.jpg";
 import Logo from "../assets/injourney-logo.png";
 import Api from "../api/api.js";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 function LoginPage() {
     const [showPassword, setShowPassword] = useState(false);
@@ -46,7 +47,13 @@ function LoginPage() {
     };
 
     return (
-        <div className="flex flex-col md:flex-row">
+        <motion.div 
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="flex flex-col md:flex-row min-h-screen"
+        >
             <div className="hidden md:block h-screen w-full">
                 <img src={Bg} alt="Background" className="h-screen w-full object-cover rounded-r-2xl" />
             </div>
@@ -131,7 +138,7 @@ function LoginPage() {
                     <p className="text-gray-500 text-xs">© 2026 InJourney. All rights reserved.</p>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 }
 
