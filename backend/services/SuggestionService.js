@@ -1,42 +1,70 @@
 import { v4 as uuidv4 } from "uuid";
-import Suggestion from "../models/Suggestions.js";
 
 class SuggestionService {
-    static async getAllSuggestions() {
-        return await Suggestion.findAll();
+  /**
+   * @param {Object} suggestionModel - Injected SuggestionModel instance
+   */
+  constructor(suggestionModel) {
+    this.suggestionModel = suggestionModel;
+  }
+
+  /**
+   * Mendapatkan semua saran
+   * @returns {Promise<Array>}
+   */
+  async getAllSuggestions() {
+    return await this.suggestionModel.findAll();
+  }
+
+  /**
+   * Mendapatkan saran berdasarkan ID dengan penanganan error
+   * @param {string} id 
+   * @returns {Promise<Object>}
+   */
+  async getSuggestionById(id) {
+    const suggestion = await this.suggestionModel.findById(id);
+    if (!suggestion) {
+      const error = new Error("Suggestion not found");
+      error.statusCode = 404;
+      throw error;
+    }
+    return suggestion;
+  }
+
+  /**
+   * Membuat saran baru
+   * @param {string} userId 
+   * @param {string} pesan 
+   * @returns {Promise<Object>}
+   */
+  async createSuggestion(userId, pesan) {
+    if (!pesan) {
+      const error = new Error("Pesan is required");
+      error.statusCode = 400;
+      throw error;
     }
 
-    static async getSuggestionById(id) {
-        const suggestion = await Suggestion.findById(id);
-        if (!suggestion) {
-        throw new Error("Suggestion not found");
-        }
-        return suggestion;
-    }
+    const data = {
+      id: uuidv4(),
+      user_id: userId,
+      pesan,
+    };
 
-    static async createSuggestion(user_id, pesan) {
-        if (!pesan) {
-        throw new Error("Pesan is required");
-        }
+    return await this.suggestionModel.create(data);
+  }
 
-        const data = {
-        sugestion_id: uuidv4(),
-        user_id,
-        pesan,
-        };
-
-        return await Suggestion.create(data);
-    }
-
-    static async deleteSuggestion(id) {
-        const suggestion = await Suggestion.findById(id);
-        if (!suggestion) {
-        throw new Error("Suggestion not found");
-        }
-
-        await Suggestion.delete(id);
-        return true;
-    }
+  /**
+   * Menghapus saran berdasarkan ID
+   * @param {string} id 
+   * @returns {Promise<boolean>}
+   */
+  async deleteSuggestion(id) {
+    // Memastikan data ada sebelum dihapus
+    await this.getSuggestionById(id);
+    
+    await this.suggestionModel.delete(id);
+    return true;
+  }
 }
 
 export default SuggestionService;
