@@ -4,55 +4,47 @@ import { useNavigate } from 'react-router-dom';
 export default function SurveiPage() {
     const { surveys } = useSurvey();
     const navigate = useNavigate();
-
     return (
-        <div className="pt-24 md:pt-32 pb-16 px-6 md:px-12 w-full min-h-screen overflow-y-auto scrollbar-none">
+        <div className="pt-24 md:pt-32 pb-16 px-6 md:px-12 w-full min-h-screen overflow-y-auto scrollbar-none bg-[#f8f9fa]">
             {/* Grid Cards Section */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-[1400px] mx-auto">
                 {surveys.map((survey) => (
                     <div 
                         key={survey.id} 
-                        className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden flex flex-col hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group"
+                        className="bg-white rounded-3xl p-4 shadow-sm border border-slate-200 flex flex-col gap-4 hover:shadow-md transition-shadow"
                     >
                         {/* Image Section */}
-                        <div className="h-48 md:h-56 w-full overflow-hidden relative bg-slate-100">
+                        <div className="w-full h-56 md:h-64 lg:h-72 overflow-hidden rounded-2xl relative">
                             <img 
                                 src={`http://localhost:5000/uploads/${survey.image}`} 
                                 alt={survey.title} 
-                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                className="w-full h-full object-cover"
                                 onError={(e) => {
-                                    e.target.src = 'https://via.placeholder.com/400x300?text=No+Image'
+                                    e.target.src = 'https://via.placeholder.com/600x300?text=No+Image'
                                 }}
                             />
-                            {/* Overlay Gradient */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-80"></div>
                         </div>
 
                         {/* Content Section */}
-                        <div className="p-6 flex flex-col flex-grow">
-                            <h2 className="text-xl md:text-2xl font-bold text-slate-800 mb-3 line-clamp-2">
-                                {survey.title}
-                            </h2>
-                            <p className="text-sm text-slate-500 mb-6 line-clamp-3 flex-grow leading-relaxed">
-                                {survey.caption}
-                            </p>
-                            
-                            <div className="mt-auto pt-2">
-                                <button 
-                                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-xl font-semibold transition-colors flex items-center justify-center gap-2 shadow-md shadow-blue-500/20 active:scale-95"
-                                    onClick={() => navigate(`/survei/${survey.id}`)}
-                                >
-                                    Mulai Survey
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                    </svg>
-                                </button>
+                        <div className="flex justify-between items-center px-2 pb-2 pt-1">
+                            <div className="flex flex-col">
+                                <h2 className="text-xl font-extrabold text-slate-800">
+                                    {survey.title}
+                                </h2>
+                                <p className="text-sm text-slate-500 mt-1 line-clamp-1 font-medium">
+                                    {survey.caption}
+                                </p>
                             </div>
+                            <button 
+                                className="bg-[#4880FF] hover:bg-blue-600 text-white px-8 py-2.5 rounded-full text-sm font-bold transition-colors flex-shrink-0 ml-4 shadow-sm"
+                                onClick={() => navigate(`/survei/${survey.id}`)}
+                            >
+                                Isi Survei
+                            </button>
                         </div>
                     </div>
                 ))}
             </div>
-            
             {/* Empty State */}
             {surveys.length === 0 && (
                 <div className="flex flex-col items-center justify-center py-20 text-slate-400">
