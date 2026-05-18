@@ -97,7 +97,6 @@ export default function UserPage() {
                                 <TableHead className="text-blue-600 font-semibold">Position</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Gender</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Role</TableHead>
-                                <TableHead className="text-blue-600 font-semibold">Password</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Actions</TableHead>
                             </TableRow>
                         </TableHeader>
@@ -117,7 +116,6 @@ export default function UserPage() {
                                         <TableCell>{user.position}</TableCell>
                                         <TableCell>{user.gender}</TableCell>
                                         <TableCell>{user.role}</TableCell>
-                                        <TableCell>{user.password}</TableCell>
                                         <TableCell className="space-x-2">
                                             <Button
                                                 size="sm"
