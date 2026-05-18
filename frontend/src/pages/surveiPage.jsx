@@ -6,9 +6,9 @@ export default function SurveiPage() {
     const navigate = useNavigate();
 
     return (
-        <div className="pt-24 md:pt-32 pb-16 px-6 md:px-12 max-w-7xl mx-auto min-h-screen overflow-y-auto scrollbar-none">
+        <div className="pt-24 md:pt-32 pb-16 px-6 md:px-12 w-full min-h-screen overflow-y-auto scrollbar-none">
             {/* Grid Cards Section */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 {surveys.map((survey) => (
                     <div 
                         key={survey.id} 
