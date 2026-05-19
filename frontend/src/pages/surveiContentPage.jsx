@@ -1,15 +1,19 @@
 import SurveiCard from "../components/surveiCard";
 import useQuestions from "../hooks/useQuestions";
-import { useParams } from "react-router-dom";
-import Load from "../components/load"
+import { useParams, useNavigate } from "react-router-dom";
+import Load from "../components/load";
 import { useState } from "react";
-import axios from "axios";
+import API from "../api/api";
+import { toast } from "sonner";
 
 export default function SurveiContentPage() {
     const { id } = useParams();
     const { questions } = useQuestions();
     const [answers, setAnswers] = useState({});
+    const navigate = useNavigate();
+    
     const filteredQuestions = Array.isArray(questions) ? questions.filter((q) => String(q.survey_id) === String(id)) : [];
+    
     const handleChange = (question_id, answer) => {
         setAnswers(prev => ({
             ...prev,
@@ -19,30 +23,26 @@ export default function SurveiContentPage() {
 
 const handleSubmit = async () => {
     try {
-        const token = localStorage.getItem("token");
-
         const formattedAnswers = Object.keys(answers).map((key) => ({
             question_id: key,
             answer: answers[key],
         }));
 
-        await axios.post(
-            "http://localhost:5000/api/answers/submit",
-            {
-                survey_id: id,
-                answers: formattedAnswers,
-            },
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            }
-        );
+        if (formattedAnswers.length === 0) {
+            toast.error("Silakan isi setidaknya satu pertanyaan sebelum mengirim survei.");
+            return;
+        }
 
-        alert("Survey submitted successfully!");
+        await API.post("/answers/submit", {
+            survey_id: id,
+            answers: formattedAnswers,
+        });
+
+        toast.success("Survei berhasil disubmit!");
+        navigate("/profile");
     } catch (error) {
         console.error(error);
-        alert("Failed to submit survey");
+        toast.error("Gagal mengirim survei.");
     }
 };
 

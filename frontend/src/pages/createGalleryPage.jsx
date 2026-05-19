@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
 import { Link, useNavigate } from "react-router-dom"
 import useGallery from "../hooks/useGallery"
@@ -25,8 +26,12 @@ export default function CreateGalleryPage() {
     const { form, handleChange, handleCreate, setForm } = useGallery()
     const navigate = useNavigate()
     const submit = async () => {
-        await handleCreate()
-        navigate("/galleryDash") // kembali ke halaman user setelah create
+        try {
+            await handleCreate()
+            navigate("/galleryDash") // kembali ke halaman user setelah create
+        } catch (err) {
+            console.error("Submit failed:", err)
+        }
     }
 
     return(
@@ -89,7 +94,7 @@ export default function CreateGalleryPage() {
                         </div>
                         <div className="flex flex-col gap-1">
                             <h1 className="font-semibold">Description</h1>
-                            <Input type="textarea" name="description" placeholder="Description" value={form.description} onChange={handleChange} className="border border-gray-400"/>
+                            <Textarea name="description" placeholder="Description" value={form.description} onChange={handleChange} className="border border-gray-400"/>
                         </div>
                     </div>
                     <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white" onClick={submit}>

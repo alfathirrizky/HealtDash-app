@@ -2,7 +2,7 @@ import db from "../db.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import { image } from "framer-motion/client";
+
 dotenv.config();
 
 export const login = async (req, res) => {
@@ -35,7 +35,7 @@ export const login = async (req, res) => {
 
     const token = jwt.sign(
       { id: user.id, email: user.email, role: user.role },
-      process.env.JWT_SECRET,
+      process.env.JWT_SECRET || "default_secret_key_123",
       { expiresIn: "12h" }
     );
 

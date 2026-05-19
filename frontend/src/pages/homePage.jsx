@@ -13,7 +13,7 @@ function HomePage() {
     const [pesan, setPesan] =  useState("");
     const submit = async () => {
         try {
-            const token = localStorage.getItem("token");
+            const token = sessionStorage.getItem("token");
             await axios.post(
                 "http://localhost:5000/api/suggestions",
         { pesan },

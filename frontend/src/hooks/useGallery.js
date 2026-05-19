@@ -44,12 +44,23 @@ function useContent() {
   };
 
   const handleCreate = async () => {
-    toast.success("User berhasil dibuat");
-    await API.post("/gallery", {
-      caption: form.caption,
-      description: form.description,
-      image: form.image, 
-    });
+    try {
+      const storedUser = sessionStorage.getItem("user");
+      const user = storedUser ? JSON.parse(storedUser) : null;
+      const user_id = user?.id || null;
+
+      await API.post("/gallery", {
+        caption: form.caption,
+        description: form.description,
+        image: form.image, 
+        user_id: user_id
+      });
+      toast.success("Gallery berhasil dibuat ✅");
+    } catch (err) {
+      console.error(err);
+      toast.error("Gagal membuat gallery ❌");
+      throw err; // throw error so the caller can know it failed
+    }
   };
 
   const handleUpdate = async () => {
@@ -72,7 +83,7 @@ function useContent() {
   };
 
   const handleDelete = async (id) => {
-    toast.error("User berhasil dihapus.");
+    toast.success("Gallery berhasil dihapus.");
     await API.delete(`/gallery/${id}`);
     fetchContent();
   };

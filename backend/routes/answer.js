@@ -14,6 +14,22 @@ router.get("/api/answer", async (req, res) => {
   }
 });
 
+router.get("/history/:user_id", async (req, res) => {
+  try {
+    const { user_id } = req.params;
+    const [rows] = await db.query(`
+      SELECT DISTINCT s.id, s.title, s.image, s.caption 
+      FROM answers a
+      JOIN surveys s ON a.survey_id = s.id
+      WHERE a.user_id = ?
+    `, [user_id]);
+    res.json(rows);
+  } catch (error) {
+    console.error("❌ Error fetching survey history:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 router.post("/submit", verifyToken, async (req, res) => {
   try {
     const { survey_id, answers } = req.body; // <-- WAJIB ADA
