@@ -2,3 +2,29 @@
 .scrollbar-none::-webkit-scrollbar {
   display: none;
 }
+
+@media print {
+  /* Sembunyikan sidebar dan elemen non-cetak secara mutlak */
+  aside,
+  nav,
+  .print\:hidden,
+  div[class*="w-64"] {
+    display: none !important;
+  }
+
+  /* Buat agar main content mengambil lebar penuh dan tidak terpotong */
+  main,
+  .flex-1 {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+  }
+
+  /* Bersihkan warna latar belakang untuk cetakan optimal */
+  body, html {
+    background-color: white !important;
+    color: #1e293b !important;
+  }
+}

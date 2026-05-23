@@ -5,7 +5,6 @@ function SurveiCard({ label, onChange, question_id }) {
                 <h3 className="text-gray-800 font-semibold mb-6 text-lg md:text-xl leading-relaxed">
                     {label}
                 </h3>
-                
                 <div className="flex justify-between text-xs font-medium text-slate-400 mb-3 px-1 md:w-3/4 lg:w-1/2">
                     <span>Sangat Rendah (1)</span>
                     <span>Sangat Tinggi (5)</span>
@@ -13,8 +12,8 @@ function SurveiCard({ label, onChange, question_id }) {
 
                 <div className="flex flex-row justify-between sm:justify-start gap-2 sm:gap-6 md:w-3/4 lg:w-1/2">
                     {[1, 2, 3, 4, 5].map((val) => (
-                        <label 
-                            key={val} 
+                        <label
+                            key={val}
                             className="relative flex items-center justify-center cursor-pointer group flex-1 sm:flex-none"
                             title={`Pilih nilai ${val}`}
                         >
