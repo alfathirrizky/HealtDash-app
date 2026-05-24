@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AOS from "aos";
 import axios from "axios";
+import { toast } from "sonner";
 import "aos/dist/aos.css";
 import CardSwap, { Card } from "../components/CardSwap"
 import SpotlightCard from '../components/SpotlightCard';
@@ -12,21 +13,27 @@ function HomePage() {
     const navigate = useNavigate();
     const [pesan, setPesan] =  useState("");
     const submit = async () => {
+        if (!pesan.trim()) {
+            toast.error("Saran tidak boleh kosong!");
+            return;
+        }
+
         try {
             const token = sessionStorage.getItem("token");
             await axios.post(
                 "http://localhost:5000/api/suggestions",
-        { pesan },
-        {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-            }
-        );
-        alert("Saran berhasil dikirim!");
-        setPesan("");
+                { pesan },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+            toast.success("Saran berhasil dikirim!");
+            setPesan("");
         } catch (error) {
             console.error("Error submitting suggestion:", error);
+            toast.error("Gagal mengirim saran. Silakan coba lagi.");
         }
     }
     useEffect(() => {
@@ -145,35 +152,70 @@ function HomePage() {
             
             <section className="features flex flex-col items-center justify-center gap-5 mt-24 px-5 mb-10">
                 <div className="container flex flex-col justify-center items-center mx-auto px-4 py-8 mb-4">
-                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-center text-gray-900">Features</h2>
-                    <p className="text-center text-sm md:text-base text-slate-600 max-w-2xl">Our mental health facility offers a range of features to support employee wellbeing:</p>
+                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-center text-gray-900">Cara Menggunakan Fitur</h2>
+                    <p className="text-center text-sm md:text-base text-slate-600 max-w-2xl">Ikuti panduan langkah demi langkah berikut untuk memanfaatkan seluruh fitur kesehatan mental yang tersedia di website ini:</p>
                 </div>
-                <div className="w-full max-w-2xl px-4">
+                <div className="w-full max-w-4xl px-4">
                     <Stepper
                     initialStep={1}
                     onStepChange={(step) => {
                         console.log(step);
                     }}
                     onFinalStepCompleted={() => console.log("All steps completed!")}
-                    backButtonText="Previous"
-                    nextButtonText="Next"
+                    backButtonText="Sebelumnya"
+                    nextButtonText="Selanjutnya"
                     >
                         <Step>
-                            <h3 className="text-xl font-bold mb-4 text-gray-800">Welcome to the Platform!</h3>
-                            <p className="text-slate-600 leading-relaxed">Explore the features designed to support your mental wellbeing.</p>
+                            <div className="flex flex-col items-center text-center p-4">
+                                <div className="w-16 h-16 bg-blue-50 text-blue-500 rounded-2xl flex items-center justify-center shadow-sm mb-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                                    </svg>
+                                </div>
+                                <h3 className="text-xl font-bold mb-2 text-gray-800">1. Eksplorasi Beranda & Dashboard</h3>
+                                <p className="text-slate-600 leading-relaxed text-sm md:text-base">
+                                    Setelah masuk ke platform, mulailah dengan menjelajahi halaman utama (Home). Di sini Anda dapat mempelajari manfaat fasilitas, memahami tujuan pentingnya kesehatan mental kerja, serta mengakses navigasi fitur lainnya.
+                                </p>
+                            </div>
                         </Step>
                         <Step>
-                            <h3 className="text-xl font-bold mb-4 text-gray-800">Daily Check-ins</h3>
-                            <img className="h-48 w-full object-cover rounded-2xl shadow-sm my-4" src="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80&w=1000&auto=format&fit=crop" alt="Daily Check-ins" />
-                            <p className="text-slate-600 leading-relaxed">Track your mood and stress levels on a daily basis to identify patterns.</p>
+                            <div className="flex flex-col items-center text-center p-4">
+                                <div className="w-16 h-16 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center shadow-sm mb-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.03 0 1.9.693 2.166 1.638m-7.377 12.408l-2.083-2.083m0 0l.551-.551a3 3 0 013.536 0l1.201 1.202m0 0l-.396.396A1.5 1.5 0 0110.5 18H9z" />
+                                    </svg>
+                                </div>
+                                <h3 className="text-xl font-bold mb-2 text-gray-800">2. Isi Survei Kesehatan Mental</h3>
+                                <p className="text-slate-600 leading-relaxed text-sm md:text-base">
+                                    Buka halaman <strong>Survei</strong> melalui menu di atas atau klik tombol <em>Get Started</em>. Pilih survei kesehatan mental yang tersedia, lalu isi kuesioner dengan jujur. Data hasil survei Anda dijamin aman dan rahasia.
+                                </p>
+                            </div>
                         </Step>
                         <Step>
-                            <h3 className="text-xl font-bold mb-4 text-gray-800">Resources & Guides</h3>
-                            <p className="text-slate-600 leading-relaxed">Access a library of articles, videos, and exercises to help you manage stress.</p>
+                            <div className="flex flex-col items-center text-center p-4">
+                                <div className="w-16 h-16 bg-purple-50 text-purple-500 rounded-2xl flex items-center justify-center shadow-sm mb-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                                    </svg>
+                                </div>
+                                <h3 className="text-xl font-bold mb-2 text-gray-800">3. Akses Edukasi & Tips Kesejahteraan</h3>
+                                <p className="text-slate-600 leading-relaxed text-sm md:text-base">
+                                    Kunjungi menu <strong>Edukasi</strong> untuk mengakses kumpulan artikel bermanfaat, video edukasi, dan tips relaksasi untuk membantu Anda mengelola tingkat stres, kelelahan kerja (burnout), serta menjaga fokus.
+                                </p>
+                            </div>
                         </Step>
                         <Step>
-                            <h3 className="text-xl font-bold mb-4 text-gray-800">Ready to Start?</h3>
-                            <p className="text-slate-600 leading-relaxed">You are all set to begin your journey towards better mental wellbeing.</p>
+                            <div className="flex flex-col items-center text-center p-4">
+                                <div className="w-16 h-16 bg-rose-50 text-rose-500 rounded-2xl flex items-center justify-center shadow-sm mb-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.74.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
+                                    </svg>
+                                </div>
+                                <h3 className="text-xl font-bold mb-2 text-gray-800">4. Sampaikan Saran & Masukan</h3>
+                                <p className="text-slate-600 leading-relaxed text-sm md:text-base">
+                                    Bila Anda memiliki aspirasi, kritik, atau keluhan terkait beban kerja dan kondisi lingkungan kerja, tulis dan kirimkan secara aman melalui formulir <strong>Saran & Masukan</strong> di bagian bawah beranda ini.
+                                </p>
+                            </div>
                         </Step>
                     </Stepper>
                 </div>

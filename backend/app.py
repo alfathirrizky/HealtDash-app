@@ -16,9 +16,32 @@ from io import BytesIO
 # pyrefly: ignore [missing-import]
 import pydot
 import os
+from pydantic import BaseModel
 
+# Global Decision Tree classifier instance
+clf_model = None
+
+def train_default_model():
+    global clf_model
+    excel_path = "../data_uji_burnout.xlsx"
+    features = ["stress_level", "work_hours", "sleep_quality"]
+    target = "burnout"
+    if os.path.exists(excel_path):
+        try:
+            df = pd.read_excel(excel_path)
+            X = df[features]
+            y = df[target]
+            clf_model = DecisionTreeClassifier(max_depth=4, min_samples_split=5, min_samples_leaf=2, random_state=42)
+            clf_model.fit(X, y)
+            print("Model successfully trained on startup using data_uji_burnout.xlsx")
+        except Exception as e:
+            print(f"Error training model on startup: {e}")
 
 app = FastAPI()
+
+@app.on_event("startup")
+async def startup_event():
+    train_default_model()
 
 app.add_middleware(
     CORSMiddleware,
@@ -27,6 +50,55 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+class PredictRequest(BaseModel):
+    stress_level: int
+    work_hours: float
+    sleep_quality: int
+
+@app.post("/predict/")
+async def predict_single(req: PredictRequest):
+    global clf_model
+    if clf_model is None:
+        train_default_model()
+    if clf_model is None:
+        return {"error": "Model not trained. Please upload an Excel file first."}
+    
+    # Predict probability for class 1 (burnout)
+    row = {
+        "stress_level": req.stress_level,
+        "work_hours": req.work_hours,
+        "sleep_quality": req.sleep_quality
+    }
+    
+    df_input = pd.DataFrame([row])
+    
+    classes_list = clf_model.classes_.tolist()
+    if 1 in classes_list:
+        class_1_idx = classes_list.index(1)
+        prob = float(clf_model.predict_proba(df_input)[0, class_1_idx])
+    else:
+        prob = 0.0
+        
+    pred = int(clf_model.predict(df_input)[0])
+    
+    # Classification of risk level
+    if prob > 0.7:
+        risk_level = "Tinggi"
+    elif prob >= 0.3:
+        risk_level = "Sedang"
+    else:
+        risk_level = "Rendah"
+        
+    rec = get_proactive_recommendation(row, risk_level)
+    
+    return {
+        "risk_score": prob,
+        "risk_level": risk_level,
+        "dominant_factor": rec["dominant_factor"],
+        "recommendations": rec["recommendations"],
+        "prediction": pred
+    }
 
 # ========= Rekomendasi HRD Proaktif & Tersegmentasi =========
 def get_proactive_recommendation(row, risk_level):
@@ -122,6 +194,7 @@ def get_proactive_recommendation(row, risk_level):
 
 @app.post("/upload-excel/")
 async def upload_excel(file: UploadFile = File(...)):
+    global clf_model
     contents = await file.read()
     df = pd.read_excel(BytesIO(contents))
 
@@ -151,6 +224,7 @@ async def upload_excel(file: UploadFile = File(...)):
         clf.fit(X, y)
         accuracy = 1.0
 
+    clf_model = clf
     all_predictions = clf.predict(X).tolist()
 
     # Mendapatkan probabilitas risiko burnout untuk analisis proaktif

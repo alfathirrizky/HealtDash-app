@@ -18,19 +18,44 @@ class IdentifiedEmployee {
       risk_level,
       dominant_factor,
     } = data;
-    const [result] = await db.query(
-      "INSERT INTO identified_employees (employee_name, stress_level, work_hours, sleep_quality, risk_score, risk_level, dominant_factor) VALUES (?, ?, ?, ?, ?, ?, ?)",
-      [
-        employee_name,
-        stress_level,
-        work_hours,
-        sleep_quality,
-        risk_score,
-        risk_level,
-        dominant_factor,
-      ]
+
+    // Cek apakah karyawan dengan nama yang sama sudah ada di database
+    const [existing] = await db.query(
+      "SELECT id FROM identified_employees WHERE employee_name = ?",
+      [employee_name]
     );
-    return result;
+
+    if (existing.length > 0) {
+      // Jika sudah ada, lakukan UPDATE
+      const [result] = await db.query(
+        "UPDATE identified_employees SET stress_level = ?, work_hours = ?, sleep_quality = ?, risk_score = ?, risk_level = ?, dominant_factor = ? WHERE employee_name = ?",
+        [
+          stress_level,
+          work_hours,
+          sleep_quality,
+          risk_score,
+          risk_level,
+          dominant_factor,
+          employee_name,
+        ]
+      );
+      return result;
+    } else {
+      // Jika belum ada, lakukan INSERT
+      const [result] = await db.query(
+        "INSERT INTO identified_employees (employee_name, stress_level, work_hours, sleep_quality, risk_score, risk_level, dominant_factor) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        [
+          employee_name,
+          stress_level,
+          work_hours,
+          sleep_quality,
+          risk_score,
+          risk_level,
+          dominant_factor,
+        ]
+      );
+      return result;
+    }
   }
 
   async delete(id) {

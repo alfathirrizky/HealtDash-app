@@ -75,12 +75,19 @@ function renderCustomLabel({ cx, cy, midAngle, innerRadius, outerRadius, percent
     );
 }
 
+const CATEGORY_LABELS = {
+    'stress_level': 'Tingkat Stres Kerja',
+    'work_hours': 'Jam Kerja (Overwork)',
+    'sleep_quality': 'Kualitas Istirahat / Tidur',
+    'scale': 'Skala Umum'
+};
+
+const getCategoryLabel = (cat) => CATEGORY_LABELS[cat] || cat;
+
 function DashboardPage() {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
     const [stressData, setStressData] = useState([]);
-    const [surveys, setSurveys] = useState([]);
-    const [selectedSurvey, setSelectedSurvey] = useState('all');
     const [loading, setLoading] = useState(true);
 
     // ── Auth check ──
@@ -93,21 +100,10 @@ function DashboardPage() {
         }
     }, [navigate]);
 
-    // ── Fetch surveys list ──
-    useEffect(() => {
-        axios.get('http://localhost:5000/api/surveys')
-            .then(res => setSurveys(res.data))
-            .catch(err => console.error('Error fetching surveys:', err));
-    }, []);
-
     // ── Fetch stress factor data ──
     useEffect(() => {
         setLoading(true);
-        const url = selectedSurvey === 'all'
-            ? 'http://localhost:5000/api/answers/stress-factors'
-            : `http://localhost:5000/api/answers/stress-factors-by-survey?survey_id=${selectedSurvey}`;
-
-        axios.get(url)
+        axios.get('http://localhost:5000/api/answers/stress-factors')
             .then(res => {
                 setStressData(res.data);
                 setLoading(false);
@@ -116,13 +112,13 @@ function DashboardPage() {
                 console.error('Error fetching stress factors:', err);
                 setLoading(false);
             });
-    }, [selectedSurvey]);
+    }, []);
 
     // ── Computed stats ──
     const stats = useMemo(() => {
         if (!stressData.length) return { totalRespondents: 0, dominantFactor: '-', avgOverall: 0 };
         const totalRespondents = Math.max(...stressData.map(d => d.total_respondents || 0));
-        const dominantFactor = stressData[0]?.category || '-';
+        const dominantFactor = getCategoryLabel(stressData[0]?.category);
         const avgOverall = (stressData.reduce((sum, d) => sum + parseFloat(d.avg_score || 0), 0) / stressData.length).toFixed(2);
         return { totalRespondents, dominantFactor, avgOverall };
     }, [stressData]);
@@ -130,16 +126,16 @@ function DashboardPage() {
     // ── Radar data ──
     const radarData = useMemo(() =>
         stressData.map(d => ({
-            category: d.category,
+            category: getCategoryLabel(d.category),
             score: parseFloat(d.avg_score),
-            fullMark: 5,
+            fullMark: d.category === 'work_hours' ? 12 : 10,
         }))
         , [stressData]);
 
     // ── Pie data ──
     const pieData = useMemo(() =>
         stressData.map(d => ({
-            name: d.category,
+            name: getCategoryLabel(d.category),
             value: parseFloat(d.avg_score),
         }))
         , [stressData]);
@@ -166,31 +162,13 @@ function DashboardPage() {
                 </div>
             </motion.div>
 
-            {/* ── Survey Filter ── */}
-            <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.1 }}
-                className="mb-6 flex items-center gap-4"
-            >
-                <label className="text-sm font-semibold text-slate-600">Filter Survey:</label>
-                <select
-                    value={selectedSurvey}
-                    onChange={(e) => setSelectedSurvey(e.target.value)}
-                    className="px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-400 transition-all cursor-pointer min-w-[240px]"
-                >
-                    <option value="all">📊 Semua Survey</option>
-                    {surveys.map((s) => (
-                        <option key={s.id} value={s.id}>{s.title}</option>
-                    ))}
-                </select>
-            </motion.div>
+
 
             {/* ── Stat Cards ── */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
-                <StatCard icon="👥" label="Total Responden" value={stats.totalRespondents} color="#6366f1" delay={0.15} />
-                <StatCard icon="🔥" label="Faktor Dominan" value={stats.dominantFactor} color="#ec4899" delay={0.25} />
-                <StatCard icon="📈" label="Rata-rata Skor" value={stats.avgOverall} color="#10b981" delay={0.35} />
+                <StatCard label="Total Responden" value={stats.totalRespondents} color="#6366f1" delay={0.15} />
+                <StatCard label="Faktor Dominan" value={stats.dominantFactor} color="#ec4899" delay={0.25} />
+                <StatCard label="Rata-rata Skor" value={stats.avgOverall} color="#10b981" delay={0.35} />
             </div>
 
             {loading ? (
@@ -219,8 +197,8 @@ function DashboardPage() {
                         transition={{ duration: 0.5, delay: 0.4 }}
                         className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 mb-6"
                     >
-                        <h2 className="font-bold text-xl text-slate-800 mb-1">📊 Rata-rata Skor per Faktor Stress</h2>
-                        <p className="text-sm text-slate-400 mb-6">Semakin tinggi skor, semakin dominan faktor stress tersebut (skala 1-5)</p>
+                        <h2 className="font-bold text-xl text-slate-800 mb-1">Rata-rata Skor per Faktor Stress</h2>
+                        <p className="text-sm text-slate-400 mb-6">Semakin tinggi skor, semakin dominan faktor stress tersebut</p>
                         <ResponsiveContainer width="100%" height={350}>
                             <BarChart data={stressData} margin={{ top: 5, right: 30, left: 0, bottom: 5 }}>
                                 <defs>
@@ -232,8 +210,8 @@ function DashboardPage() {
                                     ))}
                                 </defs>
                                 <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                                <XAxis dataKey="category" tick={{ fill: '#64748b', fontSize: 12 }} axisLine={{ stroke: '#e2e8f0' }} />
-                                <YAxis domain={[0, 5]} tick={{ fill: '#64748b', fontSize: 12 }} axisLine={{ stroke: '#e2e8f0' }} />
+                                <XAxis dataKey="category" tickFormatter={getCategoryLabel} tick={{ fill: '#64748b', fontSize: 12 }} axisLine={{ stroke: '#e2e8f0' }} />
+                                <YAxis tick={{ fill: '#64748b', fontSize: 12 }} axisLine={{ stroke: '#e2e8f0' }} />
                                 <Tooltip content={<CustomBarTooltip />} cursor={{ fill: '#f8fafc' }} />
                                 <Bar dataKey="avg_score" radius={[12, 12, 0, 0]} barSize={60}>
                                     {stressData.map((_, i) => (
@@ -253,13 +231,13 @@ function DashboardPage() {
                             transition={{ duration: 0.5, delay: 0.5 }}
                             className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6"
                         >
-                            <h2 className="font-bold text-xl text-slate-800 mb-1">🕸️ Radar Perbandingan Faktor</h2>
+                            <h2 className="font-bold text-xl text-slate-800 mb-1">Radar Perbandingan Faktor</h2>
                             <p className="text-sm text-slate-400 mb-6">Visualisasi perbandingan semua faktor stress secara bersamaan</p>
                             <ResponsiveContainer width="100%" height={320}>
                                 <RadarChart data={radarData} cx="50%" cy="50%" outerRadius="70%">
                                     <PolarGrid stroke="#e2e8f0" />
                                     <PolarAngleAxis dataKey="category" tick={{ fill: '#64748b', fontSize: 11 }} />
-                                    <PolarRadiusAxis domain={[0, 5]} tick={{ fill: '#94a3b8', fontSize: 10 }} />
+                                    <PolarRadiusAxis tick={{ fill: '#94a3b8', fontSize: 10 }} />
                                     <Radar
                                         name="Skor"
                                         dataKey="score"
@@ -279,7 +257,7 @@ function DashboardPage() {
                             transition={{ duration: 0.5, delay: 0.6 }}
                             className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6"
                         >
-                            <h2 className="font-bold text-xl text-slate-800 mb-1">🍩 Distribusi Faktor Stress</h2>
+                            <h2 className="font-bold text-xl text-slate-800 mb-1">Distribusi Faktor Stress</h2>
                             <p className="text-sm text-slate-400 mb-6">Proporsi kontribusi setiap faktor terhadap total skor stress</p>
                             <ResponsiveContainer width="100%" height={320}>
                                 <PieChart>
@@ -327,7 +305,7 @@ function DashboardPage() {
                         transition={{ duration: 0.5, delay: 0.7 }}
                         className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 mb-8"
                     >
-                        <h2 className="font-bold text-xl text-slate-800 mb-4">📋 Detail Faktor Stress Kerja</h2>
+                        <h2 className="font-bold text-xl text-slate-800 mb-4">Detail Faktor Stress Kerja</h2>
                         <div className="overflow-x-auto">
                             <table className="w-full text-sm">
                                 <thead>
@@ -343,10 +321,30 @@ function DashboardPage() {
                                     {stressData.map((item, idx) => {
                                         const score = parseFloat(item.avg_score);
                                         let level, levelColor, levelBg;
-                                        if (score >= 4) { level = 'Sangat Tinggi'; levelColor = '#dc2626'; levelBg = '#fef2f2'; }
-                                        else if (score >= 3) { level = 'Tinggi'; levelColor = '#f59e0b'; levelBg = '#fffbeb'; }
-                                        else if (score >= 2) { level = 'Sedang'; levelColor = '#3b82f6'; levelBg = '#eff6ff'; }
-                                        else { level = 'Rendah'; levelColor = '#10b981'; levelBg = '#ecfdf5'; }
+
+                                        const isScale10 = item.category === 'stress_level' || item.category === 'sleep_quality';
+                                        const isWorkHours = item.category === 'work_hours';
+
+                                        let percent = 0;
+                                        if (isScale10) {
+                                            percent = (score / 10) * 100;
+                                            if (score >= 8) { level = 'Sangat Tinggi'; levelColor = '#dc2626'; levelBg = '#fef2f2'; }
+                                            else if (score >= 6) { level = 'Tinggi'; levelColor = '#f59e0b'; levelBg = '#fffbeb'; }
+                                            else if (score >= 4) { level = 'Sedang'; levelColor = '#3b82f6'; levelBg = '#eff6ff'; }
+                                            else { level = 'Rendah'; levelColor = '#10b981'; levelBg = '#ecfdf5'; }
+                                        } else if (isWorkHours) {
+                                            percent = Math.min((score / 12) * 100, 100);
+                                            if (score >= 10) { level = 'Sangat Tinggi (Kritis)'; levelColor = '#dc2626'; levelBg = '#fef2f2'; }
+                                            else if (score >= 8) { level = 'Tinggi (Lembur)'; levelColor = '#f59e0b'; levelBg = '#fffbeb'; }
+                                            else if (score >= 6) { level = 'Sedang (Normal)'; levelColor = '#10b981'; levelBg = '#ecfdf5'; }
+                                            else { level = 'Rendah'; levelColor = '#3b82f6'; levelBg = '#eff6ff'; }
+                                        } else {
+                                            percent = (score / 5) * 100;
+                                            if (score >= 4) { level = 'Sangat Tinggi'; levelColor = '#dc2626'; levelBg = '#fef2f2'; }
+                                            else if (score >= 3) { level = 'Tinggi'; levelColor = '#f59e0b'; levelBg = '#fffbeb'; }
+                                            else if (score >= 2) { level = 'Sedang'; levelColor = '#3b82f6'; levelBg = '#eff6ff'; }
+                                            else { level = 'Rendah'; levelColor = '#10b981'; levelBg = '#ecfdf5'; }
+                                        }
                                         return (
                                             <tr key={item.category} className="border-b border-slate-50 hover:bg-slate-50/50 transition-colors">
                                                 <td className="py-3 px-4">
@@ -355,13 +353,13 @@ function DashboardPage() {
                                                         {idx + 1}
                                                     </div>
                                                 </td>
-                                                <td className="py-3 px-4 font-semibold text-slate-700">{item.category}</td>
+                                                <td className="py-3 px-4 font-semibold text-slate-700">{getCategoryLabel(item.category)}</td>
                                                 <td className="py-3 px-4">
                                                     <div className="flex items-center gap-3">
                                                         <div className="flex-1 h-2.5 bg-slate-100 rounded-full overflow-hidden max-w-[120px]">
                                                             <div className="h-full rounded-full transition-all duration-700"
                                                                 style={{
-                                                                    width: `${(score / 5) * 100}%`,
+                                                                    width: `${percent}%`,
                                                                     background: `linear-gradient(90deg, ${GRADIENT_PAIRS[idx % GRADIENT_PAIRS.length].from}, ${GRADIENT_PAIRS[idx % GRADIENT_PAIRS.length].to})`,
                                                                 }}
                                                             />

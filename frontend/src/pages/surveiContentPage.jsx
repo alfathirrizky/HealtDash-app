@@ -51,7 +51,15 @@ export default function SurveiContentPage() {
             <div className="p-5 rounded-2xl shadow-md flex flex-col gap-2">
                 {filteredQuestions.length > 0 ? (
                     filteredQuestions.map((question) => (
-                        <SurveiCard key={question.question_id} name={question.name} label={question.label} onChange={handleChange} question_id={question.question_id} />
+                        <SurveiCard 
+                            key={question.question_id} 
+                            name={question.name} 
+                            label={question.label} 
+                            note={question.note}
+                            type={question.type}
+                            onChange={handleChange} 
+                            question_id={question.question_id} 
+                        />
                     ))) : (
                     <div className="flex flex-col items-center justify-center py-20 gap-6">
                         <Load className="w-30 h-30 " />
