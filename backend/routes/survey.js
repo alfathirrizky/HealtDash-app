@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import multer from "multer";
 import fs from "fs";
 import path from "path";
+import verifyToken from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -55,16 +56,17 @@ router.get("/:id", async (req, res) => {
   res.json(rows[0]);
 });
 
-router.post("/", async (req, res) => {
+router.post("/", verifyToken, async (req, res) => {
   try {
-    const { image, title, caption, description, is_active } = req.body;
+    const { image, title, caption, description, is_active, category } = req.body;
     if (!image) {
       return res.status(400).json({ message: "Image required" });
     }
     const id = uuidv4();
+    const user_id = req.user.id;
     await db.query(
-      "INSERT INTO surveys (id, image, title, caption, description, is_active) VALUES (?, ?, ?, ?, ?, ?)",
-      [id, image, title, caption, description, is_active],
+      "INSERT INTO surveys (id, image, title, caption, description, is_active, category, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+      [id, image, title, caption, description, is_active, category || 'Umum', user_id],
     );
     const [rows] = await db.query("SELECT * FROM surveys WHERE id = ?", [id]);
     res.status(201).json(rows[0]);
@@ -81,9 +83,9 @@ router.post("/upload", upload.single("file"), (req, res) => {
   res.status(200).send(req.file.filename);
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", verifyToken, async (req, res) => {
   try {
-    const { title, caption, description, is_active, image } = req.body;
+    const { title, caption, description, is_active, image, category } = req.body;
     const [rows] = await db.query("SELECT * FROM surveys WHERE id = ?", [
       req.params.id,
     ]);
@@ -97,8 +99,8 @@ router.put("/:id", async (req, res) => {
       filename = image;
     }
     await db.query(
-      "UPDATE surveys SET image=?, title=?, caption=?, description=?, is_active=? WHERE id=?",
-      [filename, title, caption, description, is_active, req.params.id],
+      "UPDATE surveys SET image=?, title=?, caption=?, description=?, is_active=?, category=? WHERE id=?",
+      [filename, title, caption, description, is_active, category || 'Umum', req.params.id],
     );
     const [updated] = await db.query("SELECT * FROM surveys WHERE id = ?", [
       req.params.id,
@@ -110,7 +112,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", verifyToken, async (req, res) => {
   const [rows] = await db.query("SELECT * FROM surveys WHERE id = ?", [
     req.params.id,
   ]);

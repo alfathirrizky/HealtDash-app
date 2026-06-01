@@ -118,6 +118,7 @@ export default function SurveiDashPage() {
                                 <TableHead className="text-blue-600 font-semibold">Title</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Caption</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Description</TableHead>
+                                <TableHead className="text-blue-600 font-semibold">Category</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Question</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Status</TableHead>
                                 <TableHead className="text-blue-600 font-semibold">Detail</TableHead>
@@ -144,6 +145,7 @@ export default function SurveiDashPage() {
                                         <TableCell>{survey.title}</TableCell>
                                         <TableCell>{survey.caption}</TableCell>
                                         <TableCell>{survey.description}</TableCell>
+                                        <TableCell>{survey.category}</TableCell>
                                         <TableCell> {Array.isArray(questions) ? questions.filter((q) => String(q.survey_id) === String(survey.id)).length : 0 }</TableCell>
                                         <TableCell>{survey.is_active === 1 ? "Aktif" : "Nonaktif"}</TableCell>
                                         <TableCell>
@@ -265,6 +267,16 @@ export default function SurveiDashPage() {
                                 placeholder="description"
                                 name="description"
                                 value={form.description}
+                                onChange={handleChange}
+                                className="border-blue-300 focus:ring-blue-500"
+                            />
+                        </div>
+                        <div>
+                            <h2 className=" font-medium">Category</h2>
+                            <Input
+                                placeholder="category"
+                                name="category"
+                                value={form.category}
                                 onChange={handleChange}
                                 className="border-blue-300 focus:ring-blue-500"
                             />

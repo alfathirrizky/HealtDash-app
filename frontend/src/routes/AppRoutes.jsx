@@ -1,12 +1,12 @@
-import{ BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Loader from "../components/loader";
 import { lazy, Suspense } from "react";
 import HomeLayout from "../layouts/homeLayout";
 import Layout from "../layouts/layout";
 
 
-const Dashboard= lazy(() => import("../pages/dashboardPage"));
-const GalleryDash= lazy(() => import("../pages/galleryDashPage"));
+const Dashboard = lazy(() => import("../pages/dashboardPage"));
+const GalleryDash = lazy(() => import("../pages/galleryDashPage"));
 const Identification = lazy(() => import("../pages/identificationPage"));
 const Survei = lazy(() => import("../pages/surveiPage"));
 const SurveiContent = lazy(() => import("../pages/surveiContentPage"));
@@ -24,20 +24,21 @@ const CreateSurveyPage = lazy(() => import("../pages/createSurveyPage"));
 const DetailSurvey = lazy(() => import("../pages/detailSurvey"));
 const DetailContent = lazy(() => import("../pages/detailContent"));
 const SuggestioPage = lazy(() => import("../pages/suggestioPage"));
+const AnswerPage = lazy(() => import("../pages/answerPage"));
 
 
 function AppRoutes() {
-    return(
+    return (
         <Suspense fallback={<Loader />}>
             <Routes>
-                <Route path="/" element={<Login/>}/>
+                <Route path="/" element={<Login />} />
                 <Route element={<HomeLayout />}>
                     <Route path="/survei" element={<Survei />} />
                     <Route path="/home" element={<Home />} />
                     <Route path="/profile" element={<Profile />} />
-                    <Route path="/content" element={<Content/>}/>
-                    <Route path="/content/:id" element={<DetailContent/>}/>
-                    <Route path="/survei/:id" element={<SurveiContent/>}/>
+                    <Route path="/content" element={<Content />} />
+                    <Route path="/content/:id" element={<DetailContent />} />
+                    <Route path="/survei/:id" element={<SurveiContent />} />
                 </Route>
                 <Route element={<Layout />}>
                     <Route path="/dashboard" element={<Dashboard />} />
@@ -52,6 +53,7 @@ function AppRoutes() {
                     <Route path="/surveiDash/create" element={<CreateSurveyPage />} />
                     <Route path="/surveiDash/:id" element={<DetailSurvey />} />
                     <Route path="/suggestion" element={<SuggestioPage />} />
+                    <Route path="/answer" element={<AnswerPage />} />
                 </Route>
             </Routes>
         </Suspense>

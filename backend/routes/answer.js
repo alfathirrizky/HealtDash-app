@@ -16,6 +16,27 @@ router.get("/api/answer", async (req, res) => {
   }
 });
 
+router.get("/detailed-answers", async (req, res) => {
+  try {
+    const [rows] = await db.query(`
+      SELECT 
+        u.name AS employee_name,
+        s.category AS survey_category,
+        q.label AS question_label,
+        a.answer AS answer_text
+      FROM answers a
+      JOIN users u ON a.user_id = u.id
+      JOIN questions q ON a.question_id = q.question_id
+      JOIN surveys s ON a.survey_id = s.id
+      ORDER BY u.name, q.question_id
+    `);
+    res.json(rows);
+  } catch (error) {
+    console.error("❌ Error fetching detailed answers:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 router.get("/history/:user_id", async (req, res) => {
   try {
     const { user_id } = req.params;
@@ -50,58 +71,91 @@ router.post("/submit", verifyToken, async (req, res) => {
       [values],
     );
 
-    // Jika survey_id adalah "1" (Survei Kesehatan Mental), jalankan prediksi burnout proaktif
-    if (String(survey_id) === "1") {
-      let stress_level = 0;
-      let work_hours = 0;
-      let sleep_quality = 0;
+    // Ambil nama pengguna
+    const [users] = await db.query("SELECT name FROM users WHERE id = ?", [user_id]);
+    const userName = users.length > 0 ? users[0].name : "Karyawan";
 
-      // Ambil detail pertanyaan untuk mencocokkan question_id dengan nama field (stress_level, work_hours, sleep_quality)
-      const [questions] = await db.query(
-        "SELECT question_id, name FROM questions WHERE survey_id = '1'"
-      );
+    // Cek data existing untuk menggabungkan hasil
+    const [existing] = await db.query("SELECT * FROM identified_employees WHERE employee_name = ?", [userName]);
 
-      answers.forEach((ans) => {
-        const q = questions.find((item) => String(item.question_id) === String(ans.question_id));
-        if (q) {
-          if (q.name === "stress_level") stress_level = parseInt(ans.answer) || 0;
-          if (q.name === "work_hours") work_hours = parseFloat(ans.answer) || 0;
-          if (q.name === "sleep_quality") sleep_quality = parseInt(ans.answer) || 0;
+    // Jalankan prediksi burnout proaktif untuk setiap survei
+    let stress_level = existing.length > 0 ? existing[0].stress_level : 0;
+    let work_hours = existing.length > 0 ? existing[0].work_hours : 0;
+    let sleep_quality = existing.length > 0 ? existing[0].sleep_quality : 0;
+
+    // Ambil detail pertanyaan untuk mencocokkan question_id dengan nama field (stress_level, work_hours, sleep_quality)
+    const [questions] = await db.query(
+      "SELECT question_id, name FROM questions WHERE survey_id = ?", [survey_id]
+    );
+
+    answers.forEach((ans) => {
+      const q = questions.find((item) => String(item.question_id) === String(ans.question_id));
+      if (q) {
+        if (q.name === "stress_level" || String(q.name).toLowerCase().includes("stres")) {
+            const val = parseInt(ans.answer);
+            if (!isNaN(val)) stress_level = val;
         }
+        if (q.name === "work_hours" || String(q.name).toLowerCase().includes("jam kerja")) {
+            const val = parseFloat(ans.answer);
+            if (!isNaN(val)) work_hours = val;
+        }
+        if (q.name === "sleep_quality" || String(q.name).toLowerCase().includes("tidur")) {
+            const val = parseInt(ans.answer);
+            if (!isNaN(val)) sleep_quality = val;
+        }
+      }
+    });
+
+    let rec = { risk_score: 0, risk_level: "Rendah", dominant_factor: "Prediksi Offline" };
+
+    // Panggil API Python untuk melakukan prediksi
+    try {
+      const response = await axios.post(`${PYTHON_API_URL}/predict/`, {
+        stress_level,
+        work_hours,
+        sleep_quality,
       });
 
-      // Panggil API Python untuk melakukan prediksi
-      try {
-        const response = await axios.post(`${PYTHON_API_URL}/predict/`, {
+      rec = response.data;
+    } catch (err) {
+      console.error("❌ Python prediction call failed:", err.message);
+      // Fallback sederhana jika Python server mati
+      let prob = (stress_level * 0.4 + (work_hours > 8 ? (work_hours - 8) * 0.5 : 0) + (10 - sleep_quality) * 0.3) / 10;
+      if (prob > 1) prob = 1;
+      if (prob < 0) prob = 0;
+      
+      let risk_level = "Rendah";
+      if (prob > 0.7) risk_level = "Tinggi";
+      else if (prob >= 0.3) risk_level = "Sedang";
+      
+      rec = {
+        risk_score: prob,
+        risk_level: risk_level,
+        dominant_factor: "Stres / Beban Kerja (Prediksi Offline)"
+      };
+    }
+
+    // Simpan hasil klasifikasi ke tabel identified_employees
+    if (existing.length > 0) {
+      await db.query(
+        "UPDATE identified_employees SET stress_level = ?, work_hours = ?, sleep_quality = ?, risk_score = ?, risk_level = ?, dominant_factor = ? WHERE employee_name = ?",
+        [stress_level, work_hours, sleep_quality, rec.risk_score, rec.risk_level, rec.dominant_factor, userName]
+      );
+    } else {
+      await db.query(
+        "INSERT INTO identified_employees (employee_name, stress_level, work_hours, sleep_quality, risk_score, risk_level, dominant_factor) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        [
+          userName,
           stress_level,
           work_hours,
           sleep_quality,
-        });
-
-        const rec = response.data;
-
-        // Ambil nama pengguna
-        const [users] = await db.query("SELECT name FROM users WHERE id = ?", [user_id]);
-        const userName = users.length > 0 ? users[0].name : "Karyawan";
-
-        // Simpan hasil klasifikasi ke tabel identified_employees
-        await db.query(
-          "INSERT INTO identified_employees (employee_name, stress_level, work_hours, sleep_quality, risk_score, risk_level, dominant_factor) VALUES (?, ?, ?, ?, ?, ?, ?)",
-          [
-            userName,
-            stress_level,
-            work_hours,
-            sleep_quality,
-            rec.risk_score,
-            rec.risk_level,
-            rec.dominant_factor,
-          ]
-        );
-        console.log(`🚀 Burnout prediction saved for ${userName}: Risk Level = ${rec.risk_level}`);
-      } catch (err) {
-        console.error("❌ Python prediction call failed:", err.message);
-      }
+          rec.risk_score,
+          rec.risk_level,
+          rec.dominant_factor,
+        ]
+      );
     }
+    console.log(`🚀 Burnout prediction saved for ${userName}: Risk Level = ${rec.risk_level}`);
 
     res.status(200).json({ message: "Survey submitted successfully" });
   } catch (error) {

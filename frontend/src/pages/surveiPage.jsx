@@ -7,7 +7,7 @@ export default function SurveiPage() {
     return (
         <div className="pt-24 md:pt-32 pb-16 px-6 md:px-12 w-full min-h-screen overflow-y-auto scrollbar-none bg-[#f8f9fa]">
             {/* Grid Cards Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-[1400px] mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
                 {surveys.map((survey) => (
                     <div 
                         key={survey.id} 

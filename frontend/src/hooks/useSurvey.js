@@ -8,6 +8,7 @@ const initialForm = {
     description: "",
     image: "",
     is_active: "1",
+    category: "Umum",
     newImage: null,
 };
 
@@ -56,6 +57,7 @@ function useSurvey() {
             title: form.title,
             caption: form.caption,
             description: form.description,
+            category: form.category,
             is_active: form.is_active ?? 1,
         });
 
@@ -74,6 +76,7 @@ function useSurvey() {
             title: form.title,
             caption: form.caption,
             description: form.description,
+            category: form.category,
             is_active: form.is_active ?? 1,
         };
 
