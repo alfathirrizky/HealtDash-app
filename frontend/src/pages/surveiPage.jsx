@@ -28,15 +28,15 @@ export default function SurveiPage() {
             {/* Grid Cards Section */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
                 {surveys.map((survey) => (
-                    <div 
-                        key={survey.id} 
+                    <div
+                        key={survey.id}
                         className="bg-white rounded-3xl p-4 shadow-sm border border-slate-200 flex flex-col gap-4 hover:shadow-md transition-shadow"
                     >
                         {/* Image Section */}
                         <div className="w-full h-56 md:h-64 lg:h-72 overflow-hidden rounded-2xl relative">
-                            <img 
-                                src={`http://localhost:5000/uploads/${survey.image}`} 
-                                alt={survey.title} 
+                            <img
+                                src={`http://localhost:5000/uploads/${survey.image}`}
+                                alt={survey.title}
                                 className="w-full h-full object-cover"
                                 onError={(e) => {
                                     e.target.src = 'https://via.placeholder.com/600x300?text=No+Image'
@@ -54,7 +54,7 @@ export default function SurveiPage() {
                                     {survey.caption}
                                 </p>
                             </div>
-                            <button 
+                            <button
                                 className={`${completedSurveys.includes(survey.id) ? "bg-slate-400 cursor-not-allowed" : "bg-[#4880FF] hover:bg-blue-600"} text-white px-8 py-2.5 rounded-full text-sm font-bold transition-colors flex-shrink-0 ml-4 shadow-sm`}
                                 onClick={() => !completedSurveys.includes(survey.id) && navigate(`/survei/${survey.id}`)}
                                 disabled={completedSurveys.includes(survey.id)}

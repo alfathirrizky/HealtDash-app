@@ -100,7 +100,6 @@ async def predict_single(req: PredictRequest):
         "prediction": pred
     }
 
-# ========= Rekomendasi HRD Proaktif & Tersegmentasi =========
 def get_proactive_recommendation(row, risk_level):
     # Menentukan faktor paling dominan per pegawai
     factors = {
@@ -188,9 +187,6 @@ def get_proactive_recommendation(row, risk_level):
         "dominant_factor": factor_desc,
         "recommendations": suggestions
     }
-
-
-# ===========================================================
 
 @app.post("/upload-excel/")
 async def upload_excel(file: UploadFile = File(...)):
