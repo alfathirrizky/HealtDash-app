@@ -55,10 +55,10 @@ export default function CreateQuestionPage() {
                                 ))}
                             </select>
                         </div>
-                        <div className="flex flex-col gap-1">
+                        {/* <div className="flex flex-col gap-1">
                             <h1 className="font-semibold">Question</h1>
                             <Input name="question" placeholder="Masukan Question" value={form.question} onChange={handleChange} className="border border-gray-400"/>
-                        </div>
+                        </div> */}
                         <div className="flex flex-col gap-1">
                             <h1 className="font-semibold">Name</h1>
                             <Input name="name" placeholder="Name" value={form.name} onChange={handleChange} className="border border-gray-400"/>

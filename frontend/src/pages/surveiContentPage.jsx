@@ -2,7 +2,7 @@ import SurveiCard from "../components/surveiCard";
 import useQuestions from "../hooks/useQuestions";
 import { useParams, useNavigate } from "react-router-dom";
 import Load from "../components/load";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import API from "../api/api";
 import { toast } from "sonner";
 
@@ -10,7 +10,30 @@ export default function SurveiContentPage() {
     const { id } = useParams();
     const { questions } = useQuestions();
     const [answers, setAnswers] = useState({});
+    const [checking, setChecking] = useState(true);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const checkHistory = async () => {
+            const storedUser = sessionStorage.getItem("user");
+            if (storedUser) {
+                const user = JSON.parse(storedUser);
+                try {
+                    const res = await API.get(`/answers/history/${user.id}`);
+                    const historyIds = res.data.map(s => String(s.id));
+                    if (historyIds.includes(String(id))) {
+                        toast.error("Anda sudah mengisi survei ini sebelumnya.");
+                        navigate("/survei");
+                        return;
+                    }
+                } catch (err) {
+                    console.error("Error checking history", err);
+                }
+            }
+            setChecking(false);
+        };
+        checkHistory();
+    }, [id, navigate]);
 
     const filteredQuestions = Array.isArray(questions) ? questions.filter((q) => String(q.survey_id) === String(id)) : [];
 
@@ -45,6 +68,15 @@ export default function SurveiContentPage() {
             toast.error("Gagal mengirim survei.");
         }
     };
+
+    if (checking) {
+        return (
+            <div className="flex flex-col items-center justify-center h-screen gap-6">
+                <Load className="w-30 h-30" />
+                <p className="text-blue-500 font-medium text-lg">Memeriksa status survei...</p>
+            </div>
+        );
+    }
 
     return (
         <div className="mt-23 p-5 flex flex-col gap-5 h-full">

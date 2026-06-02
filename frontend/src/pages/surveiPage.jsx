@@ -1,9 +1,28 @@
+import { useState, useEffect } from 'react';
 import useSurvey from '@/hooks/useSurvey';
 import { useNavigate } from 'react-router-dom';
+import API from '../api/api';
 
 export default function SurveiPage() {
     const { surveys } = useSurvey();
     const navigate = useNavigate();
+    const [completedSurveys, setCompletedSurveys] = useState([]);
+
+    useEffect(() => {
+        const fetchHistory = async () => {
+            const storedUser = sessionStorage.getItem("user");
+            if (storedUser) {
+                const user = JSON.parse(storedUser);
+                try {
+                    const res = await API.get(`/answers/history/${user.id}`);
+                    setCompletedSurveys(res.data.map(s => s.id));
+                } catch (err) {
+                    console.error("Error fetching survey history", err);
+                }
+            }
+        };
+        fetchHistory();
+    }, []);
     return (
         <div className="pt-24 md:pt-32 pb-16 px-6 md:px-12 w-full min-h-screen overflow-y-auto scrollbar-none bg-[#f8f9fa]">
             {/* Grid Cards Section */}
@@ -36,10 +55,11 @@ export default function SurveiPage() {
                                 </p>
                             </div>
                             <button 
-                                className="bg-[#4880FF] hover:bg-blue-600 text-white px-8 py-2.5 rounded-full text-sm font-bold transition-colors flex-shrink-0 ml-4 shadow-sm"
-                                onClick={() => navigate(`/survei/${survey.id}`)}
+                                className={`${completedSurveys.includes(survey.id) ? "bg-slate-400 cursor-not-allowed" : "bg-[#4880FF] hover:bg-blue-600"} text-white px-8 py-2.5 rounded-full text-sm font-bold transition-colors flex-shrink-0 ml-4 shadow-sm`}
+                                onClick={() => !completedSurveys.includes(survey.id) && navigate(`/survei/${survey.id}`)}
+                                disabled={completedSurveys.includes(survey.id)}
                             >
-                                Isi Survei
+                                {completedSurveys.includes(survey.id) ? "Sudah Diisi" : "Isi Survei"}
                             </button>
                         </div>
                     </div>

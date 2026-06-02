@@ -104,7 +104,18 @@ export default function CreateSurveyPage() {
                         </div>
                         <div className="flex flex-col gap-1">
                             <h1 className="font-semibold">Category</h1>
-                            <Input type="text" name="category" placeholder="Category (e.g. Kesehatan Mental)" value={form.category} onChange={handleChange} className="border border-gray-400"/>
+                            <Select
+                                value={form.category || ""} onValueChange={(value) =>setForm({ ...form, category: value })}>
+                                <SelectTrigger className="bg-white w-full border border-gray-400">
+                                    <SelectValue placeholder="Pilih Kategori" />
+                                </SelectTrigger>
+                                <SelectContent className="bg-white">
+                                    <SelectItem value="Burnout" className="bg-white">Burnout</SelectItem>
+                                    <SelectItem value="Tingkat Stres Kerja" className="bg-white">Tingkat Stres Kerja</SelectItem>
+                                    <SelectItem value="Jam Kerja" className="bg-white">Jam Kerja (Overwork)</SelectItem>
+                                    <SelectItem value="Kualitas Istirahat" className="bg-white">Kualitas Istirahat / Tidur</SelectItem>
+                                </SelectContent>
+                            </Select>
                         </div>
                         <div className="flex flex-col gap-1">
                             <h1 className="font-semibold">Status</h1>

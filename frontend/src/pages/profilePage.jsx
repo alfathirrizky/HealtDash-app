@@ -95,7 +95,7 @@ function ProfilePage() {
                         ) : history.length === 0 ? (
                             <div className="flex flex-col items-center justify-center py-12 bg-gray-50 rounded-xl border border-dashed border-gray-300">
                                 <p className="text-gray-500 text-lg mb-4 font-medium">Belum ada survei yang Anda ikuti.</p>
-                                <Link to="/surveiDash" className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors shadow-sm">
+                                <Link to="/survei" className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors shadow-sm">
                                     Ikuti Survei Sekarang
                                 </Link>
                             </div>

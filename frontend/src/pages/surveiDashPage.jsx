@@ -273,13 +273,18 @@ export default function SurveiDashPage() {
                         </div>
                         <div>
                             <h2 className=" font-medium">Category</h2>
-                            <Input
-                                placeholder="category"
-                                name="category"
-                                value={form.category}
-                                onChange={handleChange}
-                                className="border-blue-300 focus:ring-blue-500"
-                            />
+                            <Select
+                                value={form.category || ""} onValueChange={(value) =>setForm({ ...form, category: value })}>
+                                <SelectTrigger className="bg-white w-full border-blue-300 focus:ring-blue-500">
+                                    <SelectValue placeholder="Pilih Kategori" />
+                                </SelectTrigger>
+                                <SelectContent className="bg-white">
+                                    <SelectItem value="Burnout" className="bg-white">Burnout</SelectItem>
+                                    <SelectItem value="Tingkat Stres Kerja" className="bg-white">Tingkat Stres Kerja</SelectItem>
+                                    <SelectItem value="Jam Kerja" className="bg-white">Jam Kerja (Overwork)</SelectItem>
+                                    <SelectItem value="Kualitas Istirahat" className="bg-white">Kualitas Istirahat / Tidur</SelectItem>
+                                </SelectContent>
+                            </Select>
                         </div>
                         <div className="flex flex-col gap-1">
                             <h1 className="font-semibold">Status</h1>

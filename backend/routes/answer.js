@@ -21,6 +21,7 @@ router.get("/detailed-answers", async (req, res) => {
     const [rows] = await db.query(`
       SELECT 
         u.name AS employee_name,
+        s.title AS survey_title,
         s.category AS survey_category,
         q.label AS question_label,
         a.answer AS answer_text
@@ -85,26 +86,37 @@ router.post("/submit", verifyToken, async (req, res) => {
 
     // Ambil detail pertanyaan untuk mencocokkan question_id dengan nama field (stress_level, work_hours, sleep_quality)
     const [questions] = await db.query(
-      "SELECT question_id, name FROM questions WHERE survey_id = ?", [survey_id]
+      "SELECT question_id, name, label FROM questions WHERE survey_id = ?", [survey_id]
     );
+
+    let stressSum = 0, stressCount = 0;
+    let workSum = 0, workCount = 0;
+    let sleepSum = 0, sleepCount = 0;
 
     answers.forEach((ans) => {
       const q = questions.find((item) => String(item.question_id) === String(ans.question_id));
       if (q) {
-        if (q.name === "stress_level" || String(q.name).toLowerCase().includes("stres")) {
+        const nameStr = String(q.name || "").toLowerCase();
+        const labelStr = String(q.label || "").toLowerCase();
+        
+        if (nameStr === "stress_level" || nameStr.includes("stres") || labelStr.includes("stres") || labelStr.includes("cemas") || labelStr.includes("tekanan") || labelStr.includes("lelah") || labelStr.includes("burnout")) {
             const val = parseInt(ans.answer);
-            if (!isNaN(val)) stress_level = val;
+            if (!isNaN(val)) { stressSum += val; stressCount++; }
         }
-        if (q.name === "work_hours" || String(q.name).toLowerCase().includes("jam kerja")) {
+        else if (nameStr === "work_hours" || nameStr.includes("jam kerja") || labelStr.includes("jam kerja") || labelStr.includes("waktu") || labelStr.includes("jam")) {
             const val = parseFloat(ans.answer);
-            if (!isNaN(val)) work_hours = val;
+            if (!isNaN(val)) { workSum += val; workCount++; }
         }
-        if (q.name === "sleep_quality" || String(q.name).toLowerCase().includes("tidur")) {
+        else if (nameStr === "sleep_quality" || nameStr.includes("tidur") || labelStr.includes("tidur")) {
             const val = parseInt(ans.answer);
-            if (!isNaN(val)) sleep_quality = val;
+            if (!isNaN(val)) { sleepSum += val; sleepCount++; }
         }
       }
     });
+
+    if (stressCount > 0) stress_level = Math.round(stressSum / stressCount);
+    if (workCount > 0) work_hours = Math.round((workSum / workCount) * 10) / 10;
+    if (sleepCount > 0) sleep_quality = Math.round(sleepSum / sleepCount);
 
     let rec = { risk_score: 0, risk_level: "Rendah", dominant_factor: "Prediksi Offline" };
 

@@ -5,6 +5,7 @@ import { Users, Activity, Clock, Moon, ShieldAlert, ChevronDown, ChevronUp, File
 export default function AnswerPage() {
     const [employees, setEmployees] = useState([]);
     const [detailedAnswers, setDetailedAnswers] = useState({});
+    const [allAnswers, setAllAnswers] = useState([]);
     const [expandedRows, setExpandedRows] = useState({});
     const [loading, setLoading] = useState(true);
 
@@ -26,6 +27,7 @@ export default function AnswerPage() {
                     answersMap[item.employee_name].push(item);
                 });
                 setDetailedAnswers(answersMap);
+                setAllAnswers(ansRes.data);
             } catch (err) {
                 console.error("Error fetching data:", err);
             } finally {
@@ -40,6 +42,16 @@ export default function AnswerPage() {
             ...prev,
             [employee_name]: !prev[employee_name]
         }));
+    };
+
+    const groupBySurvey = (answersList) => {
+        if (!answersList) return {};
+        return answersList.reduce((acc, curr) => {
+            const title = curr.survey_title || 'Survei Tidak Diketahui';
+            if (!acc[title]) acc[title] = [];
+            acc[title].push(curr);
+            return acc;
+        }, {});
     };
 
     return (
@@ -144,21 +156,46 @@ export default function AnswerPage() {
                                                             Detail Jawaban Survei
                                                         </h4>
                                                         {detailedAnswers[emp.employee_name] && detailedAnswers[emp.employee_name].length > 0 ? (
-                                                            <ul className="space-y-4">
-                                                                {detailedAnswers[emp.employee_name].map((ans, i) => (
-                                                                    <li key={i} className="flex flex-col gap-1.5">
-                                                                        <span className="text-sm font-semibold text-slate-700 flex items-center gap-2">
-                                                                            <span className="bg-indigo-100 text-indigo-800 text-xs px-2 py-0.5 rounded-md font-bold">
-                                                                                {ans.survey_category || 'Umum'}
+                                                            <div className="space-y-4">
+                                                                {Object.entries(groupBySurvey(detailedAnswers[emp.employee_name])).map(([surveyTitle, categoryAnswers]) => (
+                                                                    <div key={surveyTitle} className="overflow-x-auto rounded-lg border border-slate-200 shadow-sm">
+                                                                        <div className="bg-indigo-50 border-b border-slate-200 px-4 py-3 font-semibold text-indigo-900 flex items-center gap-2">
+                                                                            <span className="bg-indigo-200 text-indigo-800 text-xs px-2 py-1 rounded-md font-bold uppercase tracking-wider">
+                                                                                Nama Survei
                                                                             </span>
-                                                                            {ans.question_label}
-                                                                        </span>
-                                                                        <span className="text-sm font-medium text-slate-900 bg-blue-50 text-blue-800 border border-blue-100 px-3 py-2 rounded-lg self-start">
-                                                                            {ans.answer_text}
-                                                                        </span>
-                                                                    </li>
+                                                                            {surveyTitle}
+                                                                        </div>
+                                                                        <table className="min-w-full table-auto text-left">
+                                                                            <thead className="bg-white border-b border-slate-200 text-slate-500 text-xs uppercase">
+                                                                                <tr>
+                                                                                    <th className="px-4 py-2 font-bold border-r border-slate-200">Kategori</th>
+                                                                                    <th className="px-4 py-2 font-bold border-r border-slate-200 w-1/2">Pertanyaan</th>
+                                                                                    <th className="px-4 py-2 font-bold">Jawaban</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody className="divide-y divide-slate-100 text-sm text-slate-700 bg-white">
+                                                                                {categoryAnswers.map((ans, i) => (
+                                                                                    <tr key={i} className="hover:bg-slate-50/50 transition-colors">
+                                                                                        <td className="px-4 py-3 border-r border-slate-200 align-top">
+                                                                                            <span className="bg-emerald-100 text-emerald-800 text-xs px-2 py-0.5 rounded-md font-bold whitespace-nowrap">
+                                                                                                {ans.survey_category || 'Umum'}
+                                                                                            </span>
+                                                                                        </td>
+                                                                                        <td className="px-4 py-3 border-r border-slate-200 align-top">
+                                                                                            {ans.question_label}
+                                                                                        </td>
+                                                                                        <td className="px-4 py-3 align-top">
+                                                                                            <span className="text-sm font-medium text-slate-900 bg-blue-50 text-blue-800 border border-blue-100 px-3 py-1.5 rounded-lg inline-block">
+                                                                                                {ans.answer_text}
+                                                                                            </span>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                ))}
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
                                                                 ))}
-                                                            </ul>
+                                                            </div>
                                                         ) : (
                                                             <p className="text-sm text-slate-500 italic">Tidak ada detail jawaban survei yang tersimpan untuk karyawan ini (Mungkin berasal dari Upload Excel).</p>
                                                         )}
@@ -184,4 +221,4 @@ export default function AnswerPage() {
             </div>
         </div>
     );
-}
+}
