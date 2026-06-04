@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Users, Activity, Clock, Moon, ShieldAlert, ChevronDown, ChevronUp, FileText } from "lucide-react";
+import { Users, Activity, Clock, Moon, ShieldAlert, ChevronDown, ChevronUp, FileText, Download } from "lucide-react";
+import * as XLSX from "xlsx";
 
 export default function AnswerPage() {
     const [employees, setEmployees] = useState([]);
@@ -54,16 +55,60 @@ export default function AnswerPage() {
         }, {});
     };
 
+    const handleExportExcel = () => {
+        if (employees.length === 0) {
+            alert("Tidak ada data untuk diexport");
+            return;
+        }
+
+        const excelData = employees.map(emp => ({
+            'Nama Karyawan': emp.employee_name || '',
+            'Tingkat Stres': emp.stress_level || 0,
+            'Jam Kerja': emp.work_hours || 0,
+            'Kualitas Tidur': emp.sleep_quality || 0,
+            'Skor Risiko': `${(emp.risk_score * 100).toFixed(1)}%`,
+            'Tingkat Risiko': emp.risk_level || '',
+            'Faktor Dominan': emp.dominant_factor || ''
+        }));
+
+        const worksheet = XLSX.utils.json_to_sheet(excelData);
+        
+        // Sesuaikan lebar kolom
+        const columnWidths = [
+            { wch: 25 }, // Nama
+            { wch: 15 }, // Tingkat Stres
+            { wch: 15 }, // Jam Kerja
+            { wch: 15 }, // Kualitas Tidur
+            { wch: 15 }, // Skor Risiko
+            { wch: 15 }, // Tingkat Risiko
+            { wch: 40 }  // Faktor Dominan
+        ];
+        worksheet['!cols'] = columnWidths;
+
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Data Survei");
+        XLSX.writeFile(workbook, "Data_Hasil_Survei_Karyawan.xlsx");
+    };
+
     return (
         <div className="p-5 max-w-7xl mx-auto font-sans h-[calc(100vh-2rem)] overflow-y-auto scrollbar-none scroll-smooth pr-2">
-            <div className="mb-8 mt-4">
-                <h1 className="text-3xl font-extrabold text-slate-800 flex items-center gap-3 tracking-tight">
-                    <Users className="w-8 h-8 text-blue-600" />
-                    Data Hasil Survei Karyawan
-                </h1>
-                <p className="text-slate-500 mt-2 text-sm">
-                    Menampilkan daftar karyawan yang telah mengisi survei beserta skor evaluasi risiko burnout mereka.
-                </p>
+            <div className="mb-8 mt-4 flex justify-between items-center">
+                <div>
+                    <h1 className="text-3xl font-extrabold text-slate-800 flex items-center gap-3 tracking-tight">
+                        <Users className="w-8 h-8 text-blue-600" />
+                        Data Hasil Survei Karyawan
+                    </h1>
+                    <p className="text-slate-500 mt-2 text-sm">
+                        Menampilkan daftar karyawan yang telah mengisi survei beserta skor evaluasi risiko burnout mereka.
+                    </p>
+                </div>
+                <button
+                    onClick={handleExportExcel}
+                    className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl font-semibold shadow-sm transition-all text-sm"
+                >
+                    <Download className="w-4 h-4" />
+                    Export Excel
+                </button>
             </div>
 
             <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">

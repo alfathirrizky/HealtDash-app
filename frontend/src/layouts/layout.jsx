@@ -7,9 +7,9 @@ function Layout() {
     const outlet = useOutlet();
 
     return(
-        <div className="flex min-h-screen">
+        <div className="flex min-h-screen bg-slate-50">
             <Sidebar />
-            <main className="flex-1 p-4 overflow-hidden">
+            <main className="flex-1 p-4 md:p-6 overflow-y-auto overflow-x-hidden">
                 <AnimatePresence mode="wait">
                     <motion.div
                         key={location.pathname}

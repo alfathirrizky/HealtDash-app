@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import * as XLSX from "xlsx";
 import { 
   Upload, 
   FileSpreadsheet, 
@@ -221,6 +222,27 @@ export default function UploadExcel() {
     setTimeout(() => {
       window.print();
     }, 150);
+  };
+
+  // Export data ke Excel sesuai dengan format yang diminta
+  const exportToExcel = () => {
+    if (!result || !result.hr_recommendations) return;
+
+    const dataToExport = result.hr_recommendations.map((rec) => ({
+      "Nama Karyawan": rec.employee_name,
+      "Tingkat Stres": rec.stress_level,
+      "Jam Kerja": rec.work_hours,
+      "Kualitas Tidur": rec.sleep_quality,
+      "Skor Risiko": `${(rec.risk_score * 100).toFixed(1)}%`,
+      "Tingkat Risiko": rec.risk_level,
+      "Faktor Dominan": rec.dominant_factor
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Hasil Analisis Burnout");
+
+    XLSX.writeFile(workbook, "Hasil_Analisis_Burnout.xlsx");
   };
 
   // Helper untuk render badge risiko
@@ -529,8 +551,15 @@ export default function UploadExcel() {
                       <p className="text-xs text-slate-400 mt-0.5">Daftar analisis risiko detail dan rekomendasi pencegahan burnout per individu.</p>
                     </div>
 
-                    {/* Search & Filter Inputs */}
+                    {/* Search, Filter & Export */}
                     <div className="flex flex-wrap items-center gap-3">
+                      <button
+                        onClick={exportToExcel}
+                        className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition-colors shadow-sm"
+                      >
+                        <FileSpreadsheet className="w-4 h-4" />
+                        Export Excel
+                      </button>
                       <div className="relative">
                         <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
                         <input
@@ -737,25 +766,25 @@ export default function UploadExcel() {
                     </h4>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
                       <div className="bg-white p-2.5 rounded-lg border border-slate-100 font-semibold text-slate-700">
-                        <code className="text-blue-600 font-bold block mb-1">stress_level</code>
+                        <code className="text-blue-600 font-bold block mb-1">Tingkat Stres</code>
                         Skor stres (1-10)
                       </div>
                       <div className="bg-white p-2.5 rounded-lg border border-slate-100 font-semibold text-slate-700">
-                        <code className="text-blue-600 font-bold block mb-1">work_hours</code>
+                        <code className="text-blue-600 font-bold block mb-1">Jam Kerja</code>
                         Jam kerja / hari
                       </div>
                       <div className="bg-white p-2.5 rounded-lg border border-slate-100 font-semibold text-slate-700">
-                        <code className="text-blue-600 font-bold block mb-1">sleep_quality</code>
+                        <code className="text-blue-600 font-bold block mb-1">Kualitas Tidur</code>
                         Kualitas tidur (1-10)
                       </div>
                       <div className="bg-white p-2.5 rounded-lg border border-slate-100 font-semibold text-slate-700">
-                        <code className="text-rose-600 font-bold block mb-1">burnout</code>
-                        Target (0 atau 1)
+                        <code className="text-rose-600 font-bold block mb-1">Nama Karyawan</code>
+                        Nama Pegawai
                       </div>
                     </div>
                     <div className="text-xs text-slate-500 mt-2 flex items-center gap-1">
                       <CheckCircle className="w-3.5 h-3.5 text-green-600 shrink-0" />
-                      <span>Opsional: Tambahkan kolom <code className="bg-slate-100 px-1 py-0.5 rounded font-mono text-slate-700 text-[10px]">Nama</code> atau <code className="bg-slate-100 px-1 py-0.5 rounded font-mono text-slate-700 text-[10px]">Name</code> untuk personalisasi data.</span>
+                      <span>Opsional: Tambahkan kolom <code className="bg-slate-100 px-1 py-0.5 rounded font-mono text-slate-700 text-[10px]">Burnout</code> (0 atau 1) untuk melatih ulang model kecerdasan buatan.</span>
                     </div>
                   </div>
                 </div>

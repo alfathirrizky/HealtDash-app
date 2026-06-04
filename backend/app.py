@@ -194,33 +194,58 @@ async def upload_excel(file: UploadFile = File(...)):
     contents = await file.read()
     df = pd.read_excel(BytesIO(contents))
 
+    # Rename columns flexibly to support Indonesian format
+    rename_mapping = {}
+    for col in df.columns:
+        col_lower = str(col).lower().strip()
+        if col_lower in ["nama karyawan", "nama pegawai", "nama", "name"]:
+            rename_mapping[col] = "employee_name"
+        elif col_lower in ["tingkat stres", "stress_level"]:
+            rename_mapping[col] = "stress_level"
+        elif col_lower in ["jam kerja", "work_hours"]:
+            rename_mapping[col] = "work_hours"
+        elif col_lower in ["kualitas tidur", "sleep_quality"]:
+            rename_mapping[col] = "sleep_quality"
+        elif col_lower in ["burnout", "target"]:
+            rename_mapping[col] = "burnout"
+            
+    df.rename(columns=rename_mapping, inplace=True)
+
     features = ["stress_level", "work_hours", "sleep_quality"]
     target = "burnout"
 
-    if not all(col in df.columns for col in features + [target]):
-        return {"error": "Kolom tidak lengkap! Pastikan file Excel memiliki kolom: stress_level, work_hours, sleep_quality, dan burnout."}
+    if not all(col in df.columns for col in features):
+        return {"error": "Kolom tidak lengkap! Pastikan file Excel minimal memiliki kolom: Tingkat Stres, Jam Kerja, dan Kualitas Tidur."}
 
     X = df[features]
-    y = df[target]
 
-    # Melakukan split data secara aman berdasarkan ukuran data
-    if len(df) >= 5:
-        X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=0.2, random_state=42
-        )
-        # Regularisasi Decision Tree (max_depth=4) untuk menghindari overfitting dan menyederhanakan pohon
-        clf = DecisionTreeClassifier(max_depth=4, min_samples_split=5, min_samples_leaf=2, random_state=42)
-        clf.fit(X_train, y_train)
-
-        y_pred = clf.predict(X_test)
-        accuracy = float(accuracy_score(y_test, y_pred))
+    if target in df.columns:
+        y = df[target]
+        # Melakukan split data secara aman berdasarkan ukuran data
+        if len(df) >= 5:
+            X_train, X_test, y_train, y_test = train_test_split(
+                X, y, test_size=0.2, random_state=42
+            )
+            # Regularisasi Decision Tree
+            clf = DecisionTreeClassifier(max_depth=4, min_samples_split=5, min_samples_leaf=2, random_state=42)
+            clf.fit(X_train, y_train)
+            y_pred = clf.predict(X_test)
+            accuracy = float(accuracy_score(y_test, y_pred))
+        else:
+            # Jika data terlalu sedikit, latih dengan seluruh dataset
+            clf = DecisionTreeClassifier(max_depth=4, min_samples_split=5, min_samples_leaf=2, random_state=42)
+            clf.fit(X, y)
+            accuracy = 1.0
+        clf_model = clf
     else:
-        # Jika data terlalu sedikit, latih dengan seluruh dataset
-        clf = DecisionTreeClassifier(max_depth=4, min_samples_split=5, min_samples_leaf=2, random_state=42)
-        clf.fit(X, y)
-        accuracy = 1.0
+        # Gunakan model yang sudah ada karena tidak ada target yang diunggah
+        if clf_model is None:
+            train_default_model()
+        if clf_model is None:
+            return {"error": "Model gagal dilatih dan kolom 'burnout' tidak ditemukan pada file."}
+        clf = clf_model
+        accuracy = 1.0  # Accuracy is assumed 1.0 when we just predict
 
-    clf_model = clf
     all_predictions = clf.predict(X).tolist()
 
     # Mendapatkan probabilitas risiko burnout untuk analisis proaktif
