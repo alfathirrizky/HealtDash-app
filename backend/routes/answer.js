@@ -86,8 +86,12 @@ router.post("/submit", verifyToken, async (req, res) => {
 
     // Ambil detail pertanyaan untuk mencocokkan question_id dengan nama field (stress_level, work_hours, sleep_quality)
     const [questions] = await db.query(
-      "SELECT question_id, name, label FROM questions WHERE survey_id = ?", [survey_id]
+      "SELECT question_id, name, label, type FROM questions WHERE survey_id = ?", [survey_id]
     );
+
+    // Ambil kategori survei
+    const [surveys] = await db.query("SELECT category FROM surveys WHERE id = ?", [survey_id]);
+    const surveyCategory = surveys.length > 0 ? String(surveys[0].category).toLowerCase() : "";
 
     let stressSum = 0, stressCount = 0;
     let workSum = 0, workCount = 0;
@@ -98,18 +102,62 @@ router.post("/submit", verifyToken, async (req, res) => {
       if (q) {
         const nameStr = String(q.name || "").toLowerCase();
         const labelStr = String(q.label || "").toLowerCase();
+        const qType = String(q.type || "").toLowerCase();
         
-        if (nameStr === "stress_level" || nameStr.includes("stres") || labelStr.includes("stres") || labelStr.includes("cemas") || labelStr.includes("tekanan") || labelStr.includes("lelah") || labelStr.includes("burnout")) {
-            const val = parseInt(ans.answer);
-            if (!isNaN(val)) { stressSum += val; stressCount++; }
+        // Prioritaskan kategori survei jika ada, jika tidak cek nama dan label pertanyaan
+        const isStress = surveyCategory.includes("stres") || surveyCategory.includes("burnout") || 
+                         nameStr === "stress_level" || nameStr.includes("stres") || 
+                         labelStr.includes("stres") || labelStr.includes("cemas") || 
+                         labelStr.includes("tekanan") || labelStr.includes("lelah") || 
+                         labelStr.includes("burnout");
+                         
+        const isWork = surveyCategory.includes("jam kerja") || surveyCategory.includes("waktu") || 
+                       nameStr === "work_hours" || nameStr.includes("jam kerja") || 
+                       labelStr.includes("jam kerja") || labelStr.includes("waktu") || 
+                       labelStr.includes("jam");
+                       
+        const isSleep = surveyCategory.includes("tidur") || surveyCategory.includes("istirahat") || 
+                        nameStr === "sleep_quality" || nameStr.includes("tidur") || 
+                        nameStr.includes("istirahat") || labelStr.includes("tidur") || 
+                        labelStr.includes("istirahat");
+
+        const getScaledValue = (rawValue, type, category) => {
+            let val = parseFloat(rawValue);
+            if (isNaN(val)) return 0;
+            // Jika tipe bukan standar, kemungkinan menggunakan skala 1-5 dari SurveiCard
+            if (category === 'stress' && qType !== 'stress_level' && qType !== 'sleep_quality') {
+                return val <= 5 ? val * 2 : val; // Skala 1-5 -> 1-10
+            }
+            if (category === 'sleep' && qType !== 'stress_level' && qType !== 'sleep_quality') {
+                return val <= 5 ? val * 2 : val; // Skala 1-5 -> 1-10
+            }
+            if (category === 'work' && qType !== 'work_hours') {
+                // Skala 1-5 -> 6-12 jam (1: 6, 2: 7.5, 3: 9, 4: 10.5, 5: 12)
+                return val <= 5 ? 6 + ((val - 1) * 1.5) : val;
+            }
+            return val;
+        };
+
+        // Evaluasi berurutan berdasarkan kecocokan (Kualitas Tidur dan Jam Kerja didahulukan jika kategori spesifik, jika tidak ikuti urutan)
+        if (isSleep && (surveyCategory.includes("tidur") || surveyCategory.includes("istirahat") || !isStress)) {
+            sleepSum += getScaledValue(ans.answer, qType, 'sleep');
+            sleepCount++;
         }
-        else if (nameStr === "work_hours" || nameStr.includes("jam kerja") || labelStr.includes("jam kerja") || labelStr.includes("waktu") || labelStr.includes("jam")) {
-            const val = parseFloat(ans.answer);
-            if (!isNaN(val)) { workSum += val; workCount++; }
+        else if (isWork && (surveyCategory.includes("jam kerja") || surveyCategory.includes("waktu") || !isStress)) {
+            workSum += getScaledValue(ans.answer, qType, 'work');
+            workCount++;
         }
-        else if (nameStr === "sleep_quality" || nameStr.includes("tidur") || labelStr.includes("tidur")) {
-            const val = parseInt(ans.answer);
-            if (!isNaN(val)) { sleepSum += val; sleepCount++; }
+        else if (isStress) {
+            stressSum += getScaledValue(ans.answer, qType, 'stress');
+            stressCount++;
+        }
+        else if (isSleep) { // Fallback jika isSleep true tapi tertahan kondisi pertama
+            sleepSum += getScaledValue(ans.answer, qType, 'sleep');
+            sleepCount++;
+        }
+        else if (isWork) { // Fallback untuk isWork
+            workSum += getScaledValue(ans.answer, qType, 'work');
+            workCount++;
         }
       }
     });

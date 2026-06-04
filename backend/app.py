@@ -259,7 +259,7 @@ async def upload_excel(file: UploadFile = File(...)):
     except Exception as e:
         print(f"Gagal mengekspor diagram pohon keputusan: {e}")
 
-    # ==== Rekomendasi HR untuk setiap pegawai ====
+    # Rekomendasi HR untuk setiap pegawai
     hr_recommendations = []
     risk_counts = {"Tinggi": 0, "Sedang": 0, "Rendah": 0}
 
