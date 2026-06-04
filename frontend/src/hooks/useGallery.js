@@ -55,10 +55,10 @@ function useContent() {
         image: form.image, 
         user_id: user_id
       });
-      toast.success("Gallery berhasil dibuat ✅");
+      toast.success("Gallery berhasil dibuat");
     } catch (err) {
       console.error(err);
-      toast.error("Gagal membuat gallery ❌");
+      toast.error("Gagal membuat gallery");
       throw err; // throw error so the caller can know it failed
     }
   };
@@ -73,7 +73,7 @@ function useContent() {
         payload.image = form.newImage;
       }
       await API.put(`/gallery/${form.id}`, payload);
-      toast.success("Content berhasil diperbarui ✅");
+      toast.success("Content berhasil diperbarui");
       fetchContent();
       resetForm();
     } catch (err) {

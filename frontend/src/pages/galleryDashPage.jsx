@@ -56,7 +56,7 @@ registerPlugin(
   FilePondPluginImageTransform
 );
 
-function QuestionPage() {
+export default function galleryDashPage() {
         const {
             contents=[],
             open,
@@ -74,7 +74,7 @@ function QuestionPage() {
         <div className="space-y-4 p-5">
             <div className="flex flex-col gap-5 scrollbar-none scroll-smooth overflow-y-auto h-[89vh]">
                 <div className=" flex w-full items-center justify-between gap-5">
-                    <h1 className=" font-bold text-4xl">Gallery Dashboard</h1>
+                    <h1 className=" font-bold text-4xl">Education Dashboard</h1>
                     <div className=" flex gap-4 w-2xl justify-end">
                         <div className="w-full md:w-1/3">
                                 <InputGroup>
@@ -86,7 +86,7 @@ function QuestionPage() {
                         </div>
                         <Link to="/galleryDash/create">
                             <Button className="rounded-xl bg-blue-600 hover:bg-blue-700 text-white">
-                                Create Gallery
+                                Create Education
                             </Button>
                         </Link>
                     </div>
@@ -95,7 +95,7 @@ function QuestionPage() {
                     <BreadcrumbList>
                         <BreadcrumbItem>
                         <BreadcrumbLink asChild>
-                            <Link to="/galleryDash">Gallery</Link>
+                            <Link to="/galleryDash">Education</Link>
                         </BreadcrumbLink>
                         </BreadcrumbItem>
                         <BreadcrumbSeparator />
@@ -190,7 +190,7 @@ function QuestionPage() {
                                         <div className="flex flex-col items-center justify-center py-20 gap-6">
                                             <Load className="w-30 h-30 " />
                                             <p className="text-blue-500 font-medium text-lg">
-                                                No Questions Found
+                                                No Education Found
                                             </p>
                                         </div>
                                     </TableCell>
@@ -285,4 +285,3 @@ function QuestionPage() {
         </div>
     );
 }
-export default QuestionPage;

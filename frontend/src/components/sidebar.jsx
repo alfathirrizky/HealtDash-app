@@ -26,7 +26,7 @@ function Sidebar() {
     const menu = [
         { name: "Dashboard", path: "/dashboard" },
         { name: "Identification", path: "/identification" },
-        { name: "Gallery", path: "/galleryDash" },
+        { name: "Education", path: "/galleryDash" },
         { name: "Question", path: "/question" },
         { name: "Survei", path: "/surveiDash" },
         { name: "Suggestion", path: "/suggestion" },

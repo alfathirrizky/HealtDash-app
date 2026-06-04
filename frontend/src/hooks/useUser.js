@@ -87,7 +87,7 @@ export default function useUser() {
         payload.image = form.newImage;
       }
       await API.put(`/users/${form.id}`, payload);
-      toast.success("User berhasil diperbarui ✅");
+      toast.success("User berhasil diperbarui");
       fetchUser();
       resetForm();
     } catch (err) {

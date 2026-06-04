@@ -210,7 +210,7 @@ export default function SurveiDashPage() {
                                         <div className="flex flex-col items-center justify-center py-20 gap-6">
                                             <Load className="w-30 h-30 " />
                                             <p className="text-blue-500 font-medium text-lg">
-                                                No Questions Found
+                                                No Survei Found
                                             </p>
                                         </div>
                                     </TableCell>
