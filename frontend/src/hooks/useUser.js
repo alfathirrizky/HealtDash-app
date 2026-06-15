@@ -26,6 +26,7 @@ export default function useUser() {
     setOpen(false);
   };
   const initialForm = {
+    id: "",
     image: "",
     newImage: null,
     telepon: "",
@@ -105,6 +106,7 @@ export default function useUser() {
   const openEditForm = (user) => {
     setEditing(user);
     setForm({
+      id: user.id,
       image: user.image,
       telepon: user.telepon,
       name: user.name,
@@ -117,8 +119,7 @@ export default function useUser() {
     if (user.image) {
       setFiles([
         {
-          source: user.image,
-          options: { type: "local" },
+          source: `http://localhost:5000/uploads/${user.image}`,
         },
       ]);
     }

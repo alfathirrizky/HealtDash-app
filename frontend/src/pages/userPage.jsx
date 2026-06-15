@@ -1,5 +1,21 @@
 import API from "../api/api"
 import useUser from "../hooks/useUser"
+import { FilePond, registerPlugin } from "react-filepond";
+import "filepond/dist/filepond.min.css";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import FilePondPluginImageEdit from "filepond-plugin-image-edit";
+import FilePondPluginImageCrop from "filepond-plugin-image-crop";
+import FilePondPluginImageResize from "filepond-plugin-image-resize";
+import FilePondPluginImageTransform from "filepond-plugin-image-transform";
+
+registerPlugin(
+    FilePondPluginImagePreview,
+    FilePondPluginImageEdit,
+    FilePondPluginImageCrop,
+    FilePondPluginImageResize,
+    FilePondPluginImageTransform
+);
 import {
   Table, TableBody, TableCaption, TableCell, TableHead,
   TableHeader, TableRow,
@@ -45,6 +61,9 @@ export default function UserPage() {
         open,
         editing,
         form,
+        setForm,
+        files,
+        setFiles,
         openEditForm,
         handleChange,
         handleCreate,
@@ -195,20 +214,42 @@ export default function UserPage() {
                     </DialogHeader>
 
                     <div className="grid grid-cols-3 gap-3 py-2">
+                    <div className="col-span-3">
+                        <FilePond
+                            files={files}
+                            onupdatefiles={setFiles}
+                            name="file"
+                            allowMultiple={false}
+                            acceptedFileTypes={["image/jpeg", "image/png"]}
+                            labelFileTypeNotAllowed="Hanya JPG dan PNG"
+                            server={{
+                                process: {
+                                    url: "http://localhost:5000/api/users/upload",
+                                    method: "POST",
+                                    onload: (filename) => {
+                                        setForm(prev => ({ ...prev, newImage: filename }));
+                                        return filename;
+                                    },
+                                    onerror: (err) => {
+                                        console.error("UPLOAD ERROR:", err);
+                                        return err;
+                                    },
+                                },
+                            }}
+                            labelIdle='Drag & Drop atau <span class="filepond--label-action">Pilih Gambar</span>'
+                            imagePreviewHeight={150}
+                            allowImagePreview
+                            allowImageEdit
+                            credits={false}
+                        />
+                    </div>
                     <Input
                         placeholder="Id"
                         name="id"
-                        value={form.id}
+                        value={form.id || ""}
                         onChange={handleChange}
-                        className="border-blue-300 focus:ring-blue-500"
-                    />
-
-                    <Input
-                        placeholder="Image"
-                        name="image"
-                        value={form.image}
-                        onChange={handleChange}
-                        className="border-blue-300 focus:ring-blue-500"
+                        className="border-blue-300 focus:ring-blue-500 bg-gray-100"
+                        disabled
                     />
 
                     <Input

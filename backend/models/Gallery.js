@@ -2,33 +2,33 @@ import db from "../db.js";
 
 class Gallery {
   async findAll() {
-    const [results] = await db.query("SELECT * FROM albums");
+    const [results] = await db.query("SELECT * FROM educations");
     return results;
   }
 
   async findById(id) {
-    const [rows] = await db.query("SELECT * FROM albums WHERE id = ?", [id]);
+    const [rows] = await db.query("SELECT * FROM educations WHERE id = ?", [id]);
     return rows;
   }
 
-  async create(album) {
-    const { id, user_id, image, caption, description } = album;
+  async create(education) {
+    const { id, user_id, image, caption, description } = education;
     await db.query(
-      "INSERT INTO albums (id, user_id, image, caption, description) VALUES (?, ?, ?, ?, ?)",
+      "INSERT INTO educations (id, user_id, image, caption, description) VALUES (?, ?, ?, ?, ?)",
       [id, user_id, image, caption, description]
     );
   }
 
-  async update(id, album) {
-    const { image, caption, description } = album;
+  async update(id, education) {
+    const { image, caption, description } = education;
     await db.query(
-      "UPDATE albums SET image=?, caption=?, description=? WHERE id=?",
+      "UPDATE educations SET image=?, caption=?, description=? WHERE id=?",
       [image, caption, description, id]
     );
   }
 
   async delete(id) {
-    await db.query("DELETE FROM albums WHERE id = ?", [id]);
+    await db.query("DELETE FROM educations WHERE id = ?", [id]);
   }
 }
 

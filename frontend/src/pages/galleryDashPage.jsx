@@ -248,7 +248,7 @@ export default function galleryDashPage() {
                                 fileValidateTypeLabelExpectedTypes="Hanya JPG / PNG / WEBP"
                                 server={{
                                     process: {
-                                    url: "http://localhost:5000/api/gallery/upload",
+                                    url: "http://localhost:5000/api/educations/upload",
                                     method: "POST",
                                     onload: (filename) => {
                                         setForm((prev) => ({

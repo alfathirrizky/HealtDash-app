@@ -9,11 +9,11 @@ class GalleryService {
     this.galleryModel = galleryModel;
   }
 
-  async getAllAlbums() {
+  async getAllEducations() {
     return await this.galleryModel.findAll();
   }
 
-  async getAlbumById(id) {
+  async getEducationById(id) {
     const rows = await this.galleryModel.findById(id);
     if (!rows.length) {
       const error = new Error("Data not found");
@@ -23,8 +23,8 @@ class GalleryService {
     return rows[0];
   }
 
-  async createAlbum(albumData) {
-    const { user_id, caption, description, image } = albumData;
+  async createEducation(educationData) {
+    const { user_id, caption, description, image } = educationData;
     if (!image) {
       const error = new Error("Image required");
       error.statusCode = 400;
@@ -38,8 +38,8 @@ class GalleryService {
     return rows[0];
   }
 
-  async updateAlbum(id, albumData) {
-    const { caption, description, image } = albumData;
+  async updateEducation(id, educationData) {
+    const { caption, description, image } = educationData;
     const rows = await this.galleryModel.findById(id);
     if (!rows.length) {
       const error = new Error("Data not found");
@@ -61,7 +61,7 @@ class GalleryService {
     return updatedRows[0];
   }
 
-  async deleteAlbum(id) {
+  async deleteEducation(id) {
     const rows = await this.galleryModel.findById(id);
     if (!rows.length) {
       const error = new Error("Data not found");

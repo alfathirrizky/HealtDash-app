@@ -12,18 +12,18 @@ class GalleryController {
 
   async getAll(req, res) {
     try {
-      const albums = await this.galleryService.getAllAlbums();
-      res.json(albums);
+      const educations = await this.galleryService.getAllEducations();
+      res.json(educations);
     } catch (error) {
-      console.error("Error fetching albums:", error);
+      console.error("Error fetching educations:", error);
       res.status(500).json({ message: "Internal Server Error" });
     }
   }
 
   async getById(req, res) {
     try {
-      const album = await this.galleryService.getAlbumById(req.params.id);
-      res.json(album);
+      const education = await this.galleryService.getEducationById(req.params.id);
+      res.json(education);
     } catch (error) {
       console.error(error);
       res.status(error.statusCode || 500).json({ message: error.message || "Database error" });
@@ -32,8 +32,8 @@ class GalleryController {
 
   async create(req, res) {
     try {
-      const album = await this.galleryService.createAlbum(req.body);
-      res.status(201).json(album);
+      const education = await this.galleryService.createEducation(req.body);
+      res.status(201).json(education);
     } catch (error) {
       console.error(error);
       res.status(error.statusCode || 500).json({ message: error.message || "Create failed" });
@@ -42,8 +42,8 @@ class GalleryController {
 
   async update(req, res) {
     try {
-      const album = await this.galleryService.updateAlbum(req.params.id, req.body);
-      res.json(album);
+      const education = await this.galleryService.updateEducation(req.params.id, req.body);
+      res.json(education);
     } catch (error) {
       console.error(error);
       res.status(error.statusCode || 500).json({ message: error.message || "Update failed" });
@@ -52,7 +52,7 @@ class GalleryController {
 
   async delete(req, res) {
     try {
-      await this.galleryService.deleteAlbum(req.params.id);
+      await this.galleryService.deleteEducation(req.params.id);
       res.json({ message: "Deleted successfully" });
     } catch (error) {
       console.error(error);

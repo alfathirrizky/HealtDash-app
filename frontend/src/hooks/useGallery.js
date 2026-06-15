@@ -21,7 +21,7 @@ function useContent() {
 
   const fetchContent = async () => {
     try {
-      const res = await API.get("/gallery");
+      const res = await API.get("/educations");
       console.log("API RESPONSE:", res.data);
       setContents(res.data);
     } catch (err) {
@@ -49,7 +49,7 @@ function useContent() {
       const user = storedUser ? JSON.parse(storedUser) : null;
       const user_id = user?.id || null;
 
-      await API.post("/gallery", {
+      await API.post("/educations", {
         caption: form.caption,
         description: form.description,
         image: form.image, 
@@ -72,7 +72,7 @@ function useContent() {
       if (form.newImage) {
         payload.image = form.newImage;
       }
-      await API.put(`/gallery/${form.id}`, payload);
+      await API.put(`/educations/${form.id}`, payload);
       toast.success("Content berhasil diperbarui");
       fetchContent();
       resetForm();
@@ -84,7 +84,7 @@ function useContent() {
 
   const handleDelete = async (id) => {
     toast.success("Gallery berhasil dihapus.");
-    await API.delete(`/gallery/${id}`);
+    await API.delete(`/educations/${id}`);
     fetchContent();
   };
 

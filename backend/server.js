@@ -42,8 +42,8 @@ app.use("/api/users", userRoutes);
 app.use("/api/answers", answerRoutes);
 // Semua endpoint auth diawali /auth
 app.use("/api/auth", authRoutes);
-// Semua endpoint gallery diawali /gallery
-app.use("/api/gallery", galleryRoutes);
+// Semua endpoint educations diawali /educations
+app.use("/api/educations", galleryRoutes);
 // Semua endpoint surveys diawali /surveys
 app.use("/api/surveys", surveyRoutes);
 // Semua endpoint sugestions diawali /suggestions
