@@ -55,25 +55,9 @@ export default function CreateQuestionPage() {
                                     ))}
                             </select>
                         </div>
-                        {/* <div className="flex flex-col gap-1">
+                        <div className="flex flex-col gap-1">
                             <h1 className="font-semibold">Question</h1>
                             <Input name="question" placeholder="Masukan Question" value={form.question} onChange={handleChange} className="border border-gray-400"/>
-                        </div> */}
-                        <div className="flex flex-col gap-1">
-                            <h1 className="font-semibold">Name</h1>
-                            <Input name="name" placeholder="Name" value={form.name} onChange={handleChange} className="border border-gray-400" />
-                        </div>
-                        <div className="flex flex-col gap-1">
-                            <h1 className="font-semibold">Label</h1>
-                            <Input name="label" placeholder="Label" value={form.label} onChange={handleChange} className="border border-gray-400" />
-                        </div>
-                        <div className="flex flex-col gap-1">
-                            <h1 className="font-semibold">Note</h1>
-                            <Input name="note" placeholder="Note" value={form.note} onChange={handleChange} className="border border-gray-400" />
-                        </div>
-                        <div className="flex flex-col gap-1">
-                            <h1 className="font-semibold">Type</h1>
-                            <Input type="select" name="type" placeholder="Type" value={form.type} onChange={handleChange} className="border border-gray-400" />
                         </div>
                     </div>
                     <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white" onClick={submit}>

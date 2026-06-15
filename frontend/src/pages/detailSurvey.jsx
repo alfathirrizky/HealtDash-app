@@ -130,27 +130,19 @@ export default function DetailSurvey() {
                                 <Table>
                                     <TableHeader>
                                         <TableRow className="bg-blue-50 border-b border-blue-100">
-                                            <TableHead className="text-blue-600 font-semibold">Question</TableHead>
-                                            <TableHead className="text-blue-600 font-semibold">Survey ID</TableHead>
-                                            <TableHead className="text-blue-600 font-semibold">Label</TableHead>
-                                            <TableHead className="text-blue-600 font-semibold">Category</TableHead>
-                                            <TableHead className="text-blue-600 font-semibold">Note</TableHead>
-                                            <TableHead className="text-blue-600 font-semibold">Action</TableHead>
+                                            <TableHead className="text-blue-600 font-semibold w-[80%]">Question</TableHead>
+                                            <TableHead className="text-blue-600 font-semibold text-right">Action</TableHead>
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
                                         {filteredQuestions.length > 0 ? (
                                             filteredQuestions.map((question) => (
                                                 <TableRow
-                                                    key={question.question_id}
+                                                    key={question.id}
                                                     className="hover:bg-blue-50 transition border-b border-gray-400"
                                                 >
-                                                    <TableCell>{question.name}</TableCell>
-                                                    <TableCell>{question.survey_id}</TableCell>
-                                                    <TableCell>{question.label}</TableCell>
-                                                    <TableCell>{question.type}</TableCell>
-                                                    <TableCell>{question.note}</TableCell>
-                                                    <TableCell className="space-x-2">
+                                                    <TableCell className="font-medium text-slate-700">{question.question}</TableCell>
+                                                    <TableCell className="space-x-2 text-right">
                                                         <Button
                                                             size="sm"
                                                             variant="outline"
@@ -193,7 +185,7 @@ export default function DetailSurvey() {
                                                                 </AlertDialogCancel>
                                                                 <AlertDialogAction
                                                                 className="bg-red-500 hover:bg-red-600 text-white"
-                                                                onClick={() => handleDelete(question.question_id)}
+                                                                onClick={() => handleDelete(question.id)}
                                                                 >
                                                                 Ya, Hapus
                                                                 </AlertDialogAction>
@@ -229,16 +221,6 @@ export default function DetailSurvey() {
                                 </DialogHeader>
                                 <div className="flex flex-col gap-3">
                                     <div className="flex flex-col gap-1">
-                                        <p className=" font-semibold">ID Question</p>
-                                        <Input
-                                            placeholder="Id"
-                                            name="question_id"
-                                            value={form.question_id}
-                                            onChange={handleChange}
-                                            className="border-blue-300 focus:ring-blue-500"
-                                        />
-                                    </div>
-                                    <div className="flex flex-col gap-1">
                                         <p className=" font-semibold">Survey ID</p>
                                         <Input
                                             placeholder="Survey_id"
@@ -249,41 +231,11 @@ export default function DetailSurvey() {
                                         />
                                     </div>
                                     <div className="flex flex-col gap-1">
-                                        <p className=" font-semibold">Name</p>
+                                        <p className=" font-semibold">Question</p>
                                         <Input
-                                            placeholder="Name"
-                                            name="name"
-                                            value={form.name}
-                                            onChange={handleChange}
-                                            className="border-blue-300 focus:ring-blue-500"
-                                        />
-                                    </div>
-                                    <div className="flex flex-col gap-1">
-                                        <p className=" font-semibold">Label</p>
-                                        <Input
-                                            placeholder="Label"
-                                            name="label"
-                                            value={form.label}
-                                            onChange={handleChange}
-                                            className="border-blue-300 focus:ring-blue-500"
-                                        />
-                                    </div>
-                                    <div className="flex flex-col gap-1">
-                                        <p className=" font-semibold">Note</p>
-                                        <Input
-                                            placeholder="Note"
-                                            name="note"
-                                            value={form.note}
-                                            onChange={handleChange}
-                                            className="border-blue-300 focus:ring-blue-500"
-                                        />
-                                    </div>
-                                    <div className="flex flex-col gap-1">
-                                        <p className=" font-semibold">Type</p>
-                                        <Input
-                                            placeholder="Type"
-                                            name="type"
-                                            value={form.type}
+                                            placeholder="Question"
+                                            name="question"
+                                            value={form.question}
                                             onChange={handleChange}
                                             className="border-blue-300 focus:ring-blue-500"
                                         />

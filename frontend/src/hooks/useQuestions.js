@@ -19,12 +19,9 @@ export default function useQuestions() {
   const [editing, setEditing] = useState(null);
   const [files, setFiles] = useState([]);
   const [form, setForm] = useState({
-    question_id:"",
+    id:"",
     survey_id:"",
-    name:"",
-    label:"",
-    note:"",
-    type:"",
+    question:""
   });
 
   // fetch questions
@@ -43,12 +40,9 @@ export default function useQuestions() {
   //reset form
   const resetForm = () => {
     setForm({
-      question_id: "",
+      id: "",
       survey_id: "",
-      name: "",
-      label: "",
-      note: "",
-      type: "",
+      question: ""
     });
     setFiles([]);
     };
@@ -66,29 +60,26 @@ export default function useQuestions() {
   //update question
   const handleUpdate = async () => {
     const data = { ...form  };
-    const res = await API.put(`/questions/${form.question_id}`, data);
-    setQuestions((prev) => prev.map((q) => (q.question_id === form.question_id ? res.data : q)));
+    const res = await API.put(`/questions/${form.id}`, data);
+    setQuestions((prev) => prev.map((q) => (q.id === form.id ? res.data : q)));
     toast.success("Question berhasil diupdate");
     setOpen(false);
     setEditing(null);
     resetForm();
   };
   //delete question
-  const handleDelete = async (question_id) => {
-    await API.delete(`/questions/${question_id}`);
-    setQuestions((prev) => prev.filter((q) => q.question_id !== question_id));
+  const handleDelete = async (id) => {
+    await API.delete(`/questions/${id}`);
+    setQuestions((prev) => prev.filter((q) => q.id !== id));
     toast.error("Question berhasil dihapus.");
   };
 
   const openEditForm = (question) => {
     setEditing(question);
     setForm({
-      question_id: question.question_id,
+      id: question.id,
       survey_id: question.survey_id,
-      name: question.name,
-      label: question.label,
-      note: question.note,
-      type: question.type,
+      question: question.question
     });
     setOpen(true);
   };
