@@ -2,6 +2,7 @@ import { useOutlet, useLocation } from "react-router-dom";
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import { motion, AnimatePresence } from "framer-motion";
+import FloatingAudioPlayer from "../components/FloatingAudioPlayer";
 
 function HomeLayout() {
     const location = useLocation();
@@ -24,6 +25,7 @@ function HomeLayout() {
                 </AnimatePresence>
             </main>
             <Footer />
+            <FloatingAudioPlayer />
         </div>
     )
 }

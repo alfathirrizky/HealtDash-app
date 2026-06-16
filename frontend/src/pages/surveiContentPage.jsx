@@ -92,14 +92,11 @@ export default function SurveiContentPage() {
             <div className="p-5 rounded-2xl shadow-md flex flex-col gap-2">
                 {filteredQuestions.length > 0 ? (
                     filteredQuestions.map((question) => (
-                        <SurveiCard 
-                            key={question.question_id} 
-                            name={question.name} 
-                            label={question.label} 
-                            note={question.note}
-                            type={question.type}
-                            onChange={handleChange} 
-                            question_id={question.question_id} 
+                        <SurveiCard
+                            key={question.id}
+                            question={question.question}
+                            onChange={handleChange}
+                            question_id={question.id}
                         />
                     ))) : (
                     <div className="flex flex-col items-center justify-center py-20 gap-6">
@@ -107,8 +104,8 @@ export default function SurveiContentPage() {
                         <p className="text-blue-500 font-medium text-lg">No Questions Found</p>
                     </div>
                 )}
-                <button 
-                    className={`self-center mt-4 w-full px-10 py-2 text-white rounded-3xl shadow-md text-xl font-semibold transition-all ${isSubmitting ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'}`} 
+                <button
+                    className={`self-center mt-4 w-full px-10 py-2 text-white rounded-3xl shadow-md text-xl font-semibold transition-all ${isSubmitting ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'}`}
                     onClick={handleSubmit}
                     disabled={isSubmitting}
                 >
