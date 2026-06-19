@@ -55,7 +55,7 @@ export default function SurveiPage() {
                                 </p>
                             </div>
                             <button
-                                className={`${completedSurveys.includes(survey.id) ? "bg-slate-400 cursor-not-allowed" : "bg-[#4880FF] hover:bg-blue-600"} text-white px-8 py-2.5 rounded-full text-sm font-bold transition-colors flex-shrink-0 ml-4 shadow-sm`}
+                                className={`${completedSurveys.includes(survey.id) ? "bg-slate-400 cursor-not-allowed" : "bg-[#4880FF] hover:bg-blue-600"} text-white px-8 py-2.5 rounded-full text-sm font-bold transition-colors shrink-0 ml-4 shadow-sm`}
                                 onClick={() => !completedSurveys.includes(survey.id) && navigate(`/survei/${survey.id}`)}
                                 disabled={completedSurveys.includes(survey.id)}
                             >

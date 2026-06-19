@@ -230,7 +230,7 @@ export default function AnswerPage() {
                                                                                             {ans.question_label}
                                                                                         </td>
                                                                                         <td className="px-4 py-3 align-top">
-                                                                                            <span className="text-sm font-medium text-slate-900 bg-blue-50 text-blue-800 border border-blue-100 px-3 py-1.5 rounded-lg inline-block">
+                                                                                            <span className="text-sm font-medium text-slate-900 bg-blue-50 border border-blue-100 px-3 py-1.5 rounded-lg inline-block">
                                                                                                 {ans.answer_text}
                                                                                             </span>
                                                                                         </td>

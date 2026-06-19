@@ -94,7 +94,7 @@ function HomePage() {
                         <div className="bg-white font-medium text-slate-700 text-sm shadow-[0_4px_20px_rgb(0,0,0,0.05)] rounded-2xl p-6 border-l-4 border-amber-500 transition-all hover:shadow-md">Dukungan perusahaan membantu mencegah kelelahan kerja (burnout)</div>
                     </div>
                 </div>
-                <div className="relative h-[350px] md:h-[500px] w-full lg:w-[48%] mt-10 lg:mt-0 rounded-[2rem] z-10 flex items-center justify-end">
+                <div className="relative h-[350px] md:h-[500px] w-full lg:w-[48%] mt-10 lg:mt-0 rounded-4xl z-10 flex items-center justify-end">
                     <CardSwap
                         cardDistance={60}
                         verticalDistance={70}
@@ -117,7 +117,7 @@ function HomePage() {
                     <p className="text-center text-sm md:text-base text-slate-600 max-w-2xl">Supporting mental wellbeing benefits not only employees, but also the company as a whole. A healthy mind helps create a healthier workplace.</p>
                 </div>
                 <div className="flex flex-col md:flex-row gap-8 w-full max-w-6xl">
-                    <SpotlightCard className="custom-spotlight-card bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-[2rem] w-full md:w-1/2 p-8 md:p-10 border border-slate-100" spotlightColor="rgba(59, 130, 246, 0.1)">
+                    <SpotlightCard className="custom-spotlight-card bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-4xl w-full md:w-1/2 p-8 md:p-10 border border-slate-100" spotlightColor="rgba(59, 130, 246, 0.1)">
                         <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-8 flex items-center gap-4">
                             <span className="p-3 bg-blue-50 text-blue-600 rounded-xl">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
@@ -125,14 +125,14 @@ function HomePage() {
                             For Employees
                         </h3>
                         <ul className="space-y-5 text-gray-600 text-sm md:text-base font-medium">
-                            <li className="flex items-start gap-4"><svg className="w-6 h-6 text-emerald-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg><span>Better awareness of personal mental wellbeing</span></li>
-                            <li className="flex items-start gap-4"><svg className="w-6 h-6 text-emerald-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg><span>Improved stress management at work</span></li>
-                            <li className="flex items-start gap-4"><svg className="w-6 h-6 text-emerald-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg><span>Increased focus and emotional balance</span></li>
-                            <li className="flex items-start gap-4"><svg className="w-6 h-6 text-emerald-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg><span>Healthier work-life balance</span></li>
-                            <li className="flex items-start gap-4"><svg className="w-6 h-6 text-emerald-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg><span>Stronger sense of support from the company</span></li>
+                            <li className="flex items-start gap-4"><svg className="w-6 h-6 text-emerald-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg><span>Better awareness of personal mental wellbeing</span></li>
+                            <li className="flex items-start gap-4"><svg className="w-6 h-6 text-emerald-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg><span>Improved stress management at work</span></li>
+                            <li className="flex items-start gap-4"><svg className="w-6 h-6 text-emerald-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg><span>Increased focus and emotional balance</span></li>
+                            <li className="flex items-start gap-4"><svg className="w-6 h-6 text-emerald-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg><span>Healthier work-life balance</span></li>
+                            <li className="flex items-start gap-4"><svg className="w-6 h-6 text-emerald-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg><span>Stronger sense of support from the company</span></li>
                         </ul>
                     </SpotlightCard>
-                    <SpotlightCard className="custom-spotlight-card bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-[2rem] w-full md:w-1/2 p-8 md:p-10 border border-slate-100" spotlightColor="rgba(168, 85, 247, 0.1)">
+                    <SpotlightCard className="custom-spotlight-card bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-4xl w-full md:w-1/2 p-8 md:p-10 border border-slate-100" spotlightColor="rgba(168, 85, 247, 0.1)">
                         <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-8 flex items-center gap-4">
                             <span className="p-3 bg-purple-50 text-purple-600 rounded-xl">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" /></svg>
@@ -140,11 +140,11 @@ function HomePage() {
                             For the Management
                         </h3>
                         <ul className="space-y-5 text-gray-600 text-sm md:text-base font-medium">
-                            <li className="flex items-start gap-4"><svg className="w-6 h-6 text-emerald-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg><span>More emotionally stable workforce</span></li>
-                            <li className="flex items-start gap-4"><svg className="w-6 h-6 text-emerald-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg><span>Improved productivity and work quality</span></li>
-                            <li className="flex items-start gap-4"><svg className="w-6 h-6 text-emerald-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg><span>Healthier and more supportive work culture</span></li>
-                            <li className="flex items-start gap-4"><svg className="w-6 h-6 text-emerald-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg><span>Reduced burnout and absenteeism risk</span></li>
-                            <li className="flex items-start gap-4"><svg className="w-6 h-6 text-emerald-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg><span>Stronger employee engagement and retention</span></li>
+                            <li className="flex items-start gap-4"><svg className="w-6 h-6 text-emerald-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg><span>More emotionally stable workforce</span></li>
+                            <li className="flex items-start gap-4"><svg className="w-6 h-6 text-emerald-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg><span>Improved productivity and work quality</span></li>
+                            <li className="flex items-start gap-4"><svg className="w-6 h-6 text-emerald-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg><span>Healthier and more supportive work culture</span></li>
+                            <li className="flex items-start gap-4"><svg className="w-6 h-6 text-emerald-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg><span>Reduced burnout and absenteeism risk</span></li>
+                            <li className="flex items-start gap-4"><svg className="w-6 h-6 text-emerald-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg><span>Stronger employee engagement and retention</span></li>
                         </ul>
                     </SpotlightCard>
                 </div>

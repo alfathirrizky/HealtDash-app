@@ -78,7 +78,7 @@ const FloatingAudioPlayer = () => {
         dragConstraints={constraintsRef}
         dragElastic={0.1}
         dragMomentum={false}
-        className={`fixed z-50 bottom-10 right-10 flex flex-col items-center bg-white/90 backdrop-blur-md border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.12)] p-2 cursor-grab active:cursor-grabbing transition-all duration-300 ${isExpanded ? 'w-[19rem] rounded-3xl' : 'w-16 rounded-full'}`}
+        className={`fixed z-50 bottom-10 right-10 flex flex-col items-center bg-white/90 backdrop-blur-md border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.12)] p-2 cursor-grab active:cursor-grabbing transition-all duration-300 ${isExpanded ? 'w-76 rounded-3xl' : 'w-16 rounded-full'}`}
       >
         <audio 
           ref={audioRef} 
@@ -89,7 +89,7 @@ const FloatingAudioPlayer = () => {
         {!isExpanded ? (
           <div 
             onClick={toggleExpand}
-            className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full text-white shadow-lg pointer-events-auto hover:scale-105 transition-transform cursor-pointer" 
+            className="flex items-center justify-center w-12 h-12 bg-linear-to-br from-blue-500 to-indigo-600 rounded-full text-white shadow-lg pointer-events-auto hover:scale-105 transition-transform cursor-pointer" 
             title="Buka Audio Player"
           >
             {isPlaying ? <Music className="w-6 h-6 animate-pulse" /> : <Play className="w-6 h-6 ml-1" />}
@@ -98,7 +98,7 @@ const FloatingAudioPlayer = () => {
           <div className="flex flex-col items-center justify-center w-full p-3 gap-4 pointer-events-auto cursor-default" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between w-full px-2">
               <div className="text-sm font-semibold text-slate-800 flex items-center gap-2">
-                <div className="p-1.5 bg-blue-100 rounded-full flex-shrink-0">
+                <div className="p-1.5 bg-blue-100 rounded-full shrink-0">
                   <Music className="w-4 h-4 text-blue-600 animate-bounce" />
                 </div>
                 <span className="truncate max-w-[150px]" title={currentTrack.title}>{currentTrack.title}</span>
@@ -123,7 +123,7 @@ const FloatingAudioPlayer = () => {
 
               <button 
                 onClick={togglePlay}
-                className="w-12 h-12 flex items-center justify-center bg-gradient-to-br from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white rounded-full transition-all shadow-md hover:shadow-lg hover:scale-105 mx-1"
+                className="w-12 h-12 flex items-center justify-center bg-linear-to-br from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white rounded-full transition-all shadow-md hover:shadow-lg hover:scale-105 mx-1"
                 title={isPlaying ? "Pause" : "Play"}
               >
                 {isPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6 ml-1" />}
