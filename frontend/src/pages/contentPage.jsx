@@ -31,8 +31,8 @@ function ContentPage() {
                             {/* Content Layer */}
                             <div className="relative z-10 p-8 flex justify-between items-end w-full">
                                 <div className="text-white">
-                                    <h1 className="text-3xl font-bold mb-1 tracking-wide">{content.caption}</h1>
-                                    <p className="text-md text-gray-200">{content.description}</p>
+                                    <h1 className="text-xl w-md font-bold mb-1 tracking-wide">{content.caption}</h1>
+                                    <p className="text-md text-gray-200 truncate w-md">{content.description}</p>
                                 </div>
                                 <button 
                                     className="bg-[#3b82f6] hover:bg-blue-600 transition-colors text-white px-8 py-2 rounded-full font-semibold cursor-pointer text-sm shadow-md whitespace-nowrap ml-4" 

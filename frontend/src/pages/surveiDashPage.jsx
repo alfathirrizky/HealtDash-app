@@ -142,9 +142,9 @@ export default function SurveiDashPage() {
                                                 }}
                                             />
                                         </TableCell>
-                                        <TableCell>{survey.title}</TableCell>
-                                        <TableCell>{survey.caption}</TableCell>
-                                        <TableCell>{survey.description}</TableCell>
+                                        <TableCell className="max-w-[150px] truncate" title={survey.title}>{survey.title}</TableCell>
+                                        <TableCell className="max-w-[150px] truncate" title={survey.caption}>{survey.caption}</TableCell>
+                                        <TableCell className="max-w-[200px] truncate" title={survey.description}>{survey.description}</TableCell>
                                         <TableCell>{survey.category}</TableCell>
                                         <TableCell> {Array.isArray(questions) ? questions.filter((q) => String(q.survey_id) === String(survey.id)).length : 0 }</TableCell>
                                         <TableCell>{survey.is_active === 1 ? "Aktif" : "Nonaktif"}</TableCell>

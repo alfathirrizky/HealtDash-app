@@ -15,8 +15,8 @@ export default function CreateQuestionPage() {
         navigate("/question") // kembali ke halaman user setelah create
     }
     return (
-        <div className="p-5 space-y-6">
-            <div className=" gap-5 scrollbar-none scroll-smooth overflow-y-auto h-[91vh]">
+        <div className="p-10 bg-white rounded-xl shadow-md">
+            <div className=" gap-5 scrollbar-none scroll-smooth overflow-y-auto">
                 <h1 className=" font-bold text-4xl">Form Create Question</h1>
                 <div className=" flex justify-between items-center">
                     <Breadcrumb>
@@ -37,7 +37,7 @@ export default function CreateQuestionPage() {
                     </Link>
                 </div>
                 <div className="bg-white w-full">
-                    <div className="grid grid-cols-2 gap-3 py-4">
+                    <div className="py-4 flex flex-col gap-3">
                         <div className="flex flex-col gap-1">
                             <h1 className="font-semibold">Survey</h1>
                             <select

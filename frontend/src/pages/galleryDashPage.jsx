@@ -129,8 +129,8 @@ export default function galleryDashPage() {
                                                 }}
                                             />
                                         </TableCell>
-                                        <TableCell>{content.caption}</TableCell>
-                                        <TableCell>{content.description}</TableCell>
+                                        <TableCell className="max-w-[150px] truncate">{content.caption}</TableCell>
+                                        <TableCell className="max-w-[150px] truncate">{content.description}</TableCell>
                                         <TableCell className="space-x-2">
                                             <Button
                                                 size="sm"

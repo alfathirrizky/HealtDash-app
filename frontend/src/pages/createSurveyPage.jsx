@@ -37,8 +37,8 @@ export default function CreateSurveyPage() {
         navigate("/surveiDash")
     }
     return(
-    <div className="">
-        <div className=" gap-5 scrollbar-none scroll-smooth overflow-y-auto h-[95vh]">
+        <div className="p-10 bg-white rounded-xl shadow-md">    
+        <div className=" gap-5 scrollbar-none scroll-smooth overflow-y-auto">
             <h1 className=" font-bold text-4xl">Form Create Survey</h1>
             <div className=" flex justify-between items-center">
                 <Breadcrumb>

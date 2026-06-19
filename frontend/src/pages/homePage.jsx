@@ -8,7 +8,6 @@ import CardSwap, { Card } from "../components/CardSwap"
 import SpotlightCard from '../components/SpotlightCard';
 import Stepper, { Step } from '../components/Stepper';
 import imgComponent from "../assets/image-sugestion.png";
-import FloatingAudioPlayer from "../components/FloatingAudioPlayer";
 
 function HomePage() {
     const navigate = useNavigate();
@@ -249,8 +248,6 @@ function HomePage() {
                     </div>
                 </div>
             </section>
-
-            <FloatingAudioPlayer />
         </div>
     )
 }

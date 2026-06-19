@@ -35,9 +35,9 @@ export default function CreateGalleryPage() {
     }
 
     return(
-    <div className="p-5 space-y-6">
-        <div className=" gap-5 scrollbar-none scroll-smooth overflow-y-auto h-[91vh]">
-            <h1 className=" font-bold text-4xl">Form Create Gallery</h1>
+    <div className="p-10 bg-white rounded-xl shadow-md">
+        <div className=" gap-5 scrollbar-none scroll-smooth overflow-y-auto">
+            <h1 className=" font-bold text-4xl">Form Create Education</h1>
             <div className=" flex justify-between items-center">
                 <Breadcrumb>
                     <BreadcrumbList>
