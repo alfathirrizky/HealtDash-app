@@ -23,13 +23,13 @@ router.get("/detailed-answers", async (req, res) => {
         u.name AS employee_name,
         s.title AS survey_title,
         s.category AS survey_category,
-        q.label AS question_label,
+        q.question AS question_label,
         a.answer AS answer_text
       FROM answers a
       JOIN users u ON a.user_id = u.id
-      JOIN questions q ON a.question_id = q.question_id
+      JOIN questions q ON a.question_id = q.id
       JOIN surveys s ON a.survey_id = s.id
-      ORDER BY u.name, q.question_id
+      ORDER BY u.name, q.id
     `);
     res.json(rows);
   } catch (error) {
@@ -86,7 +86,7 @@ router.post("/submit", verifyToken, async (req, res) => {
 
     // Ambil detail pertanyaan untuk mencocokkan question_id dengan nama field (stress_level, work_hours, sleep_quality)
     const [questions] = await db.query(
-      "SELECT question_id, name, label, type FROM questions WHERE survey_id = ?", [survey_id]
+      "SELECT id AS question_id, question AS label FROM questions WHERE survey_id = ?", [survey_id]
     );
 
     // Ambil kategori survei

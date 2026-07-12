@@ -26,7 +26,8 @@ import {
   Sparkles,
   Database,
   RefreshCcw,
-  Printer
+  Printer,
+  HelpCircle
 } from "lucide-react";
 
 // Helper untuk menghasilkan rekomendasi tindakan preventif di sisi klien untuk data riwayat
@@ -742,7 +743,22 @@ export default function UploadExcel() {
                       className="max-h-[500px] object-contain hover:scale-[1.02] transition-transform duration-300 cursor-zoom-in"
                     />
                   </div>
-                  <div className="text-center text-xs text-slate-400 font-medium">
+                  
+                  {/* Penjelasan Cara Membaca Decision Tree */}
+                  <div className="bg-blue-50/50 p-4 rounded-xl border border-blue-100 space-y-2 mt-2">
+                    <h3 className="text-sm font-bold text-slate-800 flex items-center gap-2">
+                      <HelpCircle className="w-4 h-4 text-blue-600" />
+                      Cara Membaca Diagram Decision Tree
+                    </h3>
+                    <ul className="text-xs text-slate-600 space-y-1.5 list-disc pl-5">
+                      <li><strong>Kotak Teratas (Root Node):</strong> Merupakan faktor penentu utama yang paling kuat mempengaruhi risiko burnout pada dataset Anda.</li>
+                      <li><strong>Garis (Cabang):</strong> Merepresentasikan kriteria pemisahan (misal: <code>Tingkat Stres &lt;= 5.5</code>). Cabang ke kiri jika kriteria terpenuhi (True), ke kanan jika tidak (False).</li>
+                      <li><strong>Kotak Bawah (Leaf Node):</strong> Menunjukkan hasil akhir kelompok karyawan. Menampilkan jumlah sampel (karyawan) yang masuk dalam kategori tersebut dan probabilitas prediksi kelasnya.</li>
+                      <li><strong>Warna Kotak:</strong> Mengindikasikan kategori (kelas) mayoritas di dalam kotak tersebut. Intensitas atau kepekatan warna menunjukkan seberapa pasti (murni) kelompok tersebut.</li>
+                    </ul>
+                  </div>
+
+                  <div className="text-center text-xs text-slate-400 font-medium pt-2">
                     💡 Klik kanan gambar untuk mengunduh diagram pohon dalam resolusi penuh.
                   </div>
                 </div>

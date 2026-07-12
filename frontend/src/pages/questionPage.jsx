@@ -145,7 +145,7 @@ function QuestionPage() {
                                                     Konfirmasi Hapus
                                                     </AlertDialogTitle>
                                                     <AlertDialogDescription className="text-gray-600">
-                                                    Apakah Anda yakin ingin menghapus user ini? Tindakan ini tidak dapat
+                                                    Apakah Anda yakin ingin menghapus pertanyaan ini? Tindakan ini tidak dapat
                                                     dibatalkan.
                                                     </AlertDialogDescription>
                                                 </AlertDialogHeader>

@@ -25,10 +25,8 @@ function ContentPage() {
                                 backgroundImage: `url(http://localhost:5000/uploads/${content.image})`,
                             }}
                         >
-                            {/* Gradient Overlay */}
                             <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/30 to-transparent"></div>
                             
-                            {/* Content Layer */}
                             <div className="relative z-10 p-8 flex justify-between items-end w-full">
                                 <div className="text-white">
                                     <h1 className="text-xl w-md font-bold mb-1 tracking-wide">{content.caption}</h1>
