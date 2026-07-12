@@ -17,8 +17,6 @@ export default function AnswerPage() {
                     axios.get("http://localhost:5000/api/identified-employees"),
                     axios.get("http://localhost:5000/api/answers/detailed-answers")
                 ]);
-                setEmployees(empRes.data);
-                
                 // Group answers by employee_name
                 const answersMap = {};
                 ansRes.data.forEach(item => {
@@ -27,6 +25,11 @@ export default function AnswerPage() {
                     }
                     answersMap[item.employee_name].push(item);
                 });
+                
+                // Filter employees to only include those who have detailed answers (filled by users)
+                const userFilledEmployees = empRes.data.filter(emp => answersMap[emp.employee_name] && answersMap[emp.employee_name].length > 0);
+
+                setEmployees(userFilledEmployees);
                 setDetailedAnswers(answersMap);
                 setAllAnswers(ansRes.data);
             } catch (err) {

@@ -103,7 +103,7 @@ function DashboardPage() {
     // ── Fetch stress factor data ──
     useEffect(() => {
         setLoading(true);
-        axios.get('http://localhost:5000/api/answers/stress-factors')
+        axios.get('http://localhost:5000/api/identified-employees/stress-factors')
             .then(res => {
                 setStressData(res.data);
                 setLoading(false);

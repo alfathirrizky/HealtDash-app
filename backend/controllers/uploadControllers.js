@@ -29,24 +29,3 @@ export const uploadExcel = async (req, res) => {
         res.status(500).json({ error: "Gagal memproses file" });
     }
 };
-
-export const getIdentifiedEmployees = async (req, res) => {
-    try {
-        const data = await employeeModel.findAll();
-        res.json(data);
-    } catch (error) {
-        console.error("Error getIdentifiedEmployees:", error.message);
-        res.status(500).json({ error: "Gagal mengambil data karyawan teridentifikasi" });
-    }
-};
-
-export const deleteIdentifiedEmployee = async (req, res) => {
-    try {
-        const { id } = req.params;
-        await employeeModel.delete(id);
-        res.json({ message: "Data karyawan teridentifikasi berhasil dihapus" });
-    } catch (error) {
-        console.error("Error deleteIdentifiedEmployee:", error.message);
-        res.status(500).json({ error: "Gagal menghapus data karyawan" });
-    }
-};
