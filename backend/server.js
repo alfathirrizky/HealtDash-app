@@ -12,7 +12,6 @@ import answerRoutes from "./routes/answer.js";
 import galleryRoutes from "./routes/gallery.js";
 import surveyRoutes from "./routes/survey.js";
 import SuggestionRoute from "../backend/routes/SuggestionRoute.js"
-import identifiedEmployeeRoutes from "./routes/identifiedEmployee.js";
 
 dotenv.config();
 const app = express();
@@ -49,8 +48,6 @@ app.use("/api/educations", galleryRoutes);
 app.use("/api/surveys", surveyRoutes);
 // Semua endpoint sugestions diawali /suggestions
 app.use("/api/suggestions", SuggestionRoute);
-// Semua endpoint identified-employees diawali /identified-employees
-app.use("/api/identified-employees", identifiedEmployeeRoutes);
 
 // Jalankan server
 app.listen(PORT, () => {

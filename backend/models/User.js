@@ -30,6 +30,23 @@ class User {
   async delete(id) {
     await db.query("DELETE FROM users WHERE id = ?", [id]);
   }
+
+  async findWithRelations(id) {
+    const [users] = await db.query("SELECT * FROM users WHERE id = ?", [id]);
+    if (users.length === 0) return null;
+
+    const user = users[0];
+
+    const [surveyResults] = await db.query(
+      "SELECT * FROM survey_results WHERE user_id = ? ORDER BY created_at DESC",
+      [id]
+    );
+
+    return {
+      ...user,
+      survey_results: surveyResults,
+    };
+  }
 }
 
 export default User;

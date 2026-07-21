@@ -103,13 +103,52 @@ function DashboardPage() {
     // ── Fetch stress factor data ──
     useEffect(() => {
         setLoading(true);
-        axios.get('http://localhost:5000/api/identified-employees/stress-factors')
+        axios.get('http://localhost:5000/api/answers/survey-results')
             .then(res => {
-                setStressData(res.data);
+                const results = res.data;
+                if (!results || results.length === 0) {
+                    setStressData([]);
+                    setLoading(false);
+                    return;
+                }
+
+                const totalRespondents = results.length;
+                let totalStress = 0;
+                let totalWork = 0;
+                let totalSleep = 0;
+
+                results.forEach(row => {
+                    totalStress += Number(row.stress_level || 0);
+                    totalWork += Number(row.work_hours || 0);
+                    totalSleep += Number(row.sleep_quality || 0);
+                });
+
+                const aggregatedData = [
+                    {
+                        category: "stress_level",
+                        avg_score: (totalStress / totalRespondents).toFixed(2),
+                        total_respondents: totalRespondents
+                    },
+                    {
+                        category: "work_hours",
+                        avg_score: (totalWork / totalRespondents).toFixed(2),
+                        total_respondents: totalRespondents
+                    },
+                    {
+                        category: "sleep_quality",
+                        avg_score: (totalSleep / totalRespondents).toFixed(2),
+                        total_respondents: totalRespondents
+                    }
+                ];
+
+                // Sort to get the dominant factor first
+                aggregatedData.sort((a, b) => b.avg_score - a.avg_score);
+
+                setStressData(aggregatedData);
                 setLoading(false);
             })
             .catch(err => {
-                console.error('Error fetching stress factors:', err);
+                console.error('Error fetching survey results:', err);
                 setLoading(false);
             });
     }, []);

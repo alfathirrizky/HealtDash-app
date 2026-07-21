@@ -16,6 +16,21 @@ router.get("/api/answer", async (req, res) => {
   }
 });
 
+router.get("/survey-results", async (req, res) => {
+  try {
+    const [rows] = await db.query(`
+      SELECT sr.*, u.name AS user_name, u.email AS user_email, u.position AS user_position
+      FROM survey_results sr
+      LEFT JOIN users u ON sr.user_id = u.id
+      ORDER BY sr.created_at DESC
+    `);
+    res.json(rows);
+  } catch (error) {
+    console.error("❌ Error fetching survey results:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 router.get("/detailed-answers", async (req, res) => {
   try {
     const [rows] = await db.query(`
@@ -76,8 +91,8 @@ router.post("/submit", verifyToken, async (req, res) => {
     const [users] = await db.query("SELECT name FROM users WHERE id = ?", [user_id]);
     const userName = users.length > 0 ? users[0].name : "Karyawan";
 
-    // Cek data existing untuk menggabungkan hasil
-    const [existing] = await db.query("SELECT * FROM identified_employees WHERE employee_name = ?", [userName]);
+    // Cek data existing untuk menggabungkan hasil (gunakan user_id)
+    const [existing] = await db.query("SELECT * FROM survey_results WHERE user_id = ?", [user_id]);
 
     // Jalankan prediksi burnout proaktif untuk setiap survei
     let stress_level = existing.length > 0 ? existing[0].stress_level : 0;
@@ -195,17 +210,18 @@ router.post("/submit", verifyToken, async (req, res) => {
       };
     }
 
-    // Simpan hasil klasifikasi ke tabel identified_employees
+    // Simpan hasil klasifikasi ke tabel survey_results (relasi user_id)
     if (existing.length > 0) {
       await db.query(
-        "UPDATE identified_employees SET stress_level = ?, work_hours = ?, sleep_quality = ?, risk_score = ?, risk_level = ?, dominant_factor = ? WHERE employee_name = ?",
-        [stress_level, work_hours, sleep_quality, rec.risk_score, rec.risk_level, rec.dominant_factor, userName]
+        "UPDATE survey_results SET employee_name = ?, stress_level = ?, work_hours = ?, sleep_quality = ?, risk_score = ?, risk_level = ?, dominant_factor = ? WHERE user_id = ?",
+        [userName, stress_level, work_hours, sleep_quality, rec.risk_score, rec.risk_level, rec.dominant_factor, user_id]
       );
     } else {
       await db.query(
-        "INSERT INTO identified_employees (employee_name, stress_level, work_hours, sleep_quality, risk_score, risk_level, dominant_factor) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        "INSERT INTO survey_results (employee_name, user_id, stress_level, work_hours, sleep_quality, risk_score, risk_level, dominant_factor) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
         [
           userName,
+          user_id,
           stress_level,
           work_hours,
           sleep_quality,
