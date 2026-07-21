@@ -1,5 +1,6 @@
 import API from "../api/api"
 import useUser from "../hooks/useUser"
+import { useState } from "react";
 import { FilePond, registerPlugin } from "react-filepond";
 import "filepond/dist/filepond.min.css";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
@@ -57,6 +58,7 @@ import {
 } from "@/components/ui/breadcrumb"
 
 export default function UserPage() {
+    const [searchQuery, setSearchQuery] = useState("");
     const {
         users,
         open,
@@ -73,6 +75,12 @@ export default function UserPage() {
         setOpen,
     } = useUser();
 
+    const filteredUsers = users.filter(user => 
+        (user.name || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (user.email || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (user.position || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (user.role || "").toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     return (
         <div className="space-y-4 p-5">
@@ -82,7 +90,11 @@ export default function UserPage() {
                     <div className=" flex gap-4 w-2xl justify-end">
                         <div className="w-full md:w-1/3">
                                 <InputGroup>
-                                <InputGroupInput placeholder="Search..." />
+                                <InputGroupInput 
+                                    placeholder="Search..." 
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                />
                                 <InputGroupAddon>
                                     <Search/>
                                 </InputGroupAddon>
@@ -121,8 +133,8 @@ export default function UserPage() {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {users.length > 0 ? (
-                                users.map((user) => (
+                            {filteredUsers.length > 0 ? (
+                                filteredUsers.map((user) => (
                                     <TableRow
                                         key={user.id}
                                         className="hover:bg-blue-50 transition border-b border-gray-400"

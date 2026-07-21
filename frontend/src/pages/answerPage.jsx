@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Users, Activity, Clock, Moon, ShieldAlert, ChevronDown, ChevronUp, FileText, Download, Zap, ShieldCheck, AlertCircle, CheckCircle, Printer } from "lucide-react";
+import { Users, Activity, Clock, Moon, ShieldAlert, ChevronDown, ChevronUp, FileText, Download, Zap, ShieldCheck, AlertCircle, CheckCircle, Printer, Search } from "lucide-react";
 import * as XLSX from "xlsx";
 
 // Helper untuk menghasilkan rekomendasi tindakan preventif berdasarkan risk level dan faktor dominan
@@ -108,6 +108,13 @@ export default function AnswerPage() {
     const [expandedRows, setExpandedRows] = useState({});
     const [expandedActionRows, setExpandedActionRows] = useState({});
     const [loading, setLoading] = useState(true);
+    const [searchQuery, setSearchQuery] = useState("");
+
+    const filteredEmployees = employees.filter(emp =>
+        (emp.employee_name || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (emp.risk_level || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (emp.dominant_factor || "").toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     // State khusus untuk cetak laporan per karyawan
     const [printEmployee, setPrintEmployee] = useState(null);
@@ -232,13 +239,25 @@ export default function AnswerPage() {
                         Menampilkan daftar karyawan yang telah mengisi survei beserta skor evaluasi risiko burnout mereka.
                     </p>
                 </div>
-                <button
-                    onClick={handleExportExcel}
-                    className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl font-semibold shadow-sm transition-all text-sm"
-                >
-                    <Download className="w-4 h-4" />
-                    Export Excel
-                </button>
+                <div className="flex gap-4 items-center">
+                    <div className="relative">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
+                        <input
+                            type="text"
+                            placeholder="Cari karyawan atau risiko..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="pl-9 pr-4 py-2 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm w-64"
+                        />
+                    </div>
+                    <button
+                        onClick={handleExportExcel}
+                        className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl font-semibold shadow-sm transition-all text-sm"
+                    >
+                        <Download className="w-4 h-4" />
+                        Export Excel
+                    </button>
+                </div>
             </div>
 
             <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
@@ -267,8 +286,8 @@ export default function AnswerPage() {
                                         </div>
                                     </td>
                                 </tr>
-                            ) : employees.length > 0 ? (
-                                employees.map((emp, idx) => {
+                            ) : filteredEmployees.length > 0 ? (
+                                filteredEmployees.map((emp, idx) => {
                                     const isActionExpanded = expandedActionRows[emp.employee_name];
                                     const recommendations = getProactiveRecommendations(emp.risk_level, emp.dominant_factor);
                                     return (

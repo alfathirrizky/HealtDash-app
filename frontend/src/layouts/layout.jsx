@@ -10,16 +10,16 @@ function Layout() {
     const outlet = useOutlet();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-    return(
+    return (
         <div className="flex h-screen bg-slate-50 overflow-hidden relative">
             {/* Mobile Overlay */}
             {isSidebarOpen && (
-                <div 
+                <div
                     className="fixed inset-0 bg-slate-900/50 z-20 md:hidden backdrop-blur-sm"
-                    onClick={() => setIsSidebarOpen(false)} 
+                    onClick={() => setIsSidebarOpen(false)}
                 />
             )}
-            
+
             {/* Sidebar */}
             <div className={`fixed inset-y-0 left-0 z-30 transform transition-transform duration-300 ease-in-out md:relative md:translate-x-0 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
                 <Sidebar onClose={() => setIsSidebarOpen(false)} />

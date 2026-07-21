@@ -1,5 +1,5 @@
 import API from "../api/api"
-import { useMemo } from "react"
+import { useMemo, useState } from "react"
 import useSurvey from "@/hooks/useSurvey"
 import useQuestion from "../hooks/useQuestions"
 import {
@@ -42,6 +42,7 @@ import {
 } from "@/components/ui/breadcrumb"
 
 function QuestionPage() {
+    const [searchQuery, setSearchQuery] = useState("");
     const {
         questions,
         open,
@@ -62,6 +63,12 @@ function QuestionPage() {
         });
         return map;
         }, [surveys]);
+
+    const filteredQuestions = questions.filter(question => 
+        (question.question || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (surveyMap[String(question.survey_id)] || "").toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     return (
         <div className="space-y-4 p-5">
             <div className="flex flex-col gap-5 scrollbar-none scroll-smooth overflow-y-auto h-[89vh]">
@@ -70,7 +77,11 @@ function QuestionPage() {
                     <div className=" flex gap-4 w-2xl justify-end">
                         <div className="w-full md:w-1/3">
                                 <InputGroup>
-                                <InputGroupInput placeholder="Search..." />
+                                <InputGroupInput 
+                                    placeholder="Search..." 
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                />
                                 <InputGroupAddon>
                                     <Search/>
                                 </InputGroupAddon>
@@ -104,8 +115,8 @@ function QuestionPage() {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {questions.length > 0 ? (
-                                questions.map((question) => (
+                            {filteredQuestions.length > 0 ? (
+                                filteredQuestions.map((question) => (
                                     <TableRow
                                         key={question.id}
                                         className="hover:bg-blue-50 transition border-b border-gray-400"

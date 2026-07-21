@@ -1,5 +1,6 @@
 import API from "../api/api"
 import useGallery from "../hooks/useGallery"
+import { useState } from "react";
 import {
   Table, TableBody, TableCaption, TableCell, TableHead,
   TableHeader, TableRow,
@@ -57,6 +58,7 @@ registerPlugin(
 );
 
 export default function galleryDashPage() {
+        const [searchQuery, setSearchQuery] = useState("");
         const {
             contents=[],
             open,
@@ -70,6 +72,12 @@ export default function galleryDashPage() {
             handleDelete,
             setOpen,
         } = useGallery();
+
+        const filteredContents = contents.filter(content => 
+            (content.caption || "").toLowerCase().includes(searchQuery.toLowerCase()) || 
+            (content.description || "").toLowerCase().includes(searchQuery.toLowerCase())
+        );
+
     return (
         <div className="space-y-4 p-5">
             <div className="flex flex-col gap-5 scrollbar-none scroll-smooth overflow-y-auto h-[89vh]">
@@ -78,7 +86,11 @@ export default function galleryDashPage() {
                     <div className=" flex gap-4 w-2xl justify-end">
                         <div className="w-full md:w-1/3">
                                 <InputGroup>
-                                <InputGroupInput placeholder="Search..." />
+                                <InputGroupInput 
+                                    placeholder="Search..." 
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                />
                                 <InputGroupAddon>
                                     <Search/>
                                 </InputGroupAddon>
@@ -113,8 +125,8 @@ export default function galleryDashPage() {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {contents.length > 0 ? (
-                                contents.map((content) => (
+                            {filteredContents.length > 0 ? (
+                                filteredContents.map((content) => (
                                     <TableRow
                                         key={content.id}
                                         className="hover:bg-blue-50 transition border-b border-gray-400"

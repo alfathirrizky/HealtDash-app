@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import UseQuestion from "../hooks/useQuestions";
 import API from "../api/api";
 import {
@@ -65,6 +66,7 @@ registerPlugin(
     FilePondPluginImageTransform
 );
 export default function SurveiDashPage() {
+    const [searchQuery, setSearchQuery] = useState("");
     const {
         surveys,
         open,
@@ -81,6 +83,13 @@ export default function SurveiDashPage() {
     const { questions } = UseQuestion();
     const navigate = useNavigate();
 
+    const filteredSurveys = surveys.filter(survey => 
+        (survey.title || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (survey.caption || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (survey.description || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (survey.category || "").toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     return(
         <div className="flex flex-col gap-5 scrollbar-none scroll-smooth overflow-y-auto h-[95vh]">
                 <div className=" flex w-full items-center justify-between gap-5">
@@ -88,7 +97,11 @@ export default function SurveiDashPage() {
                     <div className=" flex gap-4 w-2xl justify-end">
                         <div className="w-full md:w-1/3">
                                 <InputGroup>
-                                <InputGroupInput placeholder="Search..." />
+                                <InputGroupInput 
+                                    placeholder="Search..." 
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                />
                                 <InputGroupAddon>
                                     <Search/>
                                 </InputGroupAddon>
@@ -127,8 +140,8 @@ export default function SurveiDashPage() {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {surveys.length > 0 ? (
-                                surveys.map((survey) => (
+                            {filteredSurveys.length > 0 ? (
+                                filteredSurveys.map((survey) => (
                                     <TableRow
                                         key={survey.id}
                                         className="hover:bg-blue-50 transition border-b border-gray-400"
