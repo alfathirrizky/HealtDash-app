@@ -4,7 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { LogOut, AlertTriangle, X } from "lucide-react";
 import { toast } from "sonner";
 
-function Sidebar() {
+function Sidebar({ onClose }) {
     const navigate = useNavigate();
     const [showLogoutModal, setShowLogoutModal] = useState(false);
 
@@ -34,17 +34,21 @@ function Sidebar() {
         { name: "Manajemen User", path: "/user" },
     ];
     return (
-        <div className="sticky top-0 z-10 flex flex-col bg-white shadow-md w-64 min-w-64 h-screen p-5 print:hidden">
-            <div className='flex items-center justify-center'>
+        <div className="flex flex-col bg-white border-r border-slate-100 w-64 min-w-[16rem] h-screen p-5 print:hidden shadow-lg md:shadow-none">
+            <div className='flex items-center justify-between mb-8'>
                 <a href="/">
-                    <img src={Logo} alt="InJourney Logo" className=' mb-8 w-52' />
+                    <img src={Logo} alt="InJourney Logo" className='w-40 md:w-52 ml-2 md:ml-0' />
                 </a>
+                <button onClick={onClose} className="md:hidden p-2 text-slate-500 hover:bg-slate-100 rounded-lg">
+                    <X className="w-5 h-5" />
+                </button>
             </div>
             <nav className='flex flex-col gap-2 flex-1 overflow-y-auto overflow-x-hidden scrollbar-hide pr-1 pb-4'>
                 {menu.map((item, index) => (
                     <NavLink
                         key={index}
                         to={item.path}
+                        onClick={onClose}
                         className={({ isActive }) =>
                             isActive
                                 ? "font-semibold bg-blue-500 text-white rounded-xl py-2.5 px-4 transition-all duration-300 shadow-sm shadow-blue-500/30"

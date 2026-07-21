@@ -182,22 +182,22 @@ function DashboardPage() {
     if (!user) return <p className="p-5 text-lg">Loading user data...</p>;
 
     return (
-        <div className="p-4 w-full overflow-y-auto h-[96vh] scrollbar-none">
+        <div className="p-2 sm:p-4 w-full">
             {/* ── Welcome Header ── */}
             <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="flex items-center gap-5 mb-8 bg-white p-6 rounded-2xl shadow-sm border border-slate-100"
+                className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-5 mb-8 bg-white p-6 rounded-2xl shadow-sm border border-slate-100"
             >
                 <img
                     src={`http://localhost:5000/uploads/${user.image}`}
                     alt="Profile"
-                    className="w-20 h-20 object-cover rounded-full ring-4 ring-indigo-100"
+                    className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-full ring-4 ring-indigo-100"
                 />
-                <div>
-                    <h1 className="font-bold text-3xl text-slate-800">Welcome, {user.name}</h1>
-                    <p className="text-slate-500 mt-1">Analisis faktor dominan stress kerja berdasarkan hasil survey.</p>
+                <div className="flex-1 mt-2 sm:mt-0">
+                    <h1 className="font-bold text-2xl sm:text-3xl text-slate-800">Welcome, {user.name}</h1>
+                    <p className="text-sm sm:text-base text-slate-500 mt-2 sm:mt-1">Analisis faktor dominan stress kerja berdasarkan hasil survey.</p>
                 </div>
             </motion.div>
 

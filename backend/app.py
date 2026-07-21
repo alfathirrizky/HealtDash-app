@@ -16,6 +16,7 @@ from io import BytesIO
 # pyrefly: ignore [missing-import]
 import pydot
 import os
+# pyrefly: ignore [missing-import]
 from pydantic import BaseModel
 
 # Global Decision Tree classifier instance
