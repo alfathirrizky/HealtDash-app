@@ -291,7 +291,7 @@ export default function galleryDashPage() {
                                 />
                             </div>
 
-                            <div className="flex flex-col gap-1.5 flex-grow">
+                            <div className="flex flex-col gap-1.5 grow">
                                 <label className="text-sm font-medium text-gray-700">Description</label>
                                 <textarea
                                     placeholder="Masukkan deskripsi konten..."
