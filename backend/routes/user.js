@@ -4,7 +4,7 @@ import fs from "fs";
 import path from "path";
 import { v4 as uuidv4 } from "uuid";
 
-import User from "../models/user.js";
+import User from "../models/User.js";
 import UserService from "../services/UserService.js";
 import UserController from "../controllers/UserController.js";
 

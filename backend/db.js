@@ -5,12 +5,12 @@ dotenv.config();
 
 // Membuat connection pool
 // Pool = koneksi dipakai ulang (lebih efisien)
-const db = await mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "healthdash",
-  port: 3306,
+const db = mysql.createPool({
+  host: process.env.DB_HOST || "localhost",
+  user: process.env.DB_USER || "healthd1_Alfathir",
+  password: process.env.DB_PASS || "Alfathir03_",
+  database: process.env.DB_NAME || "healthd1_HealthDash",
+  port: process.env.DB_PORT || 3306,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,

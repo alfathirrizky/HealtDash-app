@@ -11,7 +11,7 @@ import userRoutes from "./routes/user.js";
 import answerRoutes from "./routes/answer.js";
 import galleryRoutes from "./routes/gallery.js";
 import surveyRoutes from "./routes/survey.js";
-import SuggestionRoute from "../backend/routes/SuggestionRoute.js"
+import SuggestionRoute from "./routes/SuggestionRoute.js";
 
 dotenv.config();
 const app = express();
