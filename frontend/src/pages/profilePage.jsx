@@ -41,7 +41,7 @@ function ProfilePage() {
         <>
             <div className="bg-gray-50 min-h-screen p-6 flex flex-col pt-20">
                 <div className="bg-white rounded-xl shadow-sm p-6 mb-8 profile flex flex-row gap-6 items-center">
-                    <img src={`http://localhost:5000/uploads/${user.image}`} alt="Profile" className="w-24 h-24 object-cover rounded-full shadow-sm border-2 border-white" />
+                    <img src={`https://api.healthdash.my.id/uploads/${user.image}`} alt="Profile" className="w-24 h-24 object-cover rounded-full shadow-sm border-2 border-white" />
                     <div>
                         <h1 className="font-bold text-3xl text-gray-800">Hai, {user.name}!</h1>
                         <p className="text-gray-500 mt-1 font-medium">{user.position} • {user.email}</p>
@@ -104,7 +104,7 @@ function ProfilePage() {
                                 {history.map((item) => (
                                     <div key={item.id} className="border border-gray-100 bg-gray-50 rounded-xl overflow-hidden hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
                                         <div className="h-40 overflow-hidden bg-gray-200">
-                                            <img src={`http://localhost:5000/uploads/${item.image}`} alt={item.title} className="w-full h-full object-cover" />
+                                            <img src={`https://api.healthdash.my.id/uploads/${item.image}`} alt={item.title} className="w-full h-full object-cover" />
                                         </div>
                                         <div className="p-4 bg-white">
                                             <h3 className="font-bold text-lg text-gray-800 mb-2 truncate">{item.title}</h3>

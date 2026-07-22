@@ -140,7 +140,7 @@ export default function UserPage() {
                                         className="hover:bg-blue-50 transition border-b border-gray-400"
                                     >
                                         <TableCell>
-                                            <img src={`http://localhost:5000/uploads/${user.image}`} alt="User" className="w-15 h-15 rounded-full object-cover" />
+                                            <img src={`https://api.healthdash.my.id/uploads/${user.image}`} alt="User" className="w-15 h-15 rounded-full object-cover" />
                                         </TableCell>
                                         <TableCell>{user.name}</TableCell>
                                         <TableCell>{user.email}</TableCell>
@@ -232,7 +232,7 @@ export default function UserPage() {
                             <label className="text-sm font-semibold text-gray-700">Profile Image</label>
                             {editing && form.image && !form.newImage && (
                                 <div className="flex flex-col items-center p-4 border border-gray-200 rounded-xl bg-gray-50 mb-2">
-                                    <img src={`http://localhost:5000/uploads/${form.image}`} alt="Current" className="w-28 h-28 object-cover rounded-full shadow-md border-4 border-white" />
+                                    <img src={`https://api.healthdash.my.id/uploads/${form.image}`} alt="Current" className="w-28 h-28 object-cover rounded-full shadow-md border-4 border-white" />
                                     <p className="text-xs text-gray-500 mt-3 font-medium">Current Image</p>
                                 </div>
                             )}

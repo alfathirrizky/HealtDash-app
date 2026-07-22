@@ -35,7 +35,7 @@ export default function SurveiPage() {
                         {/* Image Section */}
                         <div className="w-full h-56 md:h-64 lg:h-72 overflow-hidden rounded-2xl relative">
                             <img
-                                src={`http://localhost:5000/uploads/${survey.image}`}
+                                src={`https://api.healthdash.my.id/uploads/${survey.image}`}
                                 alt={survey.title}
                                 className="w-full h-full object-cover"
                                 onError={(e) => {

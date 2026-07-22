@@ -80,7 +80,7 @@ export default function DetailSurvey() {
                 <div>
                     <h2 className="font-semibold">Image</h2>
                     <img
-                        src={`http://localhost:5000/uploads/${survey.image}`}
+                        src={`https://api.healthdash.my.id/uploads/${survey.image}`}
                         alt={survey.caption}
                         className="h-64 max-w-md rounded-xl mt-2"
                     />

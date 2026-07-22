@@ -51,7 +51,7 @@ export default function DetailContent() {
                 {/* Gambar Hero */}
                 <div className="w-full h-56 sm:h-72 md:h-96 bg-slate-100 relative group">
                     <img 
-                        src={`http://localhost:5000/uploads/${content.image}`} 
+                        src={`https://api.healthdash.my.id/uploads/${content.image}`} 
                         alt={content.caption} 
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                         onError={(e) => {

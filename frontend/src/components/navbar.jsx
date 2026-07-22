@@ -42,7 +42,7 @@ function Navbar() {
             ? "block text-blue-600 font-bold bg-blue-50 px-4 py-3 rounded-xl transition-all" 
             : "block text-slate-600 hover:text-blue-600 hover:bg-slate-50 px-4 py-3 rounded-xl font-medium transition-all";
 
-    const userImageUrl = user.image ? `http://localhost:5000/uploads/${user.image}` : ProfileFallback;
+    const userImageUrl = user.image ? `https://api.healthdash.my.id/uploads/${user.image}` : ProfileFallback;
 
     return (
         <nav ref={menuRef} className="fixed top-0 left-0 right-0 bg-white shadow-sm border-b border-slate-100 z-50">
@@ -50,7 +50,7 @@ function Navbar() {
                 <div className="flex justify-between items-center h-16 md:h-20">
                     
                     {/* Bagian Kiri: Logo */}
-                    <div className="flex-shrink-0 flex items-center cursor-pointer transition-transform hover:scale-105" onClick={() => navigate("/home")}>
+                    <div className="shrink-0 flex items-center cursor-pointer transition-transform hover:scale-105" onClick={() => navigate("/home")}>
                         <img src={Logo} alt="InJourney Logo" className="h-9 md:h-12 w-auto object-contain" />
                     </div>
 

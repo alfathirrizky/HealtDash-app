@@ -123,8 +123,8 @@ export default function AnswerPage() {
         const fetchData = async () => {
             try {
                 const [empRes, ansRes] = await Promise.all([
-                    axios.get("http://localhost:5000/api/answers/survey-results"),
-                    axios.get("http://localhost:5000/api/answers/detailed-answers")
+                    axios.get("https://api.healthdash.my.id/api/answers/survey-results"),
+                    axios.get("https://api.healthdash.my.id/api/answers/detailed-answers")
                 ]);
                 // Group answers by employee_name
                 const answersMap = {};

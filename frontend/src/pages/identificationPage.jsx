@@ -144,7 +144,7 @@ export default function UploadExcel() {
     try {
       setLoading(true);
       // Upload ke Node.js server (Port 5000) agar disimpan secara otomatis ke database MySQL
-      const res = await axios.post("http://localhost:5000/api/upload-excel", formData, {
+      const res = await axios.post("https://api.healthdash.my.id/api/upload-excel", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setResult(res.data);

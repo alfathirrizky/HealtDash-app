@@ -62,7 +62,7 @@ export default function CreateUserPage() {
                             fileValidateTypeLabelExpectedTypes="Hanya JPG / PNG"
                             server={{
                                 process: {
-                                url: "http://localhost:5000/api/users/upload",
+                                url: "https://api.healthdash.my.id/api/users/upload",
                                 method: "POST",
                                 onload: (filename) => {
                                     setForm(prev => ({ ...prev, image: filename }));

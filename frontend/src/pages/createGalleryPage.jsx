@@ -68,7 +68,7 @@ export default function CreateGalleryPage() {
                             fileValidateTypeLabelExpectedTypes="Hanya JPG / PNG"
                             server={{
                                 process: {
-                                url: "http://localhost:5000/api/educations/upload",
+                                url: "https://api.healthdash.my.id/api/educations/upload",
                                 method: "POST",
                                 onload: (filename) => {
                                     setForm(prev => ({ ...prev, image: filename }));

@@ -103,7 +103,7 @@ function DashboardPage() {
     // ── Fetch stress factor data ──
     useEffect(() => {
         setLoading(true);
-        axios.get('http://localhost:5000/api/answers/survey-results')
+        axios.get('https://api.healthdash.my.id/api/answers/survey-results')
             .then(res => {
                 const results = res.data;
                 if (!results || results.length === 0) {
@@ -191,7 +191,7 @@ function DashboardPage() {
                 className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-5 mb-8 bg-white p-6 rounded-2xl shadow-sm border border-slate-100"
             >
                 <img
-                    src={`http://localhost:5000/uploads/${user.image}`}
+                    src={`https://api.healthdash.my.id/uploads/${user.image}`}
                     alt="Profile"
                     className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-full ring-4 ring-indigo-100"
                 />

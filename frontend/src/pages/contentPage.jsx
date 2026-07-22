@@ -22,7 +22,7 @@ function ContentPage() {
                             key={content.id}
                             className="relative flex w-full h-80 rounded-3xl shadow-md bg-cover bg-center overflow-hidden border-4 border-white"
                             style={{
-                                backgroundImage: `url(http://localhost:5000/uploads/${content.image})`,
+                                backgroundImage: `url(https://api.healthdash.my.id/uploads/${content.image})`,
                             }}
                         >
                             <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/30 to-transparent"></div>

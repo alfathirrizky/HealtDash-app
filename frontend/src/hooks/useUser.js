@@ -119,7 +119,7 @@ export default function useUser() {
     if (user.image) {
       setFiles([
         {
-          source: `http://localhost:5000/uploads/${user.image}`,
+          source: `https://api.healthdash.my.id/uploads/${user.image}`,
         },
       ]);
     }

@@ -21,7 +21,7 @@ function HomePage() {
         try {
             const token = sessionStorage.getItem("token");
             await axios.post(
-                "http://localhost:5000/api/suggestions",
+                "https://api.healthdash.my.id/api/suggestions",
                 { pesan },
                 {
                     headers: {

@@ -70,7 +70,7 @@ export default function CreateSurveyPage() {
                             fileValidateTypeLabelExpectedTypes="Hanya JPG / PNG"
                             server={{
                                 process: {
-                                url: "http://localhost:5000/api/surveys/upload",
+                                url: "https://api.healthdash.my.id/api/surveys/upload",
                                 method: "POST",
                                 onload: (filename) => {
                                     setForm(prev => ({ ...prev, image: filename }));

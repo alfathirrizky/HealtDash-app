@@ -133,7 +133,7 @@ export default function galleryDashPage() {
                                     >
                                         <TableCell>
                                             <img
-                                                src={`http://localhost:5000/uploads/${content.image}`}
+                                                src={`https://api.healthdash.my.id/uploads/${content.image}`}
                                                 alt={content.caption}
                                                 className="w-40 h-20 object-cover"
                                                 onError={(e) => {
@@ -226,7 +226,7 @@ export default function galleryDashPage() {
                             <label className="text-sm font-semibold text-gray-700">Gambar Konten</label>
                             {editing && form.image && !form.newImage && (
                                 <div className="flex flex-col items-center p-4 border border-gray-200 rounded-xl bg-gray-50 mb-2">
-                                    <img src={`http://localhost:5000/uploads/${form.image}`} alt="Current" className="w-full h-auto object-cover rounded-lg shadow-sm border border-gray-300" />
+                                    <img src={`https://api.healthdash.my.id/uploads/${form.image}`} alt="Current" className="w-full h-auto object-cover rounded-lg shadow-sm border border-gray-300" />
                                     <p className="text-xs text-gray-500 mt-3 font-medium">Current Image</p>
                                 </div>
                             )}
